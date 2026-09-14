@@ -1,0 +1,215 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Olivier Gaillard — Entraîneur d'athlétisme à Lyon"
+  description="Olivier Gaillard, entraîneur FFA à Lyon. Coaching à distance tous niveaux et groupe élite AP au sein de l'ACL. Plans d'entraînement sur mesure via Nolio."
+  active="home"
+  home={true}
+>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-media">
+      <img src="/assets/hero-runner.jpg" alt="Coureuse à l'entraînement de nuit" />
+    </div>
+    <div class="container hero-content">
+      <h1 class="hero-title">
+        <span class="line">Olivier</span>
+        <span class="line">Gaillard</span>
+        <span class="line"><span class="accent">Coach.</span></span>
+      </h1>
+      <p class="hero-sub">
+        Entraîneur d'athlétisme depuis 15 ans. Du premier 10 km au record
+        personnel : un plan sur mesure, un vrai suivi, et quelqu'un qui
+        répond quand vous avez une question.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-solid">Me contacter <span class="arrow">→</span></a>
+        <a href="#coaching" class="btn btn-ghost">Le coaching</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHIFFRES ================= -->
+  <section class="stats-band">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat" data-reveal="1">
+          <div class="stat-num">20</div>
+          <div class="stat-label">Athlètes élite encadrés</div>
+        </div>
+        <div class="stat" data-reveal="2">
+          <div class="stat-num">40<em>+</em></div>
+          <div class="stat-label">Coureurs accompagnés</div>
+        </div>
+        <div class="stat" data-reveal="3">
+          <div class="stat-num">15</div>
+          <div class="stat-label">Ans sur la piste</div>
+        </div>
+        <div class="stat" data-reveal="4">
+          <div class="stat-num">1'52<em>"</em></div>
+          <div class="stat-label">Record perso au 800 m</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= QUI JE SUIS ================= -->
+  <section class="section" id="apropos">
+    <div class="container">
+      <div class="split split--apropos">
+        <div class="text-block" data-reveal="1">
+          <h2 class="section-title" data-reveal>Qui je suis</h2>
+          <p class="lead">
+            40 ans, entraîneur diplômé de la Fédération Française
+            d'Athlétisme, basé à Lyon. L'athlé, je l'ai d'abord pratiquée au
+            plus haut niveau régional avant d'en faire mon métier.
+          </p>
+          <p class="muted" style="margin-top: 1.4em;">
+            Aujourd'hui, je partage mon temps entre deux terrains de jeu.
+            Le coaching de coureurs amateurs, partout en France, à distance
+            et à tous les niveaux. Et le groupe élite <strong>AP (Athlete Project)</strong>, que j'encadre au sein de l'ACL Lyon : 20
+            athlètes, un objectif commun, performer.
+          </p>
+          <a href="/coach" class="more-link">Mon parcours complet <span>→</span></a>
+        </div>
+        <figure class="portrait" data-reveal="2">
+          <img src="/assets/olivier-gaillard.jpg" alt="Olivier Gaillard, entraîneur FFA à Lyon" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COACHING A DISTANCE ================= -->
+  <section class="section" id="coaching">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Le coaching à distance</h2>
+      </div>
+      <p class="lead" style="margin-bottom: clamp(40px, 6vw, 70px);" data-reveal="1">
+        Pas de séance type ni de plan copié-collé. Chaque préparation suit
+        le même fil, adapté à votre niveau et à votre objectif.
+      </p>
+      <div class="steps" data-reveal="2">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Premier échange</h3>
+          <p>On se parle. Vos objectifs, votre histoire sportive, vos contraintes du quotidien. Gratuit, sans engagement.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Bilan de départ</h3>
+          <p>Analyse de votre passé d'entraînement, de vos temps, de vos disponibilités. On fixe un cap réaliste.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Votre plan sur Nolio</h3>
+          <p>Vos séances semaine par semaine, directement sur votre téléphone, avec les allures et les consignes.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3 class="step-title">Suivi & ajustements</h3>
+          <p>Vos retours après chaque séance, le plan ajusté chaque semaine. La forme monte, le plan suit.</p>
+        </div>
+      </div>
+      <p class="steps-note" data-reveal="3">
+        <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= TARIFS ================= -->
+  <section class="section" id="tarifs">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Les formules</h2>
+      </div>
+      <div class="pricing">
+        <article class="plan" data-reveal="1">
+          <h3 class="plan-name">Suivi en ligne</h3>
+          <div class="plan-price">
+            <span class="amount">79 €</span>
+            <span class="per">/ mois</span>
+          </div>
+          <p class="plan-desc">Pour courir avec un plan sérieux, où que vous soyez.</p>
+          <ul class="plan-list">
+            <li>Plan d'entraînement personnalisé sur Nolio</li>
+            <li>Ajustements chaque semaine</li>
+            <li>Analyse de vos séances</li>
+            <li>Échanges par message, réponse sous 24 h</li>
+          </ul>
+          <a href="#contact" class="btn btn-ghost">Commencer <span class="arrow">→</span></a>
+        </article>
+        <article class="plan plan-featured" data-reveal="2">
+          <h3 class="plan-name">Suivi performance</h3>
+          <div class="plan-price">
+            <span class="amount">149 €</span>
+            <span class="per">/ mois</span>
+          </div>
+          <p class="plan-desc">Pour viser un chrono, avec un suivi renforcé.</p>
+          <ul class="plan-list">
+            <li>Tout le suivi en ligne inclus</li>
+            <li>Plan d'affûtage avant chaque objectif</li>
+            <li>Analyse vidéo de votre foulée</li>
+            <li>Disponibilité prioritaire, 7 j/7</li>
+          </ul>
+          <a href="#contact" class="btn btn-solid">Commencer <span class="arrow">→</span></a>
+        </article>
+      </div>
+      <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider.</p>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Me contacter</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info" data-reveal="1">
+          <p class="lead" style="margin-bottom: 34px;">
+            Un objectif, une question, un doute sur votre plan actuel ?
+            Écrivez-moi, je réponds à tout le monde.
+          </p>
+          <div class="info-line">
+            <div class="info-label">Email</div>
+            <div class="info-value"><a href="mailto:contact@oliviergaillard.fr">contact@oliviergaillard.fr</a></div>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm" data-reveal="2">
+          <div class="field">
+            <label for="nom">Votre nom</label>
+            <input type="text" id="nom" name="nom" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="email">Votre email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+          </div>
+          <div class="field full">
+            <label for="objectif">Votre objectif</label>
+            <select id="objectif" name="objectif">
+              <option value="Découverte / remise en forme">Découverte / remise en forme</option>
+              <option value="Premier 10 km">Premier 10 km</option>
+              <option value="Semi-marathon">Semi-marathon</option>
+              <option value="Marathon">Marathon</option>
+              <option value="Performance / compétition">Performance / compétition</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" required placeholder="Parlez-moi de vous, de votre pratique, de ce que vous cherchez…"></textarea>
+          </div>
+          <div class="form-foot">
+            <button type="submit" class="btn btn-solid">Envoyer le message <span class="arrow">→</span></button>
+            <span class="hint">Votre messagerie s'ouvre avec le message prêt à partir.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,32 @@
+---
+// Wordmark "OG." — le O est une piste d'athlétisme : forme stadium
+// (rectangle aux bords arrondis), deux couloirs (3 anneaux concentriques)
+// + petite ligne de départ de chaque côté. G et "." en Anton.
+// Le O est calé sur la hauteur optique du G (légère surhauteur comme un O rond).
+// Sur la page AP : "OG × AP" avec le logo Athlete Project en couleur.
+
+interface Props {
+  ap?: boolean;
+}
+
+const { ap = false } = Astro.props;
+---
+
+<a href="/" class="wordmark" aria-label="Olivier Gaillard — retour à l'accueil">
+  <svg viewBox="0 0 39.5 26" role="img" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="currentColor" transform="translate(0 -1.8)">
+      <rect x="1.2" y="3.9" width="14" height="19.2" rx="7" stroke-width="1.7" />
+      <rect x="3.1" y="5.8" width="10.2" height="15.4" rx="5.1" stroke-width="1.05" />
+      <rect x="5" y="7.7" width="6.4" height="11.6" rx="3.2" stroke-width="1.05" />
+      <path d="M 1 13.5 H 5.2 M 11.2 13.5 H 15.4" stroke-width="1.1" />
+    </g>
+    <text x="19.5" y="21.8" font-family="Anton, 'Archivo Black', sans-serif" font-size="23" letter-spacing="0.5" fill="currentColor">G</text>
+    <text x="33" y="21.8" font-family="Anton, 'Archivo Black', sans-serif" font-size="23" fill="#e87a3d">.</text>
+  </svg>
+  {ap && (
+    <>
+      <span class="wm-x" aria-hidden="true">×</span>
+      <img class="wm-ap" src="/assets/logo-ap.png" alt="Athlete Project" />
+    </>
+  )}
+</a>

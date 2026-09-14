@@ -1,0 +1,56 @@
+---
+interface Props {
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const tarifsHref = home ? "#tarifs" : "/#tarifs";
+---
+
+<footer class="site-footer">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="container footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="col-label">Olivier Gaillard</div>
+        <p>Entraîneur d'athlétisme à Lyon. Coaching à distance tous niveaux, groupe élite AP au sein de l'ACL.</p>
+      </div>
+      <div class="footer-col">
+        <div class="col-label">Navigation</div>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/coach">Le Coach</a></li>
+          <li><a href="/ap">Athlete Project</a></li>
+          <li><a href={tarifsHref}>Les formules</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="col-label">Me suivre</div>
+        <ul>
+          <li>
+            <a href="https://instagram.com/oliviergaillard.coach" target="_blank" rel="noopener">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.8" cy="6.2" r="1.1" fill="currentColor" stroke="none"/></svg>
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a href="https://nolio.io" target="_blank" rel="noopener">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-10 4 7 3-4 5 7z"/><path d="M3 21h18"/></svg>
+              Nolio
+            </a>
+          </li>
+          <li>
+            <a href="https://strava.com" target="_blank" rel="noopener">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14.5 3l6 11h-3.7l-2.3-4.2L12.2 14H8.5z"/><path d="M8.5 14l2.8 5.2L14 14"/></svg>
+              Strava
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Olivier Gaillard · Tous droits réservés</span>
+      <span>Lyon, France · oliviergaillard.fr</span>
+    </div>
+  </div>
+</footer>

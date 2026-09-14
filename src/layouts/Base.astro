@@ -1,0 +1,40 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  active: "home" | "coach" | "ap";
+  home?: boolean;
+  bodyClass?: string;
+}
+
+const { title, description, active, home = false, bodyClass } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class={bodyClass}>
+
+  <Header active={active} home={home} />
+
+  <main>
+    <slot />
+  </main>
+
+  <Footer home={home} />
+
+  <script src="/js/main.js" is:inline></script>
+</body>
+</html>

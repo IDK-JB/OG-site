@@ -1,0 +1,213 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="AP — Athlete Project | Groupe élite, ACL Lyon"
+  description="AP — Athlete Project : le groupe élite de 20 athlètes encadré par Olivier Gaillard au sein de l'ACL Lyon. Résultats, records et événements."
+  active="ap"
+  bodyClass="ap"
+>
+
+  <!-- ================= HERO PAGE ================= -->
+  <section class="page-hero page-hero--video">
+    <div class="page-hero-media" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="metadata" poster="/assets/ap-hero-poster.jpg">
+        <source src="/assets/ap-training.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="container">
+      <h1 class="hero-title">
+        <span class="line">Athlete</span>
+        <span class="line"><span class="accent">Project.</span></span>
+      </h1>
+      <p class="lead">
+        20 athlètes, un staff, un objectif : donner aux coureurs ambitieux
+        de Lyon un cadre de haut niveau, au sein de l'ACL.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= PRÉSENTATION ================= -->
+  <section class="section ap-intro">
+    <div class="container">
+      <div class="ap-intro-grid">
+        <div class="ap-intro-logo" aria-hidden="true" data-reveal="1">
+          <img src="/assets/logo-ap.png" alt="" />
+        </div>
+        <div class="text-block" data-reveal="2">
+          <p class="lead">
+            Athlete Project est né en 2022 d'un constat simple : à Lyon,
+            les athlètes qui visaient le niveau national s'entraînaient
+            chacun de leur côté. AP les rassemble.
+          </p>
+          <p class="muted" style="margin-top: 1.4em;">
+            Le groupe réunit 20 athlètes, du 800 m au marathon, encadrés
+            toute l'année au sein de l'ACL Lyon. Séances collectives,
+            planification individuelle, stages, suivi médical et
+            renforcement musculaire : tout est pensé comme un projet de
+            performance, pas comme une simple séance du mardi soir.
+          </p>
+        </div>
+      </div>
+      <div class="ap-stats" data-reveal="3">
+        <div class="ap-stat">
+          <div class="ap-stat-num">20</div>
+          <div class="ap-stat-label">Athlètes dans le groupe</div>
+        </div>
+        <div class="ap-stat">
+          <div class="ap-stat-num">6<span>+</span></div>
+          <div class="ap-stat-label">Titres régionaux</div>
+        </div>
+        <div class="ap-stat">
+          <div class="ap-stat-num">2</div>
+          <div class="ap-stat-label">Qualifiés aux France élite</div>
+        </div>
+        <div class="ap-stat">
+          <div class="ap-stat-num">3</div>
+          <div class="ap-stat-label">Stages par saison</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ÉVÉNEMENTS AP ================= -->
+  <section class="section section--seasons">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">La saison du groupe</h2>
+      </div>
+    </div>
+    <div class="seasons">
+      <article class="season season--hiver" data-reveal="1">
+        <div class="season-bg" aria-hidden="true"></div>
+        <div class="container season-inner">
+          <span class="t-year">Hiver</span>
+          <div>
+            <div class="t-title">Championnats régionaux & France de cross</div>
+            <div class="t-detail">Le groupe au complet sur les cross de l'hiver : 2 podiums régionaux en 2025.</div>
+          </div>
+        </div>
+      </article>
+      <article class="season season--printemps" data-reveal="2">
+        <div class="season-bg" aria-hidden="true"></div>
+        <div class="container season-inner">
+          <span class="t-year">Printemps</span>
+          <div>
+            <div class="t-title">Stage altitude & interclubs</div>
+            <div class="t-detail">Stage collectif à Font-Romeu, puis campagne d'interclubs N1 avec l'ACL.</div>
+          </div>
+        </div>
+      </article>
+      <article class="season season--ete" data-reveal="3">
+        <div class="season-bg" aria-hidden="true"></div>
+        <div class="container season-inner">
+          <span class="t-year">Été</span>
+          <div>
+            <div class="t-title">Meetings & championnats de France</div>
+            <div class="t-detail">Tournée des meetings pour les minima, jusqu'aux France élite : 2 qualifiés en 2024.</div>
+          </div>
+        </div>
+      </article>
+      <article class="season season--automne" data-reveal="4">
+        <div class="season-bg" aria-hidden="true"></div>
+        <div class="container season-inner">
+          <span class="t-year">Automne</span>
+          <div>
+            <div class="t-title">Run in Lyon & marathons</div>
+            <div class="t-detail">Objectif collectif sur le marathon de Lyon : record du groupe battu en 2024 (2h18'33").</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= RECORDS DES ATHLÈTES ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Quelques beaux records</h2>
+      </div>
+      <table class="record-table" data-reveal="1">
+        <thead>
+          <tr>
+            <th>Athlète</th>
+            <th>Épreuve</th>
+            <th>Chrono</th>
+            <th>Année</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M. Faure</td>
+            <td>800 m</td>
+            <td class="time">1'49"87</td>
+            <td class="year">2024</td>
+          </tr>
+          <tr>
+            <td>L. Perrin</td>
+            <td>1500 m</td>
+            <td class="time">3'44"21</td>
+            <td class="year">2024</td>
+          </tr>
+          <tr>
+            <td>S. Nguyen</td>
+            <td>3000 m steeple</td>
+            <td class="time">8'52"40</td>
+            <td class="year">2024</td>
+          </tr>
+          <tr>
+            <td>C. Roche</td>
+            <td>5000 m</td>
+            <td class="time">14'05"18</td>
+            <td class="year">2023</td>
+          </tr>
+          <tr>
+            <td>A. Benali</td>
+            <td>Marathon</td>
+            <td class="time">2h18'33"</td>
+            <td class="year">2024</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="steps-note" data-reveal="2" style="margin-top: 26px;">
+        <strong>Et derrière les chronos</strong> : des dizaines de records personnels chaque saison, à tous les niveaux du groupe.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= REJOINDRE ================= -->
+  <section class="section section--photo">
+    <div class="section-bg" aria-hidden="true"><img src="/assets/ap-groupe.jpg" alt="" /></div>
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Rejoindre AP</h2>
+      </div>
+      <div>
+        <div class="text-block" data-reveal="1">
+          <p class="lead">
+            Le groupe recrute chaque année à la rentrée. Pas de minima à
+            l'entrée : ce qui compte, c'est l'envie de s'entraîner sérieusement
+            dans un cadre collectif.
+          </p>
+          <p class="muted" style="margin-top: 1.4em;">
+            La première étape, c'est d'en parler. Écrivez-moi via le
+            formulaire de contact en précisant votre niveau et vos
+            objectifs, et je vous proposerai de venir tester une séance avec
+            le groupe.
+          </p>
+          <a href="/#contact" class="more-link">Me contacter <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LIEN SUIVANT ================= -->
+  <a href="/#contact" class="next-link">
+    <div class="container">
+      <div class="nl-label">Envie de courir avec nous ?</div>
+      <span class="nl-title">Me contacter →</span>
+    </div>
+  </a>
+
+</Base>

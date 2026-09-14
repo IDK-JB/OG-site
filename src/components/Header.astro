@@ -1,0 +1,34 @@
+---
+import Wordmark from "./Wordmark.astro";
+
+interface Props {
+  active: "home" | "coach" | "ap";
+  home?: boolean;
+}
+
+const { active, home = false } = Astro.props;
+const contactHref = home ? "#contact" : "/#contact";
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <Wordmark ap={active === "ap"} />
+    <nav class="main-nav">
+      <a href="/" class={active === "home" ? "nav-link active" : "nav-link"}>Accueil</a>
+      <a href="/coach" class={active === "coach" ? "nav-link active" : "nav-link"}>Le Coach</a>
+      <a href="/ap" class={active === "ap" ? "nav-link active" : "nav-link"}>Athlete Project</a>
+    </nav>
+    <a href={contactHref} class="header-cta">Me contacter</a>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <a href="/">Accueil</a>
+  <a href="/coach">Le Coach</a>
+  <a href="/ap">Athlete Project</a>
+  <a href={contactHref}>Me contacter</a>
+  <div class="menu-meta">Entraîneur FFA à Lyon</div>
+</div>
