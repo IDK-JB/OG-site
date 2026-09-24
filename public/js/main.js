@@ -1,4 +1,4 @@
-/* Olivier Gaillard — interactions */
+/* Olivier Gaillard · interactions */
 
 (function () {
   "use strict";
@@ -97,7 +97,7 @@
       var objectif = form.objectif.value;
       var message = form.message.value.trim();
 
-      var sujet = "Contact site — " + nom + " (" + objectif + ")";
+      var sujet = "Contact site · " + nom + " (" + objectif + ")";
       var corps =
         "Nom : " + nom + "\n" +
         "Email : " + email + "\n" +

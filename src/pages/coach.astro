@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base
-  title="Le Coach — Olivier Gaillard, entraîneur FFA à Lyon"
+  title="Le Coach · Olivier Gaillard, entraîneur FFA à Lyon"
   description="Le parcours d'Olivier Gaillard : 30 ans de course à pied, entraîneur FFA depuis 2009, diplômes et événements marquants."
   active="coach"
 >
@@ -21,8 +21,8 @@ import Base from "../layouts/Base.astro";
       </h1>
       <p class="lead">
         Plus de 30 ans de course à pied sur tous les terrains, d'abord
-        avec des pointes aux pieds, puis — depuis 2009 — un chronomètre
-        à la main. Voilà comment j'en suis arrivé à faire courir les autres.
+        avec des pointes aux pieds, puis un chronomètre à la main depuis
+        2009. Voilà comment j'en suis arrivé à faire courir les autres.
       </p>
     </div>
   </section>
@@ -30,14 +30,21 @@ import Base from "../layouts/Base.astro";
   <!-- ================= PARCOURS ================= -->
   <section class="section">
     <div class="container">
-      <div class="section-head" data-reveal>
-        <h2 class="section-title">Le parcours</h2>
-      </div>
-      <div class="split">
+      <div class="coach-parcours">
+        <figure class="portrait coach-parcours-photo" data-reveal="2">
+          <img
+            src="/assets/coach-parcours.jpg"
+            alt="Olivier Gaillard lors d'un événement de course à pied"
+            width="1050"
+            height="1400"
+            loading="lazy"
+          />
+        </figure>
         <div class="text-block" data-reveal="1">
+          <h2 class="section-title">Le parcours</h2>
           <p class="lead">
             Pratiquant de course à pied depuis plus de 30 ans sur tous les
-            terrains — piste, route, cross — je suis depuis toujours
+            terrains, piste, route, cross, je suis depuis toujours
             passionné par les stratégies d'entraînement et la physiologie.
           </p>
           <p class="muted" style="margin-top: 1.4em;">
@@ -48,8 +55,8 @@ import Base from "../layouts/Base.astro";
             niveau inter-régional.
           </p>
           <p class="muted" style="margin-top: 1.4em;">
-            Cette expérience XXL — combinée à 18 années dans le milieu du
-            coaching — m'a forgé de solides connaissances, et une
+            Cette expérience XXL, combinée à 18 années dans le milieu du
+            coaching, m'a forgé de solides connaissances, et une
             méthodologie qui a sans cesse évolué au fil des connaissances
             et des méthodes d'entraînement.
           </p>
@@ -64,24 +71,24 @@ import Base from "../layouts/Base.astro";
       <div class="section-head" data-reveal>
         <h2 class="section-title">Ma vision</h2>
       </div>
-      <div class="split">
-        <div class="text-block" data-reveal="1">
-          <p class="lead">
-            Aujourd'hui, bien au-delà des compétences techniques, je mets
-            l'humain au cœur du projet.
-          </p>
-          <p class="muted" style="margin-top: 1.4em;">
-            Un athlète n'est pas qu'une équation physiologique à résoudre.
-            Il est avant tout un être humain singulier, avec ses
-            spécificités émotionnelles et psychologiques. Je suis intimement
-            convaincu qu'il faut comprendre l'individu, trouver les clés et
-            les leviers motivationnels à activer, pour en tirer toute la
-            quintessence. C'est là que la vraie relation de confiance se
-            crée, et que le processus de performance se met en place.
-          </p>
-          <p class="muted" style="margin-top: 1.4em;">
-            C'est guidé par ces convictions que le groupe
-            <strong>AP (Athlete Project)</strong> est créé à Lyon, au sein de
+      <p class="coach-vision-quote" data-reveal="1">
+        Aujourd'hui, bien au-delà des compétences techniques, je mets
+        <em>l'humain au cœur du projet.</em>
+      </p>
+      <div class="coach-vision-cols text-block" data-reveal="2">
+        <p class="muted">
+          Un athlète n'est pas qu'une équation physiologique à résoudre.
+          Il est avant tout un être humain singulier, avec ses
+          spécificités émotionnelles et psychologiques. Je suis intimement
+          convaincu qu'il faut comprendre l'individu, trouver les clés et
+          les leviers motivationnels à activer, pour en tirer toute la
+          quintessence. C'est là que la vraie relation de confiance se
+          crée, et que le processus de performance se met en place.
+        </p>
+        <div>
+          <p class="muted">
+            C'est guidé par ces convictions que le
+            groupe&nbsp;<strong>AP (Athlete Project)</strong> est créé à Lyon, au sein de
             l'ACL (Athletic Club du Lyonnais), en septembre 2024 : 20
             athlètes triés sur le volet (10 hommes, 10 femmes), aux profils
             demi-fondeurs, qui souhaitent s'investir pleinement pour
@@ -119,7 +126,7 @@ import Base from "../layouts/Base.astro";
         <li data-reveal="3">
           <span class="t-year">2019</span>
           <div>
-            <div class="t-title">DU de préparation physique — G. Cometti (Dijon)</div>
+            <div class="t-title">DU de préparation physique (G. Cometti, Dijon)</div>
             <div class="t-detail">Diplôme universitaire de préparation physique.</div>
           </div>
         </li>
@@ -135,45 +142,6 @@ import Base from "../layouts/Base.astro";
           <div>
             <div class="t-title">Formation continue</div>
             <div class="t-detail">Conférences : l'athlétisme au féminin, l'entraînement en altitude, l'entraînement du crossman, l'entraînement du marathonien.</div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ================= ÉVÉNEMENTS ================= -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <h2 class="section-title">Événements marquants</h2>
-      </div>
-      <ul class="event-list">
-        <li data-reveal="1">
-          <span class="t-year">2009</span>
-          <div>
-            <div class="t-title">Début de l'aventure coaching</div>
-            <div class="t-detail">Diplômes d'entraîneur fédéral en poche, je commence à entraîner en club — et n'ai plus jamais arrêté.</div>
-          </div>
-        </li>
-        <li data-reveal="2">
-          <span class="t-year">2018</span>
-          <div>
-            <div class="t-title">Champion de France &amp; sélection internationale</div>
-            <div class="t-detail">Un athlète que j'entraîne est sacré champion de France et obtient une sélection aux championnats du monde de semi-marathon.</div>
-          </div>
-        </li>
-        <li data-reveal="3">
-          <span class="t-year">2024</span>
-          <div>
-            <div class="t-title">Création d'AP (Athlete Project)</div>
-            <div class="t-detail">Lancement du groupe à Lyon, au sein de l'ACL : 20 athlètes, un staff, un objectif.</div>
-          </div>
-        </li>
-        <li data-reveal="4">
-          <span class="t-year">2025</span>
-          <div>
-            <div class="t-title">10 qualifiés aux championnats de France piste</div>
-            <div class="t-detail">Des opens de France aux France élite, le groupe AP franchit un cap en deux saisons.</div>
           </div>
         </li>
       </ul>

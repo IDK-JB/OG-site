@@ -8,6 +8,7 @@ interface Props {
 
 const { active, home = false } = Astro.props;
 const contactHref = home ? "#contact" : "/#contact";
+const coachingHref = home ? "#coaching" : "/#coaching";
 ---
 
 <header class="site-header">
@@ -17,6 +18,7 @@ const contactHref = home ? "#contact" : "/#contact";
       <a href="/" class={active === "home" ? "nav-link active" : "nav-link"}>Accueil</a>
       <a href="/coach" class={active === "coach" ? "nav-link active" : "nav-link"}>Le Coach</a>
       <a href="/ap" class={active === "ap" ? "nav-link active" : "nav-link"}>Athlete Project</a>
+      <a href={coachingHref} class="nav-link">Votre accompagnement</a>
     </nav>
     <a href={contactHref} class="header-cta">Me contacter</a>
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -29,6 +31,7 @@ const contactHref = home ? "#contact" : "/#contact";
   <a href="/">Accueil</a>
   <a href="/coach">Le Coach</a>
   <a href="/ap">Athlete Project</a>
+  <a href={coachingHref}>Votre accompagnement</a>
   <a href={contactHref}>Me contacter</a>
   <div class="menu-meta">Entraîneur FFA à Lyon</div>
 </div>

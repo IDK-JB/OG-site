@@ -1,5 +1,5 @@
 /* ============================================================
-   Olivier Gaillard — Entraîneur athlétisme, Lyon
+   Olivier Gaillard · Entraîneur athlétisme, Lyon
    Base sombre chaude / accent ambré piste
    ============================================================ */
 
@@ -231,6 +231,7 @@ a { color: inherit; text-decoration: none; }
 .mobile-menu.open a:nth-child(2) { transition-delay: 0.16s; }
 .mobile-menu.open a:nth-child(3) { transition-delay: 0.24s; }
 .mobile-menu.open a:nth-child(4) { transition-delay: 0.32s; }
+.mobile-menu.open a:nth-child(5) { transition-delay: 0.4s; }
 
 .mobile-menu a:hover { color: var(--accent); }
 
@@ -920,7 +921,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
-/* Accueil — Qui je suis : titre standard, colonne texte abaissée face à l'image */
+/* Accueil · Qui je suis : titre standard, colonne texte abaissée face à l'image */
 
 #apropos .split { align-items: start; }
 
@@ -928,7 +929,7 @@ a { color: inherit; text-decoration: none; }
 
 #apropos .section-title { margin-bottom: clamp(22px, 3vw, 34px); }
 
-/* Coach — records en cartes (au lieu du tableau) */
+/* Coach · records en cartes (au lieu du tableau) */
 
 .record-grid {
   display: grid;
@@ -973,7 +974,7 @@ a { color: inherit; text-decoration: none; }
 
 .rc-meta strong { color: var(--text); font-weight: 500; }
 
-/* Coach — événements en grille 2 colonnes (année en display) */
+/* Coach · événements en grille 2 colonnes (année en display) */
 
 .event-list {
   list-style: none;
@@ -1007,7 +1008,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
-/* AP : saison en bandeaux panoramiques — image NB, couleur au survol */
+/* AP : saison en bandeaux panoramiques · image NB, couleur au survol */
 
 .section--seasons .seasons { margin-top: clamp(8px, 2vw, 20px); }
 
@@ -1078,7 +1079,21 @@ a { color: inherit; text-decoration: none; }
 .season--ete .season-bg { background-image: url("/assets/season-ete.jpg"); }
 .season--automne .season-bg { background-image: url("/assets/season-automne.jpg"); }
 
-/* AP : intro sous le hero — grand logo à gauche, texte à droite */
+/* Logo AP dans le hero de la page AP */
+
+.hero-ap-logo {
+  position: absolute;
+  right: clamp(20px, 4vw, 48px);
+  bottom: clamp(28px, 6vh, 56px);
+  z-index: 2;
+  display: block;
+  width: clamp(88px, 10vw, 130px);
+  height: auto;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.35s forwards;
+}
+
+/* AP : intro sous le hero · grand logo à gauche, texte à droite */
 
 body.ap { --ap: #B31525; --ap-deep: #6B1516; }
 
@@ -1086,12 +1101,86 @@ body.ap { --ap: #B31525; --ap-deep: #6B1516; }
   display: grid;
   grid-template-columns: minmax(340px, 52%) 1fr;
   gap: clamp(40px, 6vw, 90px);
-  align-items: center;
+  align-items: stretch;
 }
 
-.ap-intro-logo img {
+.ap-intro-photo {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 340px;
+}
+
+.ap-intro-photo img {
+  display: block;
   width: 100%;
-  max-width: 340px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.ap-intro-photo img.base {
+  filter: grayscale(1) brightness(0.85);
+}
+
+.ap-intro-photo img.subject {
+  position: absolute;
+  inset: 0;
+}
+
+/* Survol : assombrissement en bas pour le texte (pas de flou) */
+
+.ap-intro-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(15, 15, 15, 0.85) 0%, rgba(15, 15, 15, 0.45) 45%, transparent 75%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.ap-intro-photo .photo-cover {
+  position: absolute;
+  bottom: clamp(18px, 3vw, 30px);
+  left: clamp(18px, 3vw, 30px);
+  right: clamp(18px, 3vw, 30px);
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease 0.08s, transform 0.6s var(--ease) 0.08s;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(15, 15, 15, 0.9), 0 4px 24px rgba(15, 15, 15, 0.55);
+}
+
+.cover-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+  line-height: 0.95;
+}
+
+.cover-name span { color: var(--ap); }
+
+.cover-sub {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.8;
+  color: rgba(255, 253, 250, 0.85);
+}
+
+.ap-intro-photo:hover::after { opacity: 1; }
+
+.ap-intro-photo:hover .photo-cover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (hover: none) {
+  .ap-intro-photo::after { opacity: 1; }
+  .ap-intro-photo .photo-cover { opacity: 1; transform: none; }
 }
 
 .ap-stats {
@@ -1137,6 +1226,57 @@ body.ap { --ap: #B31525; --ap-deep: #6B1516; }
 }
 
 .portrait:hover img { transform: scale(1.03); }
+
+/* Coach · Le parcours : texte à gauche, photo à droite calée sur la hauteur du texte */
+.coach-parcours {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(40px, 6vw, 90px);
+  align-items: stretch;
+}
+.coach-parcours .text-block {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+}
+.coach-parcours-photo {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: stretch;
+  border-radius: 16px;
+}
+.coach-parcours-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: center 20%;
+}
+.coach-parcours .section-title { margin-bottom: clamp(22px, 3vw, 34px); }
+.coach-parcours .text-block { max-width: 580px; }
+
+/* Coach · Ma vision : phrase manifeste en grand, texte en deux colonnes */
+.coach-vision-quote {
+  max-width: 900px;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding-left: clamp(18px, 2.5vw, 30px);
+  border-left: 2px solid var(--accent);
+}
+.coach-vision-quote em { font-style: normal; color: var(--accent); }
+.coach-vision-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: clamp(28px, 3.5vw, 40px);
+}
+.coach-vision-cols p { line-height: 1.75; }
+.coach-vision-cols p + p { margin-top: 0; }
 
 .portrait figcaption {
   position: absolute;
@@ -1207,6 +1347,30 @@ body.ap .header-cta:hover {
   border-color: var(--ap);
 }
 
+/* Records AP : logo Athlete Project en filigrane a droite */
+
+.section--records {
+  position: relative;
+  overflow: hidden;
+}
+
+.records-bg {
+  position: absolute;
+  top: 50%;
+  right: clamp(8px, 3vw, 36px);
+  width: clamp(280px, 32vw, 500px);
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
+  background-image: url("/assets/logo-ap.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
+.section--records .container { position: relative; z-index: 1; }
+
 /* CTA final page intérieure */
 
 .next-link {
@@ -1269,7 +1433,12 @@ html.js [data-reveal="4"].in { transition-delay: 0.32s; }
   .split, .contact-grid, .pricing { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .ap-intro-grid { grid-template-columns: 1fr; }
-  .ap-intro-logo img { max-width: 320px; }
+  .coach-parcours, .coach-vision-cols { grid-template-columns: 1fr; }
+  .coach-parcours .text-block, .coach-parcours-photo { grid-column: auto; grid-row: auto; }
+  .coach-parcours-photo { aspect-ratio: 4 / 3; }
+  .coach-parcours-photo img { object-position: center 35%; }
+  .ap-intro-photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .ap-intro-photo img { height: 100%; }
   .ap-stats { grid-template-columns: 1fr 1fr; }
   .event-list { grid-template-columns: 1fr; }
 }

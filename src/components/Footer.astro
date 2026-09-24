@@ -5,6 +5,7 @@ interface Props {
 
 const { home = false } = Astro.props;
 const tarifsHref = home ? "#tarifs" : "/#tarifs";
+const coachingHref = home ? "#coaching" : "/#coaching";
 ---
 
 <footer class="site-footer">
@@ -21,6 +22,7 @@ const tarifsHref = home ? "#tarifs" : "/#tarifs";
           <li><a href="/">Accueil</a></li>
           <li><a href="/coach">Le Coach</a></li>
           <li><a href="/ap">Athlete Project</a></li>
+          <li><a href={coachingHref}>Votre accompagnement</a></li>
           <li><a href={tarifsHref}>Les formules</a></li>
         </ul>
       </div>

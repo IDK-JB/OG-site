@@ -3,8 +3,8 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base
-  title="AP — Athlete Project | Le groupe fondé par Olivier Gaillard, ACL Lyon"
-  description="AP — Athlete Project : le groupe de 20 athlètes fondé par Olivier Gaillard au sein de l'ACL Lyon. Résultats, records et événements."
+  title="AP (Athlete Project) | Le groupe fondé par Olivier Gaillard, ACL Lyon"
+  description="AP (Athlete Project) : le groupe de 20 athlètes fondé par Olivier Gaillard au sein de l'ACL Lyon. Résultats, records et événements."
   active="ap"
   bodyClass="ap"
 >
@@ -27,14 +27,20 @@ import Base from "../layouts/Base.astro";
         niveau.
       </p>
     </div>
+    <img class="hero-ap-logo" src="/assets/logo-ap.png" alt="Logo Athlete Project" />
   </section>
 
   <!-- ================= PRÉSENTATION ================= -->
   <section class="section ap-intro">
     <div class="container">
       <div class="ap-intro-grid">
-        <div class="ap-intro-logo" aria-hidden="true" data-reveal="1">
-          <img src="/assets/logo-ap.png" alt="" />
+        <div class="ap-intro-photo" data-reveal="1">
+          <img class="base" src="/assets/matis-run.jpg" alt="Matis Boucard, maillot Athlete Project, vainqueur des 10 km de Run in Lyon 2025" />
+          <img class="subject" src="/assets/matis-subject.png" alt="" aria-hidden="true" />
+          <div class="photo-cover" aria-hidden="true">
+            <div class="cover-name">Matis <span>Boucard</span></div>
+            <div class="cover-sub">Vainqueur des 10 km de Run in Lyon 2025<br />13'56 sur 5000 m · 3'46 sur 1500 m · 29'21 sur 10 km</div>
+          </div>
         </div>
         <div class="text-block" data-reveal="2">
           <p class="lead">
@@ -83,7 +89,7 @@ import Base from "../layouts/Base.astro";
   <section class="section section--seasons">
     <div class="container">
       <div class="section-head" data-reveal>
-        <h2 class="section-title">La saison du groupe</h2>
+        <h2 class="section-title">La saison 2025-2026 du groupe</h2>
       </div>
     </div>
     <div class="seasons">
@@ -137,7 +143,8 @@ import Base from "../layouts/Base.astro";
   </section>
 
   <!-- ================= RECORDS DES ATHLÈTES ================= -->
-  <section class="section">
+  <section class="section section--records">
+    <div class="records-bg" aria-hidden="true"></div>
     <div class="container">
       <div class="section-head" data-reveal>
         <h2 class="section-title">Quelques beaux records</h2>
@@ -215,7 +222,7 @@ import Base from "../layouts/Base.astro";
         <div class="text-block" data-reveal="1">
           <p class="lead">
             Le groupe recrute chaque année à la rentrée. Il s'adresse aux
-            coureurs et coureuses de demi-fond — du 800 m au semi-marathon —
+            coureurs et coureuses de demi-fond, du 800 m au semi-marathon,
             qui veulent s'investir pleinement pour viser le niveau national.
           </p>
           <p class="muted" style="margin-top: 1.4em;">
