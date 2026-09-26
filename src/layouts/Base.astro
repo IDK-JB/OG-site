@@ -1,6 +1,13 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { INDEXABLE } from "../seo";
+
+interface Preload {
+  href: string;
+  srcset?: string;
+  sizes?: string;
+}
 
 interface Props {
   title: string;
@@ -8,9 +15,132 @@ interface Props {
   active: "home" | "coach" | "ap";
   home?: boolean;
   bodyClass?: string;
+  /** Image de partage (Open Graph), chemin depuis /public */
+  image?: string;
+  imageAlt?: string;
+  /** Image principale (LCP) à précharger */
+  preload?: Preload;
+  /** Données structurées propres à la page */
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { title, description, active, home = false, bodyClass } = Astro.props;
+const {
+  title,
+  description,
+  active,
+  home = false,
+  bodyClass,
+  image = "/assets/hero-runner.webp",
+  imageAlt = "Olivier Gaillard, coach running à Lyon",
+  preload,
+  jsonLd = [],
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://oliviergaillard.fr");
+const path =
+  Astro.url.pathname.replace(/(index)?\.html$/, "").replace(/\/$/, "") || "/";
+const canonical = new URL(path, site).href;
+const ogImage = new URL(image, site).href;
+
+// Entité commune à toutes les pages : identifie CET Olivier Gaillard
+// (coach running à Lyon) et le distingue de ses homonymes.
+const personId = new URL("/#olivier-gaillard", site).href;
+const businessId = new URL("/#coaching", site).href;
+const websiteId = new URL("/#site", site).href;
+
+const graph = [
+  {
+    "@type": "WebSite",
+    "@id": websiteId,
+    url: new URL("/", site).href,
+    name: "Olivier Gaillard, coach running à Lyon",
+    inLanguage: "fr-FR",
+    publisher: { "@id": personId },
+  },
+  {
+    "@type": "Person",
+    "@id": personId,
+    name: "Olivier Gaillard",
+    jobTitle: "Entraîneur d'athlétisme et coach running",
+    description:
+      "Entraîneur diplômé de la Fédération Française d'Athlétisme, spécialiste demi-fond et running, basé à Lyon. Fondateur du groupe Athlete Project à l'Athletic Club du Lyonnais.",
+    url: new URL("/coach", site).href,
+    image: new URL("/assets/olivier-qui-suis-je.webp", site).href,
+    email: "mailto:contact@oliviergaillard.fr",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Lyon",
+      addressRegion: "Auvergne-Rhône-Alpes",
+      addressCountry: "FR",
+    },
+    worksFor: { "@id": businessId },
+    affiliation: {
+      "@type": "SportsClub",
+      name: "Athletic Club du Lyonnais (ACL)",
+      address: { "@type": "PostalAddress", addressLocality: "Lyon", addressCountry: "FR" },
+    },
+    hasCredential: [
+      { "@type": "EducationalOccupationalCredential", name: "Entraîneur fédéral demi-fond et running (FFA)" },
+      { "@type": "EducationalOccupationalCredential", name: "Licence STAPS" },
+      { "@type": "EducationalOccupationalCredential", name: "DU de préparation physique" },
+      { "@type": "EducationalOccupationalCredential", name: "Certification entraînement de haut niveau et prophylaxie (INSEP)" },
+    ],
+    knowsAbout: [
+      "Course à pied",
+      "Running",
+      "Athlétisme",
+      "Demi-fond",
+      "Préparation marathon",
+      "Préparation semi-marathon",
+      "Préparation 10 km",
+      "Cross-country",
+      "Préparation physique",
+    ],
+    sameAs: ["https://instagram.com/oliviergaillard.coach"],
+  },
+  {
+    "@type": ["ProfessionalService", "SportsActivityLocation"],
+    "@id": businessId,
+    name: "Olivier Gaillard, coach running et athlétisme",
+    description:
+      "Coaching running et athlétisme à Lyon et à distance : plans d'entraînement personnalisés sur Nolio, du premier 10 km au marathon.",
+    url: new URL("/", site).href,
+    image: ogImage,
+    email: "contact@oliviergaillard.fr",
+    founder: { "@id": personId },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Lyon",
+      addressRegion: "Auvergne-Rhône-Alpes",
+      addressCountry: "FR",
+    },
+    areaServed: [
+      { "@type": "City", name: "Lyon" },
+      { "@type": "AdministrativeArea", name: "Métropole de Lyon" },
+      { "@type": "Country", name: "France" },
+    ],
+    priceRange: "80 € à 130 € par mois",
+    makesOffer: [
+      {
+        "@type": "Offer",
+        name: "Suivi performance",
+        price: "80",
+        priceCurrency: "EUR",
+        description: "Plan d'entraînement running personnalisé sur Nolio, ajusté chaque semaine.",
+      },
+      {
+        "@type": "Offer",
+        name: "Suivi premium",
+        price: "130",
+        priceCurrency: "EUR",
+        description: "Suivi running personnalisé avec accompagnement nutritionnel et disponibilité prioritaire.",
+      },
+    ],
+  },
+  ...jsonLd,
+];
+
+const structuredData = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
 ---
 
 <!DOCTYPE html>
@@ -20,16 +150,47 @@ const { title, description, active, home = false, bodyClass } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content={INDEXABLE ? "index, follow, max-image-preview:large" : "noindex, nofollow"} />
+  <meta name="author" content="Olivier Gaillard" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Partage réseaux sociaux -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="Olivier Gaillard, coach running à Lyon" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content={imageAlt} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Performance : image principale d'abord, polices ensuite -->
+  {preload && (
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href={preload.href}
+      imagesrcset={preload.srcset}
+      imagesizes={preload.sizes}
+      fetchpriority="high"
+    />
+  )}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
+
+  <script type="application/ld+json" set:html={structuredData} />
 </head>
 <body class={bodyClass}>
 
   <Header active={active} home={home} />
 
-  <main>
+  <main id="contenu" tabindex="-1">
     <slot />
   </main>
 

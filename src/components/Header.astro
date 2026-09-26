@@ -9,29 +9,40 @@ interface Props {
 const { active, home = false } = Astro.props;
 const contactHref = home ? "#contact" : "/#contact";
 const coachingHref = home ? "#coaching" : "/#coaching";
+const current = (key: Props["active"]) => (active === key ? "page" : undefined);
 ---
+
+<a href="#contenu" class="skip-link">Aller au contenu</a>
 
 <header class="site-header">
   <div class="container header-inner">
     <Wordmark ap={active === "ap"} />
-    <nav class="main-nav">
-      <a href="/" class={active === "home" ? "nav-link active" : "nav-link"}>Accueil</a>
-      <a href="/coach" class={active === "coach" ? "nav-link active" : "nav-link"}>Le Coach</a>
-      <a href="/ap" class={active === "ap" ? "nav-link active" : "nav-link"}>Athlete Project</a>
+    <nav class="main-nav" aria-label="Navigation principale">
+      <a href="/" class={active === "home" ? "nav-link active" : "nav-link"} aria-current={current("home")}>Accueil</a>
+      <a href="/coach" class={active === "coach" ? "nav-link active" : "nav-link"} aria-current={current("coach")}>Le Coach</a>
       <a href={coachingHref} class="nav-link">Votre accompagnement</a>
+      <a href="/ap" class={active === "ap" ? "nav-link active" : "nav-link"} aria-current={current("ap")}>Athlete Project</a>
     </nav>
     <a href={contactHref} class="header-cta">Me contacter</a>
-    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false">
-      <span></span><span></span><span></span>
+    <button
+      type="button"
+      class="burger"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+    >
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </button>
   </div>
 </header>
 
-<div class="mobile-menu">
-  <a href="/">Accueil</a>
-  <a href="/coach">Le Coach</a>
-  <a href="/ap">Athlete Project</a>
+<!-- Hors du header : le backdrop-filter du header casserait le position: fixed.
+     Fermé, le menu est inert (ni focusable au clavier, ni lu par les lecteurs d'écran). -->
+<nav class="mobile-menu" id="menu-mobile" aria-label="Menu mobile" inert>
+  <a href="/" aria-current={current("home")}>Accueil</a>
+  <a href="/coach" aria-current={current("coach")}>Le Coach</a>
   <a href={coachingHref}>Votre accompagnement</a>
+  <a href="/ap" aria-current={current("ap")}>Athlete Project</a>
   <a href={contactHref}>Me contacter</a>
-  <div class="menu-meta">Entraîneur FFA à Lyon</div>
-</div>
+  <p class="menu-meta">Entraîneur FFA à Lyon</p>
+</nav>

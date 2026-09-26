@@ -3,22 +3,38 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base
-  title="Olivier Gaillard · Entraîneur d'athlétisme à Lyon"
-  description="Olivier Gaillard, entraîneur FFA à Lyon. Coaching à distance tous niveaux, et fondateur du groupe AP au sein de l'ACL. Plans d'entraînement sur mesure via Nolio."
+  title="Coach sportif running à Lyon et à distance · Olivier Gaillard"
+  description="Coach running et entraîneur d'athlétisme FFA à Lyon. Plans d'entraînement sur mesure, à Lyon ou à distance : 10 km, semi, marathon, demi-fond. Premier échange gratuit."
   active="home"
   home={true}
+  imageAlt="Coureuse à l'entraînement de nuit, coaching running à Lyon"
+  preload={{
+    href: "/assets/hero-runner.webp",
+    srcset: "/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w",
+    sizes: "100vw",
+  }}
 >
 
   <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="hero-media">
-      <img src="/assets/hero-runner.jpg" alt="Coureuse à l'entraînement de nuit" />
+      <img
+        src="/assets/hero-runner.webp"
+        srcset="/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w"
+        sizes="100vw"
+        width="1920"
+        height="1436"
+        fetchpriority="high"
+        decoding="async"
+        alt="Coureuse à l'entraînement de nuit, coaching running à Lyon"
+      />
     </div>
     <div class="container hero-content">
       <h1 class="hero-title">
         <span class="line">Olivier</span>
         <span class="line">Gaillard</span>
         <span class="line"><span class="accent">Coach.</span></span>
+        <span class="sr-only">Coach running et entraîneur d'athlétisme à Lyon et à distance</span>
       </h1>
       <p class="hero-sub">
         Entraîneur demi-fond et running depuis 2009. Du premier 10 km au
@@ -27,7 +43,7 @@ import Base from "../layouts/Base.astro";
         projet devient le nôtre.
       </p>
       <div class="hero-actions">
-        <a href="#contact" class="btn btn-solid">Me contacter <span class="arrow">→</span></a>
+        <a href="#contact" class="btn btn-solid">Me contacter <span class="arrow" aria-hidden="true">→</span></a>
         <a href="#coaching" class="btn btn-ghost">Le coaching</a>
       </div>
     </div>
@@ -75,10 +91,17 @@ import Base from "../layouts/Base.astro";
             collectif&nbsp;<strong>AP (Athlete Project)</strong> : émulation, cohésion de
             groupe, et les outils pour viser la haute performance.
           </p>
-          <a href="/coach" class="more-link">Mon parcours complet <span>→</span></a>
+          <a href="/coach" class="more-link">Mon parcours complet <span aria-hidden="true">→</span></a>
         </div>
         <figure class="portrait" data-reveal="2">
-          <img src="/assets/olivier-gaillard.jpg" alt="Olivier Gaillard, entraîneur FFA à Lyon" />
+          <img
+            src="/assets/olivier-qui-suis-je.webp"
+            width="1050"
+            height="1400"
+            loading="lazy"
+            decoding="async"
+            alt="Olivier Gaillard, coach running et entraîneur FFA à Lyon, au bord de la piste"
+          />
         </figure>
       </div>
     </div>
@@ -142,7 +165,7 @@ import Base from "../layouts/Base.astro";
             <li>Analyse de vos séances</li>
             <li>Échanges par messages Nolio, réponse sous 24 à 48 h</li>
           </ul>
-          <a href="#contact" class="btn btn-ghost">Commencer <span class="arrow">→</span></a>
+          <a href="#contact" class="btn btn-ghost">Commencer <span class="arrow" aria-hidden="true">→</span></a>
         </article>
         <article class="plan plan-featured" data-reveal="2">
           <h3 class="plan-name">Suivi premium</h3>
@@ -156,7 +179,7 @@ import Base from "../layouts/Base.astro";
             <li>Accompagnement nutritionnel spécialisé pour les sportifs en relation avec les objectifs et le plan d'entraînement</li>
             <li>Disponibilité prioritaire, 7 j/7 par message WhatsApp</li>
           </ul>
-          <a href="#contact" class="btn btn-solid">Commencer <span class="arrow">→</span></a>
+          <a href="#contact" class="btn btn-solid">Commencer <span class="arrow" aria-hidden="true">→</span></a>
         </article>
       </div>
       <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider.</p>
@@ -166,51 +189,111 @@ import Base from "../layouts/Base.astro";
   <!-- ================= CONTACT ================= -->
   <section class="section" id="contact">
     <div class="container">
-      <div class="section-head" data-reveal>
-        <h2 class="section-title">Me contacter</h2>
-      </div>
       <div class="contact-grid">
-        <div class="contact-info" data-reveal="1">
-          <p class="lead" style="margin-bottom: 34px;">
+        <div class="contact-intro" data-reveal="1">
+          <h2 class="section-title">Me contacter</h2>
+          <p class="lead">
             Un objectif, une question, un doute sur votre plan actuel ?
             Écrivez-moi, je réponds à tout le monde.
           </p>
-          <div class="info-line">
-            <div class="info-label">Email</div>
-            <div class="info-value"><a href="mailto:contact@oliviergaillard.fr">contact@oliviergaillard.fr</a></div>
-          </div>
+          <p class="contact-direct">
+            <a href="mailto:contact@oliviergaillard.fr">contact@oliviergaillard.fr</a>
+          </p>
         </div>
-        <form class="contact-form" id="contactForm" data-reveal="2">
+
+        <form class="contact-form" id="contactForm" novalidate aria-describedby="form-note" data-reveal="2">
+          <p class="form-note full" id="form-note">Tous les champs sont obligatoires.</p>
           <div class="field">
-            <label for="nom">Votre nom</label>
-            <input type="text" id="nom" name="nom" required autocomplete="name" />
+            <label for="nom">Nom et prénom</label>
+            <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" placeholder="Martin Julie" aria-describedby="nom-error" />
+            <p class="field-error" id="nom-error"></p>
           </div>
           <div class="field">
-            <label for="email">Votre email</label>
-            <input type="email" id="email" name="email" required autocomplete="email" />
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required aria-required="true" placeholder="julie.martin@gmail.com" aria-describedby="email-error" />
+            <p class="field-error" id="email-error"></p>
           </div>
           <div class="field full">
-            <label for="objectif">Votre objectif</label>
-            <select id="objectif" name="objectif">
-              <option value="Découverte / remise en forme">Découverte / remise en forme</option>
-              <option value="Premier 10 km">Premier 10 km</option>
-              <option value="Semi-marathon">Semi-marathon</option>
-              <option value="Marathon">Marathon</option>
-              <option value="Performance / compétition">Performance / compétition</option>
-              <option value="Autre">Autre</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label for="message">Votre message</label>
-            <textarea id="message" name="message" required placeholder="Parlez-moi de vous, de votre pratique, de ce que vous cherchez…"></textarea>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Votre objectif, votre niveau, vos questions…" aria-describedby="message-error"></textarea>
+            <p class="field-error" id="message-error"></p>
           </div>
           <div class="form-foot">
-            <button type="submit" class="btn btn-solid">Envoyer le message <span class="arrow">→</span></button>
-            <span class="hint">Votre messagerie s'ouvre avec le message prêt à partir.</span>
+            <button type="submit" class="btn btn-solid">Envoyer <span class="arrow" aria-hidden="true">→</span></button>
+            <p class="form-status" id="form-status" role="status"></p>
           </div>
         </form>
       </div>
     </div>
   </section>
+
+  <script>
+    import { z } from "zod/mini";
+
+    const NOM = "Indiquez votre nom et votre prénom.";
+
+    const schema = z.object({
+      nom: z.string().check(
+        z.trim(),
+        z.minLength(1, { error: NOM }),
+        z.refine((v) => v.split(/\s+/).length >= 2, { error: NOM }),
+      ),
+      email: z.pipe(
+        z.string().check(z.trim()),
+        z.email({ error: "Cette adresse email ne semble pas valide." }),
+      ),
+      message: z.string().check(
+        z.trim(),
+        z.minLength(10, { error: "Votre message est un peu court (10 caractères minimum)." }),
+        z.maxLength(3000, { error: "Votre message est trop long (3000 caractères maximum)." }),
+      ),
+    });
+
+    type Champ = keyof z.infer<typeof schema>;
+    const champs: Champ[] = ["nom", "email", "message"];
+
+    const form = document.getElementById("contactForm") as HTMLFormElement | null;
+
+    if (form) {
+      const lire = () => Object.fromEntries(champs.map((c) => [c, String(new FormData(form).get(c) ?? "")]));
+
+      // Valide et affiche les erreurs sous chaque champ ; renvoie les données propres ou null
+      const valider = () => {
+        const r = schema.safeParse(lire());
+        const erreurs: Partial<Record<Champ, string>> = {};
+        if (!r.success) for (const i of r.error.issues) erreurs[i.path[0] as Champ] ??= i.message;
+
+        for (const c of champs) {
+          const msg = erreurs[c] ?? "";
+          (form.elements.namedItem(c) as HTMLElement).setAttribute("aria-invalid", String(!!msg));
+          document.getElementById(`${c}-error`)!.textContent = msg;
+        }
+        return r.success ? r.data : null;
+      };
+
+      let tente = false;
+
+      // Après un premier envoi raté, on revalide à la frappe pour effacer les erreurs corrigées
+      form.addEventListener("input", () => { if (tente) valider(); });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        tente = true;
+        const data = valider();
+        if (!data) {
+          form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+          return;
+        }
+
+        const sujet = `Contact site · ${data.nom}`;
+        const corps = `Nom et prénom : ${data.nom}\nEmail : ${data.email}\n\nMessage :\n${data.message}\n`;
+
+        window.location.href =
+          "mailto:contact@oliviergaillard.fr" +
+          "?subject=" + encodeURIComponent(sujet) +
+          "&body=" + encodeURIComponent(corps);
+      });
+    }
+  </script>
 
 </Base>

@@ -20,20 +20,50 @@
   var menu = document.querySelector(".mobile-menu");
 
   if (burger && menu) {
-    burger.addEventListener("click", function () {
-      var open = menu.classList.toggle("open");
+    var main = document.querySelector("main");
+    var footer = document.querySelector(".site-footer");
+
+    function setMenu(open, returnFocus) {
+      menu.classList.toggle("open", open);
       burger.classList.toggle("open", open);
       burger.setAttribute("aria-expanded", open ? "true" : "false");
+      burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
       document.body.style.overflow = open ? "hidden" : "";
+      // Menu fermé : inaccessible au clavier. Ouvert : le reste de la page l'est.
+      menu.inert = !open;
+      if (main) main.inert = open;
+      if (footer) footer.inert = open;
+      if (open) {
+        var first = menu.querySelector("a");
+        if (first) first.focus();
+      } else if (returnFocus) {
+        burger.focus();
+      }
+    }
+
+    burger.addEventListener("click", function () {
+      setMenu(!menu.classList.contains("open"), true);
     });
 
     menu.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        menu.classList.remove("open");
-        burger.classList.remove("open");
-        burger.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-      });
+      link.addEventListener("click", function () { setMenu(false, false); });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (!menu.classList.contains("open")) return;
+      if (e.key === "Escape") { setMenu(false, true); return; }
+      // Focus piégé entre le bouton et les liens du menu
+      if (e.key === "Tab") {
+        var items = [burger].concat(Array.prototype.slice.call(menu.querySelectorAll("a")));
+        var firstEl = items[0], lastEl = items.slice(-1)[0];
+        if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+        else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+      }
+    });
+
+    // Retour en desktop menu ouvert : on referme proprement
+    window.matchMedia("(min-width: 1021px)").addEventListener("change", function (mq) {
+      if (mq.matches && menu.classList.contains("open")) setMenu(false, false);
     });
   }
 
@@ -57,11 +87,86 @@
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
 
-  /* ---------- Vidéo : respect du mouvement réduit ---------- */
+  /* ---------- Vidéo : bouton pause + respect du mouvement réduit ---------- */
+  var video = document.querySelector(".page-hero-media video");
+  var toggle = document.querySelector(".video-toggle");
+
+  function setPaused(paused) {
+    if (!video) return;
+    if (paused) video.pause(); else video.play();
+    if (toggle) {
+      toggle.setAttribute("aria-label", paused ? "Lire la vidéo" : "Mettre la vidéo en pause");
+      toggle.classList.toggle("is-paused", paused);
+    }
+  }
+
+  if (video && toggle) {
+    toggle.addEventListener("click", function () { setPaused(!video.paused); });
+  }
+
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     document.querySelectorAll("video[autoplay]").forEach(function (v) {
-      v.pause();
       v.removeAttribute("autoplay");
+    });
+    setPaused(true);
+  }
+
+  /* ---------- Formulaire de contact : validation accessible puis messagerie ---------- */
+  var form = document.getElementById("contactForm");
+
+  if (form) {
+    var status = document.getElementById("form-status");
+    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    var rules = {
+      nom: function (v) { return v ? "" : "Indiquez votre nom et prénom."; },
+      email: function (v) {
+        if (!v) return "Indiquez votre adresse email.";
+        return emailRe.test(v) ? "" : "Adresse email invalide, par exemple : julie.martin@gmail.com";
+      },
+      message: function (v) { return v ? "" : "Écrivez votre message."; },
+    };
+
+    function check(name) {
+      var field = form.elements[name];
+      var msg = rules[name](field.value.trim());
+      var err = document.getElementById(name + "-error");
+      err.textContent = msg;
+      if (msg) field.setAttribute("aria-invalid", "true");
+      else field.removeAttribute("aria-invalid");
+      return !msg;
+    }
+
+    // Après une première erreur, le champ se revalide pendant la frappe
+    Object.keys(rules).forEach(function (name) {
+      form.elements[name].addEventListener("input", function () {
+        if (this.getAttribute("aria-invalid") === "true") check(name);
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var invalid = Object.keys(rules).filter(function (name) { return !check(name); });
+
+      if (invalid.length) {
+        status.textContent = invalid.length === 1
+          ? "1 champ à corriger."
+          : invalid.length + " champs à corriger.";
+        form.elements[invalid[0]].focus();
+        return;
+      }
+
+      var nom = form.elements.nom.value.trim();
+      var sujet = "Contact site · " + nom;
+      var corps =
+        "Nom : " + nom + "\n" +
+        "Email : " + form.elements.email.value.trim() + "\n\n" +
+        "Message :\n" + form.elements.message.value.trim() + "\n";
+
+      status.textContent = "Votre messagerie s'ouvre avec le message prêt à partir.";
+      window.location.href =
+        "mailto:contact@oliviergaillard.fr" +
+        "?subject=" + encodeURIComponent(sujet) +
+        "&body=" + encodeURIComponent(corps);
     });
   }
 
@@ -83,31 +188,5 @@
         ticking = true;
       }
     }, { passive: true });
-  }
-
-  /* ---------- Formulaire de contact → mail ---------- */
-  var form = document.getElementById("contactForm");
-
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      var nom = form.nom.value.trim();
-      var email = form.email.value.trim();
-      var objectif = form.objectif.value;
-      var message = form.message.value.trim();
-
-      var sujet = "Contact site · " + nom + " (" + objectif + ")";
-      var corps =
-        "Nom : " + nom + "\n" +
-        "Email : " + email + "\n" +
-        "Objectif : " + objectif + "\n\n" +
-        "Message :\n" + message + "\n";
-
-      window.location.href =
-        "mailto:contact@oliviergaillard.fr" +
-        "?subject=" + encodeURIComponent(sujet) +
-        "&body=" + encodeURIComponent(corps);
-    });
   }
 })();

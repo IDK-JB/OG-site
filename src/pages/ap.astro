@@ -3,19 +3,50 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base
-  title="AP (Athlete Project) | Le groupe fondé par Olivier Gaillard, ACL Lyon"
-  description="AP (Athlete Project) : le groupe de 20 athlètes fondé par Olivier Gaillard au sein de l'ACL Lyon. Résultats, records et événements."
+  title="Athlete Project · Groupe d'athlétisme demi-fond à Lyon (ACL)"
+  description="Athlete Project (AP), groupe d'entraînement demi-fond de 20 athlètes à l'Athletic Club du Lyonnais, fondé par Olivier Gaillard. Saison, résultats, records, recrutement."
   active="ap"
   bodyClass="ap"
+  image="/assets/ap-hero-poster.webp"
+  imageAlt="Athlete Project, groupe de demi-fond à Lyon, à l'entraînement"
+  preload={{ href: "/assets/ap-hero-poster.webp" }}
+  jsonLd={[
+    {
+      "@type": "SportsTeam",
+      "@id": "https://oliviergaillard.fr/ap#athlete-project",
+      name: "Athlete Project (AP)",
+      alternateName: "AP Lyon",
+      sport: "Athlétisme",
+      url: "https://oliviergaillard.fr/ap",
+      logo: "https://oliviergaillard.fr/assets/logo-ap.webp",
+      foundingDate: "2024-09",
+      founder: { "@id": "https://oliviergaillard.fr/#olivier-gaillard" },
+      coach: { "@id": "https://oliviergaillard.fr/#olivier-gaillard" },
+      parentOrganization: { "@type": "SportsClub", name: "Athletic Club du Lyonnais (ACL)" },
+      location: { "@type": "Place", name: "Site de la Duchère", address: { "@type": "PostalAddress", addressLocality: "Lyon", addressCountry: "FR" } },
+      sameAs: ["https://instagram.com/athleteproject.lyon"],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://oliviergaillard.fr/" },
+        { "@type": "ListItem", position: 2, name: "Athlete Project", item: "https://oliviergaillard.fr/ap" },
+      ],
+    },
+  ]}
 >
 
   <!-- ================= HERO PAGE ================= -->
   <section class="page-hero page-hero--video">
     <div class="page-hero-media" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="metadata" poster="/assets/ap-hero-poster.jpg">
+      <video autoplay muted loop playsinline preload="metadata" poster="/assets/ap-hero-poster.webp" width="1280" height="720">
         <source src="/assets/ap-training.mp4" type="video/mp4" />
       </video>
     </div>
+    <button type="button" class="video-toggle" aria-label="Mettre la vidéo en pause">
+      <svg class="icon-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+      <svg class="icon-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+    </button>
     <div class="container">
       <h1 class="hero-title">
         <span class="line">Athlete</span>
@@ -26,8 +57,8 @@ import Base from "../layouts/Base.astro";
         de Lyon une structure d'entraînement et d'accompagnement de haut
         niveau.
       </p>
+      <img class="hero-ap-logo" src="/assets/logo-ap.webp" width="552" height="496" decoding="async" alt="Logo Athlete Project, groupe d'athlétisme à Lyon" />
     </div>
-    <img class="hero-ap-logo" src="/assets/logo-ap.png" alt="Logo Athlete Project" />
   </section>
 
   <!-- ================= PRÉSENTATION ================= -->
@@ -35,12 +66,8 @@ import Base from "../layouts/Base.astro";
     <div class="container">
       <div class="ap-intro-grid">
         <div class="ap-intro-photo" data-reveal="1">
-          <img class="base" src="/assets/matis-run.jpg" alt="Matis Boucard, maillot Athlete Project, vainqueur des 10 km de Run in Lyon 2025" />
-          <img class="subject" src="/assets/matis-subject.png" alt="" aria-hidden="true" />
-          <div class="photo-cover" aria-hidden="true">
-            <div class="cover-name">Matis <span>Boucard</span></div>
-            <div class="cover-sub">Vainqueur des 10 km de Run in Lyon 2025<br />13'56 sur 5000 m · 3'46 sur 1500 m · 29'21 sur 10 km</div>
-          </div>
+          <img class="base" src="/assets/matis-run.webp" width="1423" height="1066" loading="lazy" decoding="async" alt="Matis Boucard, coureur de demi-fond en maillot Athlete Project à Lyon" />
+          <img class="subject" src="/assets/matis-subject.webp" width="1423" height="1066" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         </div>
         <div class="text-block" data-reveal="2">
           <p class="lead">
@@ -137,71 +164,72 @@ import Base from "../layouts/Base.astro";
     <div class="container">
       <p class="steps-note" data-reveal style="margin-top: 26px;">
         <strong>Suivre l'actualité du groupe</strong> : rendez-vous sur la
-        <a href="https://instagram.com/athleteproject.lyon" target="_blank" rel="noopener">page Instagram d'Athlete Project</a>.
+        <a href="https://instagram.com/athleteproject.lyon" target="_blank" rel="noopener">page Instagram d'Athlete Project<span class="sr-only"> (nouvel onglet)</span></a>.
       </p>
     </div>
   </section>
 
   <!-- ================= RECORDS DES ATHLÈTES ================= -->
   <section class="section section--records">
-    <div class="records-bg" aria-hidden="true"></div>
     <div class="container">
+      <div class="records-bg" aria-hidden="true"></div>
       <div class="section-head" data-reveal>
         <h2 class="section-title">Quelques beaux records</h2>
       </div>
       <table class="record-table" data-reveal="1">
+        <caption class="sr-only">Records personnels d'athlètes du groupe Athlete Project</caption>
         <thead>
           <tr>
-            <th>Athlète</th>
-            <th>Épreuve</th>
-            <th>Chrono</th>
+            <th scope="col">Athlète</th>
+            <th scope="col">Épreuve</th>
+            <th scope="col">Chrono</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Charlotte Lanoix</td>
             <td>1500 m</td>
-            <td class="time">4'28</td>
+            <td class="time"><span aria-hidden="true">4'28</span><span class="sr-only">4 min 28 s</span></td>
           </tr>
           <tr>
             <td>Charlotte Lanoix</td>
             <td>5 km</td>
-            <td class="time">16'37</td>
+            <td class="time"><span aria-hidden="true">16'37</span><span class="sr-only">16 min 37 s</span></td>
           </tr>
           <tr>
             <td>Charlotte Lanoix</td>
             <td>10 km</td>
-            <td class="time">34'37</td>
+            <td class="time"><span aria-hidden="true">34'37</span><span class="sr-only">34 min 37 s</span></td>
           </tr>
           <tr>
             <td>Paul Michaud</td>
             <td>1500 m</td>
-            <td class="time">3'43</td>
+            <td class="time"><span aria-hidden="true">3'43</span><span class="sr-only">3 min 43 s</span></td>
           </tr>
           <tr>
             <td>Matis Boucard</td>
             <td>5000 m</td>
-            <td class="time">13'56</td>
+            <td class="time"><span aria-hidden="true">13'56</span><span class="sr-only">13 min 56 s</span></td>
           </tr>
           <tr>
             <td>Matis Boucard</td>
             <td>1500 m</td>
-            <td class="time">3'46</td>
+            <td class="time"><span aria-hidden="true">3'46</span><span class="sr-only">3 min 46 s</span></td>
           </tr>
           <tr>
             <td>Matis Boucard</td>
             <td>10 km</td>
-            <td class="time">29'21</td>
+            <td class="time"><span aria-hidden="true">29'21</span><span class="sr-only">29 min 21 s</span></td>
           </tr>
           <tr>
             <td>Margot Novel</td>
             <td>3000 m steeple</td>
-            <td class="time">10'39</td>
+            <td class="time"><span aria-hidden="true">10'39</span><span class="sr-only">10 min 39 s</span></td>
           </tr>
           <tr>
             <td>Lou Anne Hadrot</td>
             <td>800 m</td>
-            <td class="time">2'14</td>
+            <td class="time"><span aria-hidden="true">2'14</span><span class="sr-only">2 min 14 s</span></td>
           </tr>
         </tbody>
       </table>
@@ -213,7 +241,7 @@ import Base from "../layouts/Base.astro";
 
   <!-- ================= REJOINDRE ================= -->
   <section class="section section--photo">
-    <div class="section-bg" aria-hidden="true"><img src="/assets/ap-groupe.jpg" alt="" /></div>
+    <div class="section-bg" aria-hidden="true"><img src="/assets/ap-groupe.webp" width="828" height="1104" loading="lazy" decoding="async" alt="" /></div>
     <div class="container">
       <div class="section-head" data-reveal>
         <h2 class="section-title">Rejoindre AP</h2>
@@ -231,7 +259,7 @@ import Base from "../layouts/Base.astro";
             objectifs, et je vous proposerai de venir tester une séance avec
             le groupe.
           </p>
-          <a href="/#contact" class="more-link">Me contacter <span>→</span></a>
+          <a href="/#contact" class="more-link">Me contacter <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
@@ -241,7 +269,7 @@ import Base from "../layouts/Base.astro";
   <a href="/#contact" class="next-link">
     <div class="container">
       <div class="nl-label">Envie de courir avec nous ?</div>
-      <span class="nl-title">Me contacter →</span>
+      <span class="nl-title">Me contacter <span aria-hidden="true">→</span></span>
     </div>
   </a>
 
