@@ -1,0 +1,60 @@
+---
+import { AVIS, NOTE_MOYENNE, NOMBRE_AVIS } from "../data/avis";
+
+const etoile =
+  "M12 2.6l2.8 5.9 6.4.8-4.7 4.4 1.2 6.3L12 17l-5.7 3 1.2-6.3L2.8 9.3l6.4-.8L12 2.6z";
+---
+
+<!-- ================= AVIS ================= -->
+<section class="section avis" id="avis" aria-labelledby="titre-avis">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 class="section-title" id="titre-avis">Les avis des coureurs</h2>
+      <p class="avis-score">{NOTE_MOYENNE}/5 · {NOMBRE_AVIS} avis</p>
+      <button
+        type="button"
+        class="avis-toggle"
+        aria-label="Mettre le défilement des avis en pause"
+        aria-pressed="false"
+      >
+        <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+          <rect x="2" y="1" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+          <rect x="8.5" y="1" width="3.5" height="12" rx="1" fill="currentColor"></rect>
+        </svg>
+        <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+          <path d="M3.5 1.5v11l9-5.5z" fill="currentColor"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="avis-viewport" role="region" aria-labelledby="titre-avis" data-reveal="1">
+    <div class="avis-track" id="avisTrack">
+      <ul class="avis-list" id="avisList">
+        {
+          AVIS.map((a) => (
+            <li class="avis-card">
+              <p class="avis-stars" role="img" aria-label={`Note : ${a.note} sur 5`}>
+                {Array.from({ length: 5 }, (_, i) => (
+                  <svg
+                    class={i < a.note ? "on" : "off"}
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d={etoile} fill="currentColor" />
+                  </svg>
+                ))}
+              </p>
+              <blockquote class="avis-quote">
+                <p>«&nbsp;{a.texte}&nbsp;»</p>
+              </blockquote>
+              <p class="avis-author">{a.nom}</p>
+              <p class="avis-meta">{a.meta}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

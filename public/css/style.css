@@ -1471,9 +1471,134 @@ body.ap :focus-visible { outline-color: var(--text); }
   transition: background-color 0.3s ease;
 }
 .video-toggle:hover { background: rgba(15, 15, 15, 0.8); }
-.video-toggle .icon-play { display: none; }
-.video-toggle.is-paused .icon-play { display: block; }
-.video-toggle.is-paused .icon-pause { display: none; }
+.video-toggle .icon-play,
+.avis-toggle .icon-play { display: none; }
+.video-toggle.is-paused .icon-play,
+.avis-toggle.is-paused .icon-play { display: block; }
+.video-toggle.is-paused .icon-pause,
+.avis-toggle.is-paused .icon-pause { display: none; }
+
+/* ---------- Avis (défilement en boucle) ---------- */
+
+.avis .section-head { margin-bottom: clamp(30px, 4vw, 48px); }
+
+.avis-score {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Bouton pause/reprise du défilement (WCAG 2.2.2) */
+.avis-toggle {
+  margin-left: auto;
+  align-self: center;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 253, 250, 0.35);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.avis-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.avis-toggle:focus-visible { border-radius: 100px; }
+
+.avis-viewport {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Voiles de bord qui fondent les cartes entrantes et sortantes */
+.avis-viewport::before,
+.avis-viewport::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: clamp(24px, 8vw, 120px);
+  background: linear-gradient(to right, var(--bg) 0%, rgba(15, 15, 15, 0) 100%);
+  pointer-events: none;
+}
+.avis-viewport::after {
+  inset: 0 0 0 auto;
+  background: linear-gradient(to left, var(--bg) 0%, rgba(15, 15, 15, 0) 100%);
+}
+
+.avis-track {
+  display: flex;
+  width: max-content;
+  animation: avisDefile 80s linear infinite;
+}
+
+@keyframes avisDefile {
+  to { transform: translateX(-50%); }
+}
+
+/* Pause au survol et quand le bouton bascule en .is-paused */
+.avis-viewport:hover .avis-track,
+.avis-track.is-paused { animation-play-state: paused; }
+
+.avis-list {
+  display: flex;
+  gap: clamp(14px, 1.6vw, 22px);
+  /* Le padding droit reproduit l'espacement entre les deux copies de la boucle */
+  padding-right: clamp(14px, 1.6vw, 22px);
+  list-style: none;
+}
+
+.avis-card {
+  flex: none;
+  width: min(380px, 78vw);
+  padding: clamp(20px, 2.4vw, 30px);
+}
+
+.avis-stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+.avis-stars .on { color: var(--accent); }
+.avis-stars .off { color: rgba(255, 253, 250, 0.18); }
+
+.avis-quote p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.avis-author {
+  margin-top: 18px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.avis-meta {
+  margin-top: 3px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Mouvement réduit : pas de boucle, défilement manuel au doigt ou au clavier */
+@media (prefers-reduced-motion: reduce) {
+  .avis-toggle { display: none; }
+  .avis-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+  .avis-card { scroll-snap-align: start; }
+}
+
+/* Mode contraste forcé : garder le contour du bouton visible */
+@media (forced-colors: active) {
+  .avis-toggle { border: 1px solid ButtonText; }
+  .avis-stars .off { color: GrayText; }
+}
 
 /* Mode contraste forcé (Windows) : garder les contours visibles */
 @media (forced-colors: active) {

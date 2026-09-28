@@ -1,5 +1,29 @@
 ---
 import Base from "../layouts/Base.astro";
+import Avis from "../components/Avis.astro";
+import { AVIS, NOTE_MOYENNE_LD, NOMBRE_AVIS } from "../data/avis";
+
+// Avis de démonstration : remplacer par de vrais avis clients avant l'indexation.
+const businessId = new URL("/#coaching", Astro.site ?? "https://oliviergaillard.fr").href;
+const avisLd: Record<string, unknown>[] = [
+  {
+    "@id": businessId,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: NOTE_MOYENNE_LD,
+      bestRating: 5,
+      reviewCount: NOMBRE_AVIS,
+    },
+  },
+  ...AVIS.map((a) => ({
+    "@type": "Review",
+    author: { "@type": "Person", name: a.nom },
+    reviewRating: { "@type": "Rating", ratingValue: a.note, bestRating: 5 },
+    reviewBody: a.texte,
+    inLanguage: "fr-FR",
+    itemReviewed: { "@id": businessId },
+  })),
+];
 ---
 
 <Base
@@ -8,6 +32,7 @@ import Base from "../layouts/Base.astro";
   active="home"
   home={true}
   imageAlt="Coureuse à l'entraînement de nuit, coaching running à Lyon"
+  jsonLd={avisLd}
   preload={{
     href: "/assets/hero-runner.webp",
     srcset: "/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w",
@@ -144,6 +169,8 @@ import Base from "../layouts/Base.astro";
       </p>
     </div>
   </section>
+
+  <Avis />
 
   <!-- ================= TARIFS ================= -->
   <section class="section" id="tarifs">

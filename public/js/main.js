@@ -87,6 +87,56 @@
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
 
+  /* ---------- Avis : boucle de défilement ---------- */
+  /* La seconde copie ne sert que la boucle visuelle : clonée en JS (source HTML
+     propre pour le SEO) et masquée des lecteurs d'écran. En mouvement réduit,
+     pas de copie : la rangée devient scrollable manuellement (voir CSS). */
+  var avisTrack = document.getElementById("avisTrack");
+  var avisList = document.getElementById("avisList");
+  var avisToggle = document.querySelector(".avis-toggle");
+  var motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function setAvisPaused(paused) {
+    if (!avisTrack || !avisToggle) return;
+    avisTrack.classList.toggle("is-paused", paused);
+    avisToggle.classList.toggle("is-paused", paused);
+    avisToggle.setAttribute("aria-pressed", paused ? "true" : "false");
+    avisToggle.setAttribute(
+      "aria-label",
+      paused ? "Relancer le défilement des avis" : "Mettre le défilement des avis en pause"
+    );
+  }
+
+  function syncAvis() {
+    if (!avisTrack || !avisList) return;
+    var clone = document.getElementById("avisListClone");
+    var viewport = avisTrack.parentElement;
+    if (motionMq.matches) {
+      if (clone) clone.remove();
+      setAvisPaused(false);
+      if (viewport) viewport.setAttribute("tabindex", "0");
+    } else {
+      if (!clone) {
+        clone = avisList.cloneNode(true);
+        clone.id = "avisListClone";
+        clone.setAttribute("aria-hidden", "true");
+        clone.inert = true;
+        avisTrack.appendChild(clone);
+      }
+      if (viewport) viewport.removeAttribute("tabindex");
+    }
+  }
+
+  if (avisTrack && avisList) {
+    if (avisToggle) {
+      avisToggle.addEventListener("click", function () {
+        setAvisPaused(!avisTrack.classList.contains("is-paused"));
+      });
+    }
+    syncAvis();
+    motionMq.addEventListener("change", syncAvis);
+  }
+
   /* ---------- Vidéo : bouton pause + respect du mouvement réduit ---------- */
   var video = document.querySelector(".page-hero-media video");
   var toggle = document.querySelector(".video-toggle");
