@@ -105,6 +105,8 @@
       "aria-label",
       paused ? "Relancer le défilement des avis" : "Mettre le défilement des avis en pause"
     );
+    var label = avisToggle.querySelector(".avis-toggle-text");
+    if (label) label.textContent = paused ? "Lecture" : "Pause";
   }
 
   function syncAvis() {

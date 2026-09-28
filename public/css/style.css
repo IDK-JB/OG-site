@@ -1494,14 +1494,17 @@ body.ap :focus-visible { outline-color: var(--text); }
   margin-left: auto;
   align-self: center;
   flex: none;
-  display: grid;
-  place-items: center;
-  width: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   height: 44px;
+  padding: 0 18px;
   border-radius: 100px;
   border: 1px solid rgba(255, 253, 250, 0.35);
   background: transparent;
   color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
   cursor: pointer;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
