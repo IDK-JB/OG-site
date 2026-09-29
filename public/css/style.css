@@ -1634,6 +1634,34 @@ body.ap :focus-visible { outline-color: var(--text); }
 /* Liens de nav posés sur photo (header transparent) : gris un peu plus clair, 4,5:1 minimum */
 .site-header:not(.scrolled) .main-nav a.nav-link:not(.active):not(:hover) { color: #a3a3a3; }
 
+/* ---------- Hero Nolio (capture claire : voile renforcé + flou) ---------- */
+
+.page-hero--nolio .page-hero-media img {
+  filter: blur(4px) saturate(0.85);
+  transform: scale(1.04);
+}
+
+.page-hero--nolio .page-hero-media::after {
+  background: linear-gradient(to top, rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.78) 55%, rgba(15, 15, 15, 0.65) 100%);
+}
+
+/* ---------- Capture plan Nolio (preuve produit) ---------- */
+
+.nolio-shot { margin-top: clamp(40px, 6vw, 64px); }
+
+.nolio-shot img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.nolio-shot figcaption {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
 /* ---------- FAQ (page coaching à distance) ---------- */
 
 .faq { border-top: 1px solid var(--line); margin-top: clamp(28px, 4vw, 44px); }

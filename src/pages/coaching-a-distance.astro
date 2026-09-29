@@ -77,24 +77,25 @@ const jsonLd: Record<string, unknown>[] = [
   title="Coach running à distance, plan personnalisé et vrai suivi · Olivier Gaillard"
   description="Coaching running à distance partout en France : plan d'entraînement sur mesure publié sur Nolio, ajusté chaque semaine, du premier 10 km au marathon. Premier échange gratuit."
   active="distance"
-  imageAlt="Coureuse à l'entraînement de nuit, coaching running à distance avec Olivier Gaillard"
+  image="/assets/nolio-plan.webp"
+  imageAlt="Plan d'entraînement Nolio : quatre semaines de séances jusqu'au marathon"
   jsonLd={jsonLd}
   preload={{
-    href: "/assets/hero-runner.webp",
-    srcset: "/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w",
+    href: "/assets/nolio-hero.webp",
+    srcset: "/assets/nolio-hero-960.webp 960w, /assets/nolio-hero.webp 1400w",
     sizes: "100vw",
   }}
 >
 
   <!-- ================= HERO PAGE ================= -->
-  <section class="page-hero page-hero--photo">
+  <section class="page-hero page-hero--photo page-hero--nolio">
     <div class="page-hero-media" aria-hidden="true">
       <img
-        src="/assets/hero-runner.webp"
-        srcset="/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w"
+        src="/assets/nolio-hero.webp"
+        srcset="/assets/nolio-hero-960.webp 960w, /assets/nolio-hero.webp 1400w"
         sizes="100vw"
-        width="1920"
-        height="1436"
+        width="1400"
+        height="798"
         fetchpriority="high"
         decoding="async"
         alt=""
@@ -155,6 +156,17 @@ const jsonLd: Record<string, unknown>[] = [
       <p class="steps-note" data-reveal="3">
         <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
       </p>
+      <figure class="nolio-shot" data-reveal="3">
+        <img
+          src="/assets/nolio-plan.webp"
+          width="1400"
+          height="798"
+          loading="lazy"
+          decoding="async"
+          alt="Exemple de plan d'entraînement sur Nolio : quatre semaines de préparation marathon, chaque séance colorée par type, du footing au jour de course"
+        />
+        <figcaption>Un vrai plan de préparation marathon, tel que vous le recevez chaque semaine.</figcaption>
+      </figure>
     </div>
   </section>
 
