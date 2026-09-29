@@ -1,0 +1,259 @@
+---
+import Base from "../layouts/Base.astro";
+
+const site = Astro.site ?? new URL("https://oliviergaillard.fr");
+const businessId = new URL("/#coaching", site).href;
+
+const FAQ = [
+  {
+    q: "Le suivi à distance est-il vraiment efficace ?",
+    r: "Oui, parce que rien n'est figé. Votre plan est construit à partir de votre histoire sportive et de vos contraintes, puis réajusté chaque semaine en fonction de vos retours et de vos séances analysées. C'est cette boucle hebdomadaire qui fait progresser, pas la distance.",
+  },
+  {
+    q: "Faut-il une montre GPS ou une application particulière ?",
+    r: "Votre plan est publié sur Nolio, lisible depuis votre téléphone, et vos séances peuvent être programmées directement sur votre montre. Une montre GPS facilite l'analyse, mais elle n'est pas indispensable pour démarrer.",
+  },
+  {
+    q: "Je débute, ce suivi est-il fait pour moi ?",
+    r: "Oui. Le suivi s'adresse à tous les niveaux : du premier 10 km au marathon, de la remise en forme à la performance. Le plan démarre exactement là où vous en êtes.",
+  },
+  {
+    q: "Comment se passe le premier contact ?",
+    r: "Par un premier échange gratuit et sans engagement, par téléphone ou en visio. On parle de vos objectifs, de votre histoire sportive et de votre quotidien. Vous décidez ensuite, sans pression.",
+  },
+  {
+    q: "Et si j'ai une question en cours de semaine ?",
+    r: "Avec la formule performance, vous écrivez sur Nolio et vous avez une réponse sous 24 à 48 h. Avec la formule premium, je suis disponible 7 j/7 sur WhatsApp.",
+  },
+];
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    "@type": "Service",
+    "@id": new URL("/coaching-a-distance#service", site).href,
+    name: "Coaching running à distance",
+    serviceType: "Coaching sportif à distance",
+    description:
+      "Plan d'entraînement running personnalisé publié sur Nolio, ajusté chaque semaine, avec analyse des séances. Du premier 10 km au marathon, partout en France.",
+    provider: { "@id": businessId },
+    areaServed: { "@type": "Country", name: "France" },
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Suivi performance",
+        price: "80",
+        priceCurrency: "EUR",
+        description: "Plan d'entraînement running personnalisé sur Nolio, ajusté chaque semaine.",
+      },
+      {
+        "@type": "Offer",
+        name: "Suivi premium",
+        price: "130",
+        priceCurrency: "EUR",
+        description: "Suivi running personnalisé avec accompagnement nutritionnel et disponibilité prioritaire.",
+      },
+    ],
+  },
+  {
+    "@type": "FAQPage",
+    "@id": new URL("/coaching-a-distance#faq", site).href,
+    mainEntity: FAQ.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.r },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: new URL("/", site).href },
+      { "@type": "ListItem", position: 2, name: "Coaching à distance", item: new URL("/coaching-a-distance", site).href },
+    ],
+  },
+];
+---
+
+<Base
+  title="Coach running à distance, plan personnalisé et vrai suivi · Olivier Gaillard"
+  description="Coaching running à distance partout en France : plan d'entraînement sur mesure publié sur Nolio, ajusté chaque semaine, du premier 10 km au marathon. Premier échange gratuit."
+  active="distance"
+  imageAlt="Coureuse à l'entraînement de nuit, coaching running à distance avec Olivier Gaillard"
+  jsonLd={jsonLd}
+  preload={{
+    href: "/assets/hero-runner.webp",
+    srcset: "/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w",
+    sizes: "100vw",
+  }}
+>
+
+  <!-- ================= HERO PAGE ================= -->
+  <section class="page-hero page-hero--photo">
+    <div class="page-hero-media" aria-hidden="true">
+      <img
+        src="/assets/hero-runner.webp"
+        srcset="/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w"
+        sizes="100vw"
+        width="1920"
+        height="1436"
+        fetchpriority="high"
+        decoding="async"
+        alt=""
+      />
+    </div>
+    <div class="container">
+      <h1 class="hero-title">
+        <span class="line">Un plan.</span>
+        <span class="line">Un coach.</span>
+        <span class="line">Où que vous <span class="accent">couriez.</span></span>
+        <span class="sr-only">Coaching running à distance : plan d'entraînement personnalisé et suivi hebdomadaire partout en France</span>
+      </h1>
+      <p class="lead">
+        Annecy, Lille, Bordeaux ou un village sans piste : peu importe. Votre
+        plan arrive sur votre téléphone, ajusté chaque semaine à vos retours,
+        avec un entraîneur FFA qui analyse vos séances et répond à vos
+        questions.
+      </p>
+      <div class="hero-actions">
+        <a href="/#contact" class="btn btn-solid">Premier échange gratuit <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="#formules" class="btn btn-ghost">Voir les formules</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DÉROULÉ ================= -->
+  <section class="section" id="deroule">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Comment ça marche</h2>
+      </div>
+      <p class="lead" style="margin-bottom: clamp(40px, 6vw, 70px);" data-reveal="1">
+        Le même fil que sur piste, sans la piste. Quatre étapes, et un plan
+        qui vit avec vous.
+      </p>
+      <div class="steps" data-reveal="2">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Premier échange</h3>
+          <p>Par téléphone ou en visio. Vos objectifs, votre histoire sportive, vos contraintes du quotidien. Gratuit, sans engagement.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Bilan de départ</h3>
+          <p>Analyse de votre passé d'entraînement, de vos temps, de vos disponibilités. On fixe un cap réaliste.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Votre plan sur Nolio</h3>
+          <p>Vos séances semaine par semaine, sur votre téléphone ou programmées sur votre montre, avec les allures et les consignes.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3 class="step-title">Suivi &amp; ajustements</h3>
+          <p>Vos retours après certaines séances, le plan ajusté chaque semaine. La forme monte, le plan suit.</p>
+        </div>
+      </div>
+      <p class="steps-note" data-reveal="3">
+        <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= PREUVES ================= -->
+  <section class="stats-band">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat" data-reveal="1">
+          <div class="stat-num">30<em>+</em></div>
+          <div class="stat-label">Ans de course à pied</div>
+        </div>
+        <div class="stat" data-reveal="2">
+          <div class="stat-num">500<em>+</em></div>
+          <div class="stat-label">Coureurs accompagnés depuis 2009</div>
+        </div>
+        <div class="stat" data-reveal="3">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Podiums nationaux par des athlètes accompagnés</div>
+        </div>
+        <div class="stat" data-reveal="4">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Champion de France entraîné, sélection mondiale 2018</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FORMULES ================= -->
+  <section class="section" id="formules">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Les formules</h2>
+      </div>
+      <div class="pricing">
+        <article class="plan" data-reveal="1">
+          <h3 class="plan-name">Suivi performance</h3>
+          <div class="plan-price">
+            <span class="amount">80 €</span>
+            <span class="per">/ mois</span>
+          </div>
+          <p class="plan-desc">Pour courir avec un plan sérieux, où que vous soyez.</p>
+          <ul class="plan-list">
+            <li>Plan d'entraînement personnalisé sur Nolio</li>
+            <li>Ajustements chaque semaine</li>
+            <li>Analyse de vos séances</li>
+            <li>Échanges par messages Nolio, réponse sous 24 à 48 h</li>
+          </ul>
+          <a href="/#contact" class="btn btn-ghost">Commencer <span class="arrow" aria-hidden="true">→</span></a>
+        </article>
+        <article class="plan plan-featured" data-reveal="2">
+          <h3 class="plan-name">Suivi premium</h3>
+          <div class="plan-price">
+            <span class="amount">130 €</span>
+            <span class="per">/ mois</span>
+          </div>
+          <p class="plan-desc">Pour viser un chrono, avec un suivi renforcé sur le plan nutritionnel en partenariat avec Deborah Maurice, diététicienne nutritionniste diplômée.</p>
+          <ul class="plan-list">
+            <li>Tout le suivi en ligne inclus</li>
+            <li>Accompagnement nutritionnel spécialisé pour les sportifs en relation avec les objectifs et le plan d'entraînement</li>
+            <li>Disponibilité prioritaire, 7 j/7 par message WhatsApp</li>
+          </ul>
+          <a href="/#contact" class="btn btn-solid">Commencer <span class="arrow" aria-hidden="true">→</span></a>
+        </article>
+      </div>
+      <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider.</p>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Questions fréquentes</h2>
+      </div>
+      <div class="faq" data-reveal="1">
+        {FAQ.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <div class="faq-answer">
+              <p>{f.r}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section cta-band">
+    <div class="container">
+      <h2 class="section-title" data-reveal>On en parle ?</h2>
+      <p class="lead" data-reveal="1">
+        Racontez-moi votre projet. Le premier échange est gratuit, sans
+        engagement, et je réponds à tout le monde.
+      </p>
+      <div class="hero-actions" data-reveal="2">
+        <a href="/#contact" class="btn btn-solid">Me contacter <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</Base>

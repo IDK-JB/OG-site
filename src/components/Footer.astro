@@ -5,7 +5,6 @@ interface Props {
 
 const { home = false } = Astro.props;
 const tarifsHref = home ? "#tarifs" : "/#tarifs";
-const coachingHref = home ? "#coaching" : "/#coaching";
 ---
 
 <footer class="site-footer">
@@ -21,7 +20,7 @@ const coachingHref = home ? "#coaching" : "/#coaching";
         <ul>
           <li><a href="/">Accueil</a></li>
           <li><a href="/coach">Le Coach</a></li>
-          <li><a href={coachingHref}>Votre accompagnement</a></li>
+          <li><a href="/coaching-a-distance">Coaching à distance</a></li>
           <li><a href={tarifsHref}>Les formules</a></li>
           <li><a href="/ap">Athlete Project</a></li>
         </ul>
@@ -52,7 +51,7 @@ const coachingHref = home ? "#coaching" : "/#coaching";
     </div>
     <div class="footer-bottom">
       <span>© 2026 Olivier Gaillard · Tous droits réservés</span>
-      <span>Lyon, France · oliviergaillard.fr</span>
+      <span><a href="/mentions-legales">Mentions légales</a> · Lyon, France · oliviergaillard.fr</span>
     </div>
   </div>
 </footer>

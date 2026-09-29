@@ -1,38 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
 import Avis from "../components/Avis.astro";
-import { AVIS, NOTE_MOYENNE_LD, NOMBRE_AVIS } from "../data/avis";
 
-// Avis de démonstration : remplacer par de vrais avis clients avant l'indexation.
-const businessId = new URL("/#coaching", Astro.site ?? "https://oliviergaillard.fr").href;
-const avisLd: Record<string, unknown>[] = [
-  {
-    "@id": businessId,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: NOTE_MOYENNE_LD,
-      bestRating: 5,
-      reviewCount: NOMBRE_AVIS,
-    },
-  },
-  ...AVIS.map((a) => ({
-    "@type": "Review",
-    author: { "@type": "Person", name: a.nom },
-    reviewRating: { "@type": "Rating", ratingValue: a.note, bestRating: 5 },
-    reviewBody: a.texte,
-    inLanguage: "fr-FR",
-    itemReviewed: { "@id": businessId },
-  })),
-];
+// Avis de démonstration (src/data/avis.ts) : aucune donnée structurée
+// Review/AggregateRating tant qu'ils ne sont pas remplacés par de vrais avis.
 ---
 
 <Base
-  title="Coach sportif running à Lyon et à distance · Olivier Gaillard"
-  description="Coach running et entraîneur d'athlétisme FFA à Lyon. Plans d'entraînement sur mesure, à Lyon ou à distance : 10 km, semi, marathon, demi-fond. Premier échange gratuit."
+  title="Coach running à distance et à Lyon · Olivier Gaillard, entraîneur FFA"
+  description="Coaching running à distance partout en France et à Lyon : plan d'entraînement sur mesure sur Nolio, ajusté chaque semaine. 10 km, semi, marathon. Premier échange gratuit."
   active="home"
   home={true}
   imageAlt="Coureuse à l'entraînement de nuit, coaching running à Lyon"
-  jsonLd={avisLd}
   preload={{
     href: "/assets/hero-runner.webp",
     srcset: "/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w",
@@ -59,7 +38,7 @@ const avisLd: Record<string, unknown>[] = [
         <span class="line">Olivier</span>
         <span class="line">Gaillard</span>
         <span class="line"><span class="accent">Coach.</span></span>
-        <span class="sr-only">Coach running et entraîneur d'athlétisme à Lyon et à distance</span>
+        <span class="sr-only">Coach running à distance et entraîneur d'athlétisme à Lyon</span>
       </h1>
       <p class="hero-sub">
         Entraîneur demi-fond et running depuis 2009. Du premier 10 km au
@@ -166,6 +145,9 @@ const avisLd: Record<string, unknown>[] = [
       </div>
       <p class="steps-note" data-reveal="3">
         <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
+      </p>
+      <p class="text-block" data-reveal="3">
+        <a href="/coaching-a-distance" class="more-link">Le suivi à distance en détail <span aria-hidden="true">→</span></a>
       </p>
     </div>
   </section>

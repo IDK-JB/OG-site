@@ -2,13 +2,12 @@
 import Wordmark from "./Wordmark.astro";
 
 interface Props {
-  active: "home" | "coach" | "ap";
+  active: "home" | "coach" | "distance" | "ap" | "legal";
   home?: boolean;
 }
 
 const { active, home = false } = Astro.props;
 const contactHref = home ? "#contact" : "/#contact";
-const coachingHref = home ? "#coaching" : "/#coaching";
 const current = (key: Props["active"]) => (active === key ? "page" : undefined);
 ---
 
@@ -20,7 +19,7 @@ const current = (key: Props["active"]) => (active === key ? "page" : undefined);
     <nav class="main-nav" aria-label="Navigation principale">
       <a href="/" class={active === "home" ? "nav-link active" : "nav-link"} aria-current={current("home")}>Accueil</a>
       <a href="/coach" class={active === "coach" ? "nav-link active" : "nav-link"} aria-current={current("coach")}>Le Coach</a>
-      <a href={coachingHref} class="nav-link">Votre accompagnement</a>
+      <a href="/coaching-a-distance" class={active === "distance" ? "nav-link active" : "nav-link"} aria-current={current("distance")}>Coaching à distance</a>
       <a href="/ap" class={active === "ap" ? "nav-link active" : "nav-link"} aria-current={current("ap")}>Athlete Project</a>
     </nav>
     <a href={contactHref} class="header-cta">Me contacter</a>
@@ -41,7 +40,7 @@ const current = (key: Props["active"]) => (active === key ? "page" : undefined);
 <nav class="mobile-menu" id="menu-mobile" aria-label="Menu mobile" inert>
   <a href="/" aria-current={current("home")}>Accueil</a>
   <a href="/coach" aria-current={current("coach")}>Le Coach</a>
-  <a href={coachingHref}>Votre accompagnement</a>
+  <a href="/coaching-a-distance" aria-current={current("distance")}>Coaching à distance</a>
   <a href="/ap" aria-current={current("ap")}>Athlete Project</a>
   <a href={contactHref}>Me contacter</a>
   <p class="menu-meta">Entraîneur FFA à Lyon</p>
