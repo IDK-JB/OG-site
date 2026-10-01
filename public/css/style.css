@@ -1745,8 +1745,8 @@ body.ap :focus-visible { outline-color: var(--text); }
 /* ---------- Hero Nolio (capture claire : voile renforcé + flou) ---------- */
 
 .page-hero--nolio .page-hero-media img {
-  filter: grayscale(1) blur(4px);
-  transform: scale(1.04);
+  filter: grayscale(1) blur(1.5px);
+  transform: scale(1.02);
 }
 
 .page-hero--nolio .page-hero-media::after {
