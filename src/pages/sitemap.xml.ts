@@ -5,7 +5,7 @@ const pages = [
   { path: "/", priority: "1.0" },
   { path: "/coaching-a-distance", priority: "0.9" },
   { path: "/coach", priority: "0.8" },
-  { path: "/ap", priority: "0.7" },
+  { path: "/athlete-project", priority: "0.7" },
   { path: "/mentions-legales", priority: "0.1" },
 ];
 

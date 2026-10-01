@@ -20,7 +20,7 @@ const current = (key: Props["active"]) => (active === key ? "page" : undefined);
       <a href="/" class={active === "home" ? "nav-link active" : "nav-link"} aria-current={current("home")}>Accueil</a>
       <a href="/coach" class={active === "coach" ? "nav-link active" : "nav-link"} aria-current={current("coach")}>Le Coach</a>
       <a href="/coaching-a-distance" class={active === "distance" ? "nav-link active" : "nav-link"} aria-current={current("distance")}>Coaching à distance</a>
-      <a href="/ap" class={active === "ap" ? "nav-link active" : "nav-link"} aria-current={current("ap")}>Athlete Project</a>
+      <a href="/athlete-project" class={active === "ap" ? "nav-link active" : "nav-link"} aria-current={current("ap")}>Athlete Project</a>
     </nav>
     <a href={contactHref} class="header-cta">Me contacter</a>
     <button
@@ -41,7 +41,7 @@ const current = (key: Props["active"]) => (active === key ? "page" : undefined);
   <a href="/" aria-current={current("home")}>Accueil</a>
   <a href="/coach" aria-current={current("coach")}>Le Coach</a>
   <a href="/coaching-a-distance" aria-current={current("distance")}>Coaching à distance</a>
-  <a href="/ap" aria-current={current("ap")}>Athlete Project</a>
+  <a href="/athlete-project" aria-current={current("ap")}>Athlete Project</a>
   <a href={contactHref}>Me contacter</a>
   <p class="menu-meta">Entraîneur FFA à Lyon</p>
 </nav>

@@ -1091,7 +1091,7 @@ a { color: inherit; text-decoration: none; }
 
 /* AP : intro sous le hero · grand logo à gauche, texte à droite */
 
-body.ap { --ap: #B31525; --ap-deep: #6B1516; --ap-text: #ef5a63; }
+body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #ef5a63; }
 
 .ap-intro-grid {
   display: grid;
@@ -1263,7 +1263,7 @@ body.ap { --ap: #B31525; --ap-deep: #6B1516; --ap-text: #ef5a63; }
 
 .section--photo .container { position: relative; z-index: 1; }
 
-/* Page AP : rouges Athlete Project (#B31525 accent / #6B1516 profond).
+/* Page AP : rouge de marque Athlete Project (#6B1417) pour fonds, bordures et survols.
    Texte rouge sur fond sombre ou photo : --ap-text (#ef5a63), 5,8:1 sur fond uni (WCAG AA avec marge). */
 
 body.ap .hero-title .accent,
@@ -1283,7 +1283,7 @@ body.ap .section--photo { padding: clamp(100px, 14vw, 170px) 0; }
 
 body.ap .event-list li { border-top-color: var(--ap); }
 
-body.ap .record-card:hover { border-color: rgba(179, 21, 37, 0.55); }
+body.ap .record-card:hover { border-color: rgba(107, 20, 23, 0.55); }
 
 body.ap .header-cta:hover {
   background: var(--ap);
@@ -1590,6 +1590,8 @@ body.ap :focus-visible { outline-color: var(--text); }
   font-size: 0.8rem;
   color: var(--muted);
 }
+
+.avis-vide { color: var(--muted); }
 
 /* Mouvement réduit : pas de boucle, défilement manuel au doigt ou au clavier */
 @media (prefers-reduced-motion: reduce) {

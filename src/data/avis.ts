@@ -85,7 +85,5 @@ export const AVIS: Avis[] = [
   },
 ];
 
-/** Moyenne affichée (format français) et valeur numérique pour le JSON-LD */
-export const NOTE_MOYENNE = "4,8";
-export const NOTE_MOYENNE_LD = 4.8;
-export const NOMBRE_AVIS = AVIS.length;
+/** Avis réels affichés sur le site. Vide tant que les témoignages clients ne sont pas validés. */
+export const AVIS_PUBLIES: Avis[] = [];

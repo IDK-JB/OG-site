@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [{ "source": "/ap", "destination": "/athlete-project", "permanent": true }],
   "headers": [
     {
       "source": "/(.*)",
