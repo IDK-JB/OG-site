@@ -1706,16 +1706,6 @@ body.ap :focus-visible { outline-color: var(--text); }
   .media-grid { grid-template-columns: 1fr; }
 }
 
-.media-grid--single { grid-template-columns: minmax(0, 440px); }
-
-.media-more {
-  margin-top: 26px;
-  max-width: 78ch;
-  font-size: 0.92rem;
-  line-height: 1.7;
-  color: var(--muted);
-}
-
 /* ---------- Hero Nolio (capture claire : voile renforcé + flou) ---------- */
 
 .page-hero--nolio .page-hero-media img {
