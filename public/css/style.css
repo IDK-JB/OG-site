@@ -1638,6 +1638,15 @@ body.ap :focus-visible { outline-color: var(--text); }
 /* Liens de nav posés sur photo (header transparent) : gris un peu plus clair, 4,5:1 minimum */
 .site-header:not(.scrolled) .main-nav a.nav-link:not(.active):not(:hover) { color: #a3a3a3; }
 
+/* Liens dans les listes timeline (page Coach) */
+.timeline-list a {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease;
+}
+
+.timeline-list a:hover { color: var(--accent); }
+
 /* ---------- Hero Nolio (capture claire : voile renforcé + flou) ---------- */
 
 .page-hero--nolio .page-hero-media img {
