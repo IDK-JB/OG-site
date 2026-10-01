@@ -1630,9 +1630,6 @@ body.ap :focus-visible { outline-color: var(--text); }
 }
 .site-header.scrolled::before { opacity: 0; }
 
-/* Titre hero : halo sombre sous les lettres, invisible sur fond noir */
-.hero-title { text-shadow: 0 2px 24px rgba(15, 15, 15, 0.7), 0 0 2px rgba(15, 15, 15, 0.6); }
-
 @media (max-width: 860px) {
   .season::after { background: rgba(15, 15, 15, 0.84); }
   .section--photo .section-bg::after { background: rgba(15, 15, 15, 0.86); }
