@@ -1091,7 +1091,7 @@ a { color: inherit; text-decoration: none; }
 
 /* AP : intro sous le hero · grand logo à gauche, texte à droite */
 
-body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #ef5a63; }
+body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #6B1417; }
 
 .ap-intro-grid {
   display: grid;
@@ -1263,8 +1263,8 @@ body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #ef5a63; }
 
 .section--photo .container { position: relative; z-index: 1; }
 
-/* Page AP : rouge de marque Athlete Project (#6B1417) pour fonds, bordures et survols.
-   Texte rouge sur fond sombre ou photo : --ap-text (#ef5a63), 5,8:1 sur fond uni (WCAG AA avec marge). */
+/* Page AP : rouge de marque Athlete Project (#6B1417), choix du client, y compris dans les textes.
+   Contraste faible sur fond sombre assumé : revenir à --ap-text: #ef5a63 si la lisibilité pose problème. */
 
 body.ap .hero-title .accent,
 body.ap .stat-num em,
