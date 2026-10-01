@@ -1675,6 +1675,7 @@ body.ap :focus-visible { outline-color: var(--text); }
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
+  padding-bottom: 22px;
 }
 
 .media-viewport:focus-visible {
