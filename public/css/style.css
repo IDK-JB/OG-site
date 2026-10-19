@@ -1578,6 +1578,7 @@ body.ap :focus-visible { outline-color: var(--text); }
   line-height: 1.65;
   color: var(--text);
 }
+.avis-quote p + p { margin-top: 0.8em; }
 
 .avis-author {
   margin-top: 18px;

@@ -1,89 +1,64 @@
-// Avis affichés sur la landing (section #avis) et dans le JSON-LD.
-// ATTENTION : avis de démonstration, à remplacer par de vrais avis clients
-// (Google Business, Nolio, etc.) avant l'indexation du site.
+// Avis affichés sur la landing (section #avis), textes validés par le client.
+// Pas de Review/AggregateRating en JSON-LD : avis auto-publiés, non éligibles.
 
 export interface Avis {
   /** Nom public de l'auteur, ex. "Camille R." */
   nom: string;
-  /** Contexte affiché sous le nom, séparateur maison « · » */
+  /** Contexte affiché sous le nom */
   meta: string;
+  /** Paragraphes séparés par une ligne vide */
   texte: string;
-  /** Note entière de 1 à 5 */
-  note: 1 | 2 | 3 | 4 | 5;
+  /** Note entière de 1 à 5, absente si l'auteur n'en a pas donné */
+  note?: 1 | 2 | 3 | 4 | 5;
 }
 
-export const AVIS: Avis[] = [
+export const AVIS_PUBLIES: Avis[] = [
   {
-    nom: "Camille R.",
-    meta: "Semi-marathon de Lyon · Suivi à distance",
+    nom: "Clémence D.",
+    meta: "Nice, coaching à distance",
     texte:
-      "Deux ans à courir seule sans progresser, puis trois mois avec Olivier : 8 minutes de mieux sur mon semi à Lyon. Le plan tient compte de ma vie, pas l'inverse.",
-    note: 5,
+      "Je m’entraine avec Olivier depuis 2019. Il a su me faire progresser sur toutes les distances du 5km au marathon grâce à ses compétences, son expérience et surtout sa bienveillance. Il a toujours su adapter mes reprises progressives post-partum pour me permettre de retrouver l’envie sans jamais brûler les étapes. Aujourd’hui encore je continue de progresser et repousser mes limites à ses côtés, je ne peux que recommander ce coach en OR",
   },
   {
-    nom: "Julien M.",
-    meta: "Marathon de Paris · Suivi premium",
+    nom: "Mathieu G.",
+    meta: "Le Mans, coaching à distance",
     texte:
-      "Le duo entraînement et nutrition a tout changé. Aucun coup de barre au 30e kilomètre et 6 minutes de record personnel au marathon de Paris.",
-    note: 5,
+      "Un coach à l’écoute qui s’adapte en toutes circonstance, et m’a fait énormément progresser (de 2h41 à 2h27 au marathon)",
   },
   {
-    nom: "Sophie L.",
-    meta: "Reprise du sport à 45 ans",
+    nom: "Charlotte L.",
+    meta: "Lyon, groupe AP",
     texte:
-      "Après dix ans sans sport, j'avais peur de me blesser. Chaque semaine est dosée au plus juste : dix kilomètres sans m'arrêter aujourd'hui, et zéro bobo.",
-    note: 5,
+      "Olivier est un coach particulièrement investi dans ma progression et très à l’écoute de mon ressenti et mes sensations. Il sait adapter les entraînements au contexte. Etant lui-même coureur d’expérience, il comprend parfaitement les enjeux et les ressentis d’un athlète. Pratiquant la course à pied depuis 16 années, il m’a amené au niveau national, et c’est de loin le meilleur coach que j’ai pu avoir.",
   },
   {
-    nom: "Karim B.",
-    meta: "10 km · Suivi à distance",
+    nom: "Matis B",
+    meta: "Lyon, groupe AP",
     texte:
-      "Plan clair sur Nolio, allures précises, réponses rapides quand j'ai une question. Je ne cours plus au feeling : moins de 50 minutes au 10 km en six mois.",
-    note: 4,
+      "Je suis entraîné par Olivier depuis 2024. Entraîneur passionné, à l’écoute et surtout acteur dans la progression et le suivi de ses athlètes. Mes records 1500m, 5000m, 10km, semi-marathon ont été battus pendant cette période. Une personnalisation et une gestion des entraînements de ses athlètes, à la perfection. Olivier s’adapte au profil de chacun, en tenant compte de nombreux paramètres souvent négligés.",
   },
   {
-    nom: "Élise D.",
-    meta: "Groupe AP (Athlete Project) · Lyon",
+    nom: "Aurélie T.",
+    meta: "Bordeaux, coaching à distance",
     texte:
-      "Les séances AP du mardi sont devenues mon rendez-vous de la semaine. On pousse fort, on rit beaucoup, et les chronos suivent. L'émulation change tout.",
-    note: 5,
+      "Olivier ne regarde pas uniquement les résultats des séances, il prend en compte tous les à-côtés : travail, contraintes persos, imprévus... Et sait adapter sans perdre le fil de l’objectif. Il a aussi un regard très juste sur la gestion du mental, sait quand calmer le jeu, quand rassurer, ou simplement écouter.\n\nToujours disponible, réactif et présent, son accompagnement est global, cette capacité d’adaptation et de compréhension de l’athlète font toute la différence",
   },
   {
-    nom: "Thomas V.",
-    meta: "Marathon · Suivi à distance",
+    nom: "Pierre L.",
+    meta: "Mâcon, coaching à distance",
     texte:
-      "À distance mais jamais seul : chaque séance est analysée, le plan bouge quand la forme bouge. 3 h 12 au marathon, 9 minutes de mieux que mon objectif.",
-    note: 5,
+      "Coach réactif et à l’écoute, qui en 3 mois, m’a amené à battre mon record sur 10km (39min à 54 ans) sans blessure (ce qui était mon problème ces dernières années). Le tout en m’entrainant moins que ce que je pouvais faire seul, donc avec un entraînement mieux calibré !",
   },
   {
-    nom: "Nathalie P.",
-    meta: "Semi-marathon · Suivi à distance",
+    nom: "Audrey G.",
+    meta: "Paris, coaching à distance",
     texte:
-      "Depuis Annecy, le suivi est aussi précis qu'en présentiel. Olivier ajuste tout chaque semaine. Premier semi couru à fond, sans souffrir, en 1 h 58.",
-    note: 5,
+      "Même à distance, Olivier est hyper à l’écoute, attentif au moindre détail, et on se sent vraiment soutenu. J’ai couru mon 1er marathon en 3h24 avec son coaching. Il est toujours très encourageant et plein d’humour. Je lui fais entièrement confiance.",
   },
   {
-    nom: "Romain G.",
-    meta: "Trail et ultra · Suivi à distance",
+    nom: "Jorge G.",
+    meta: "Paris, coaching à distance",
     texte:
-      "Venu pour le plat, resté pour la rigueur du plan. Ma prépa trail a gagné en structure : séances ciblées, montées de charge propres, aucune semaine grillée.",
-    note: 4,
-  },
-  {
-    nom: "Claire B.",
-    meta: "Premier 10 km",
-    texte:
-      "Je partais de zéro, essoufflée au bout de deux bornes. Six mois plus tard, mon premier 10 km en course officielle, et l'envie d'aller plus loin.",
-    note: 5,
-  },
-  {
-    nom: "Marc D.",
-    meta: "5 km · Athlète en club",
-    texte:
-      "Même en club, l'œil d'Olivier fait la différence : VMA travaillée avec méthode, séances affinées. 18 secondes de mieux sur 5 km en une saison.",
-    note: 5,
+      "Un coaching personnalisé s’adaptant à la forme du moment et aux objectifs. Des plans toujours différents, mais qui suivent un vrai fil conducteur. On ne s’ennuie jamais ! J’ai battu tous mes records personnels du 5km au marathon, mais Olivier m’a surtout appris à me faire confiance, alors que je sortais d’un cycle de blessures.",
   },
 ];
-
-/** Avis réels affichés sur le site. Vide tant que les témoignages clients ne sont pas validés. */
-export const AVIS_PUBLIES: Avis[] = [];

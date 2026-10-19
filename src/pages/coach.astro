@@ -168,67 +168,6 @@ import Base from "../layouts/Base.astro";
     </div>
   </section>
 
-  <!-- ================= MÉDIAS ================= -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head media-head" data-reveal>
-        <h2 class="section-title">Médias et interventions</h2>
-        <div class="media-nav">
-          <button type="button" class="media-arrow" data-dir="-1" aria-label="Cartes précédentes">
-            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2L4 7l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button type="button" class="media-arrow" data-dir="1" aria-label="Cartes suivantes">
-            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="media-viewport" tabindex="0" role="region" aria-label="Médias et interventions, liste défilante" data-reveal="1">
-        <div class="media-track" id="mediaTrack">
-          <article class="media-card">
-            <span class="media-year">2014</span>
-            <h3 class="media-outlet">Urban Running</h3>
-            <p class="media-detail">Coach d'une équipe de journalistes pour un test Garmin, jusqu'à la ligne d'arrivée du semi-marathon de Lisbonne.</p>
-          </article>
-          <article class="media-card">
-            <span class="media-year">2016</span>
-            <h3 class="media-outlet">CNews</h3>
-            <p class="media-detail">Interview conseils marathon, en tant que coach Urban Running.</p>
-          </article>
-          <article class="media-card">
-            <span class="media-year">2020</span>
-            <h3 class="media-outlet">Athlé TV · FFA</h3>
-            <p class="media-detail">« 5 km Athlé : les conseils du coach Olivier Gaillard », réalisée pour l'Open de France virtuel.</p>
-            <a class="media-link" href="https://www.youtube.com/watch?v=6yk6V5PPKhg" target="_blank" rel="noopener">Voir la vidéo <span aria-hidden="true">→</span><span class="sr-only"> (nouvel onglet)</span></a>
-          </article>
-          <article class="media-card">
-            <span class="media-year">2020</span>
-            <h3 class="media-outlet">Semi de Paris · Run in Lyon</h3>
-            <p class="media-detail">Vidéos de conseils aux coureurs, publiées par les organisateurs.</p>
-          </article>
-          <article class="media-card">
-            <span class="media-year">2021</span>
-            <h3 class="media-outlet">Run Expérience</h3>
-            <p class="media-detail">Ambassadeur « J'aime Courir » de la FFA au salon du marathon de Paris, aux côtés d'Annette Sergent : présentation du parcours et de l'échauffement du jour J.</p>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    const mediaVp = document.querySelector<HTMLElement>(".media-viewport");
-    const mediaTrack = document.getElementById("mediaTrack");
-    document.querySelectorAll<HTMLButtonElement>(".media-arrow").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        if (!mediaVp || !mediaTrack) return;
-        const card = mediaTrack.querySelector<HTMLElement>(".media-card");
-        const gap = parseFloat(getComputedStyle(mediaTrack).columnGap || getComputedStyle(mediaTrack).gap) || 0;
-        const pas = (card?.getBoundingClientRect().width ?? 300) + gap;
-        mediaVp.scrollBy({ left: Number(btn.dataset.dir) * pas, behavior: "smooth" });
-      });
-    });
-  </script>
-
   <!-- ================= LIEN SUIVANT ================= -->
   <a href="/coaching-a-distance" class="next-link">
     <div class="container">

@@ -2,8 +2,9 @@
 import { AVIS_PUBLIES } from "../data/avis";
 
 const avis = AVIS_PUBLIES;
-const moyenne = avis.length
-  ? (avis.reduce((total, a) => total + a.note, 0) / avis.length).toFixed(1).replace(".", ",")
+const notes = avis.flatMap((a) => (a.note ? [a.note] : []));
+const moyenne = notes.length
+  ? (notes.reduce((total, n) => total + n, 0) / notes.length).toFixed(1).replace(".", ",")
   : null;
 
 const etoile =
@@ -15,7 +16,7 @@ const etoile =
   <div class="container">
     <div class="section-head" data-reveal>
       <h2 class="section-title" id="titre-avis">Les avis des coureurs</h2>
-      {moyenne && <p class="avis-score">{moyenne}/5 · {avis.length} avis</p>}
+      {moyenne && <p class="avis-score">{moyenne}/5 · {notes.length} avis</p>}
       {avis.length > 0 && (
         <button
           type="button"
@@ -45,21 +46,29 @@ const etoile =
           {
             avis.map((a) => (
               <li class="avis-card">
-                <p class="avis-stars" role="img" aria-label={`Note : ${a.note} sur 5`}>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <svg
-                      class={i < a.note ? "on" : "off"}
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path d={etoile} fill="currentColor" />
-                    </svg>
-                  ))}
-                </p>
+                {a.note && (
+                  <p class="avis-stars" role="img" aria-label={`Note : ${a.note} sur 5`}>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <svg
+                        class={i < a.note! ? "on" : "off"}
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path d={etoile} fill="currentColor" />
+                      </svg>
+                    ))}
+                  </p>
+                )}
                 <blockquote class="avis-quote">
-                  <p>«&nbsp;{a.texte}&nbsp;»</p>
+                  {a.texte.split("\n\n").map((paragraphe, i, tous) => (
+                    <p>
+                      {i === 0 && "«\u00a0"}
+                      {paragraphe}
+                      {i === tous.length - 1 && "\u00a0»"}
+                    </p>
+                  ))}
                 </blockquote>
                 <p class="avis-author">{a.nom}</p>
                 <p class="avis-meta">{a.meta}</p>
