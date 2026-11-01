@@ -1,0 +1,86 @@
+---
+// Bandeau de consentement : la mesure d'audience Vercel n'est ni chargée ni
+// exécutée avant un accord explicite. Le choix et sa date restent dans le
+// navigateur, et la question est reposée au bout de six mois (reco CNIL).
+---
+
+<div class="consent" id="consent" role="region" aria-label="Mesure d'audience" hidden>
+  <p class="consent-text">
+    Acceptez-vous la mesure de fréquentation et de performance de ce site ?
+    Elle sert seulement à savoir quelles pages vous sont utiles et si elles
+    s'affichent assez vite. Aucun cookie, aucune publicité, aucun suivi d'un
+    site à l'autre, et le refus ne change rien à votre visite.{" "}
+    <a href="/mentions-legales#cookies">En savoir plus</a>
+  </p>
+  <div class="consent-actions">
+    <button type="button" class="btn btn-ghost" data-consent="non">Refuser</button>
+    <button type="button" class="btn btn-ghost" data-consent="oui">Accepter</button>
+  </div>
+</div>
+
+<script>
+  import { inject } from "@vercel/analytics";
+  import { injectSpeedInsights } from "@vercel/speed-insights";
+
+  const CLE = "og-mesure-audience";
+  const VALIDITE = 182 * 24 * 60 * 60 * 1000; // six mois
+  const bandeau = document.getElementById("consent");
+
+  if (bandeau) {
+    let lance = false;
+
+    const lire = () => {
+      try {
+        const brut = localStorage.getItem(CLE);
+        if (!brut) return null;
+        const choix = JSON.parse(brut);
+        if (!choix || (choix.reponse !== "oui" && choix.reponse !== "non")) return null;
+        if (Date.now() - Date.parse(choix.date) > VALIDITE) return null;
+        return choix.reponse;
+      } catch {
+        return null;
+      }
+    };
+
+    const ecrire = (reponse: string | null) => {
+      try {
+        if (reponse) {
+          localStorage.setItem(CLE, JSON.stringify({ reponse, date: new Date().toISOString() }));
+        } else {
+          localStorage.removeItem(CLE);
+        }
+      } catch {
+        /* navigation privée ou stockage refusé : le choix ne survit pas à la page */
+      }
+    };
+
+    const demarrer = () => {
+      if (lance) return;
+      lance = true;
+      inject({ framework: "astro" });
+      injectSpeedInsights({ framework: "astro" });
+    };
+
+    const choix = lire();
+    if (choix === "oui") demarrer();
+    else if (choix !== "non") bandeau.hidden = false;
+
+    bandeau.addEventListener("click", (e) => {
+      const bouton = (e.target as HTMLElement).closest<HTMLElement>("[data-consent]");
+      if (!bouton) return;
+      const reponse = bouton.dataset.consent ?? null;
+      ecrire(reponse);
+      bandeau.hidden = true;
+      if (reponse === "oui") demarrer();
+    });
+
+    document.addEventListener("click", (e) => {
+      const lien = (e.target as HTMLElement).closest("[data-consent-reset]");
+      if (!lien) return;
+      e.preventDefault();
+      ecrire(null);
+      bandeau.hidden = false;
+      bandeau.querySelector<HTMLButtonElement>("[data-consent]")?.focus();
+    });
+  }
+</script>

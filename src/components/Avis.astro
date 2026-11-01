@@ -1,11 +1,14 @@
 ---
-import { AVIS_PUBLIES } from "../data/avis";
+import { AVIS_PUBLIES } from "@/data/avis";
 
 const avis = AVIS_PUBLIES;
 const notes = avis.flatMap((a) => (a.note ? [a.note] : []));
 const moyenne = notes.length
   ? (notes.reduce((total, n) => total + n, 0) / notes.length).toFixed(1).replace(".", ",")
   : null;
+
+// Au-delà, l'avis est tronqué dans la carte et se lit en entier dans la fenêtre
+const AVIS_LONG = 300;
 
 const etoile =
   "M12 2.6l2.8 5.9 6.4.8-4.7 4.4 1.2 6.3L12 17l-5.7 3 1.2-6.3L2.8 9.3l6.4-.8L12 2.6z";
@@ -40,12 +43,12 @@ const etoile =
     )}
   </div>
   {avis.length > 0 && (
-    <div class="avis-viewport" role="region" aria-labelledby="titre-avis" data-reveal="1">
+    <div class="avis-viewport" role="region" aria-label="Avis en défilement" data-reveal="1">
       <div class="avis-track" id="avisTrack">
         <ul class="avis-list" id="avisList">
           {
             avis.map((a) => (
-              <li class="avis-card">
+              <li class:list={["avis-card", { "is-long": a.texte.length > AVIS_LONG }]}>
                 {a.note && (
                   <p class="avis-stars" role="img" aria-label={`Note : ${a.note} sur 5`}>
                     {Array.from({ length: 5 }, (_, i) => (
@@ -70,6 +73,11 @@ const etoile =
                     </p>
                   ))}
                 </blockquote>
+                {a.texte.length > AVIS_LONG && (
+                  <button type="button" class="avis-more">
+                    Lire l’avis complet<span class="sr-only"> de {a.nom}</span>
+                  </button>
+                )}
                 <p class="avis-author">{a.nom}</p>
                 <p class="avis-meta">{a.meta}</p>
               </li>
@@ -77,6 +85,17 @@ const etoile =
           }
         </ul>
       </div>
+    </div>
+    <dialog class="avis-dialog" id="avisDialog" aria-labelledby="avisDialogAuteur">
+      <button type="button" class="avis-dialog-close" aria-label="Fermer l’avis">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <div class="avis-dialog-body"></div>
+    </dialog>
+    <div class="container">
+      <p class="avis-verif">Avis vérifiés, recueillis directement auprès d’athlètes entraînés par Olivier.</p>
     </div>
   )}
 </section>

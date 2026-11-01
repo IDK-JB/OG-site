@@ -1,10 +1,10 @@
 ---
-import Base from "../layouts/Base.astro";
+import Base from "@/layouts/Base.astro";
 ---
 
 <Base
   title="Athlete Project : groupe d'athlétisme demi-fond à Lyon (ACL)"
-  description="Athlete Project (AP), groupe d'entraînement demi-fond de 20 athlètes à l'Athletic Club du Lyonnais, fondé par Olivier Gaillard. Saison, résultats, records, recrutement."
+  description="Athlete Project, groupe demi-fond de 20 athlètes à l'Athletic Club du Lyonnais fondé par Olivier Gaillard : saison, résultats, records et recrutement."
   active="ap"
   bodyClass="ap"
   image="/assets/og-athlete-project.jpg"
@@ -24,7 +24,7 @@ import Base from "../layouts/Base.astro";
       coach: { "@id": "https://olivier-gaillard.fr/#olivier-gaillard" },
       parentOrganization: { "@type": "SportsClub", name: "Athletic Club du Lyonnais (ACL)" },
       location: { "@type": "Place", name: "Site de la Duchère", address: { "@type": "PostalAddress", addressLocality: "Lyon", addressCountry: "FR" } },
-      sameAs: ["https://instagram.com/athleteproject.lyon"],
+      sameAs: ["https://www.instagram.com/athleteproject.lyon"],
     },
     {
       "@type": "BreadcrumbList",
@@ -52,6 +52,7 @@ import Base from "../layouts/Base.astro";
       <h1 class="hero-title">
         <span class="line">Athlete</span>
         <span class="line"><span class="accent">Project.</span></span>
+        <span class="sr-only">Groupe d'athlétisme demi-fond à Lyon</span>
       </h1>
       <p class="lead">
         20 athlètes, un staff, un objectif : donner aux coureurs ambitieux
@@ -164,8 +165,8 @@ import Base from "../layouts/Base.astro";
     </div>
     <div class="container">
       <p class="steps-note" data-reveal style="margin-top: 26px;">
-        <strong>Suivre l'actualité du groupe</strong> : rendez-vous sur la
-        <a href="https://instagram.com/athleteproject.lyon" target="_blank" rel="noopener">page Instagram d'Athlete Project<span class="sr-only"> (nouvel onglet)</span></a>.
+        <strong>Suivre l'actualité du groupe</strong> : rendez-vous sur la{" "}
+        <a href="https://www.instagram.com/athleteproject.lyon" target="_blank" rel="noopener">page Instagram d'Athlete Project<span class="sr-only"> (nouvel onglet)</span></a>.
       </p>
     </div>
   </section>
