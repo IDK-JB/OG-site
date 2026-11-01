@@ -1,7 +1,8 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { INDEXABLE } from "../seo";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Consent from "@/components/Consent.astro";
+import { CONTACT_EMAIL, INDEXABLE, OFFRES } from "@/seo";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -89,7 +90,7 @@ const graph = [
       "Entraîneur diplômé de la Fédération Française d'Athlétisme, spécialiste demi-fond et running, basé à Lyon. Fondateur du groupe Athlete Project à l'Athletic Club du Lyonnais.",
     url: new URL("/coach", site).href,
     image: new URL("/assets/olivier-qui-suis-je.webp", site).href,
-    email: "mailto:contact@olivier-gaillard.fr",
+    email: CONTACT_EMAIL,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Lyon",
@@ -126,14 +127,14 @@ const graph = [
     ],
   },
   {
-    "@type": ["ProfessionalService", "SportsActivityLocation"],
+    "@type": "ProfessionalService",
     "@id": businessId,
     name: "Olivier Gaillard, coach running et athlétisme",
     description:
       "Coaching running et athlétisme à Lyon et à distance : plans d'entraînement personnalisés sur Nolio, du premier 10 km au marathon.",
     url: new URL("/", site).href,
-    image: ogImage,
-    email: "contact@olivier-gaillard.fr",
+    image: new URL(DEFAULT_IMAGE, site).href,
+    email: CONTACT_EMAIL,
     founder: { "@id": personId },
     address: {
       "@type": "PostalAddress",
@@ -147,22 +148,7 @@ const graph = [
       { "@type": "Country", name: "France" },
     ],
     priceRange: "80 € à 130 € par mois",
-    makesOffer: [
-      {
-        "@type": "Offer",
-        name: "Suivi performance",
-        price: "80",
-        priceCurrency: "EUR",
-        description: "Plan d'entraînement running personnalisé sur Nolio, ajusté chaque semaine.",
-      },
-      {
-        "@type": "Offer",
-        name: "Suivi premium",
-        price: "130",
-        priceCurrency: "EUR",
-        description: "Suivi running personnalisé avec accompagnement nutritionnel et disponibilité prioritaire.",
-      },
-    ],
+    makesOffer: OFFRES,
   },
   ...jsonLd,
 ];
@@ -252,5 +238,8 @@ const structuredData = JSON.stringify({ "@context": "https://schema.org", "@grap
   <Footer home={home} />
 
   <script src={`/js/main.js?v=${jsVersion}`} is:inline></script>
+
+  <!-- Mesure d'audience Vercel, chargée seulement après accord -->
+  <Consent />
 </body>
 </html>

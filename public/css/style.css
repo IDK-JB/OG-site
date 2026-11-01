@@ -20,7 +20,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 
 body {
   background: var(--bg);
@@ -371,6 +371,7 @@ a { color: inherit; text-decoration: none; }
 .btn-solid:hover { background: var(--text); color: #0f0f0f; }
 
 .btn-ghost {
+  background: transparent;
   border-color: rgba(255, 253, 250, 0.35);
   color: var(--text);
 }
@@ -599,6 +600,13 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
+.pricing-note a {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+}
+
+.pricing-note a:hover { color: var(--accent); }
+
 /* ---------- Contact ---------- */
 
 .contact-grid {
@@ -682,6 +690,18 @@ a { color: inherit; text-decoration: none; }
 }
 
 .form-foot { grid-column: 1 / -1; }
+
+/* Piège à robots : champ invisible que seuls les spams remplissent */
+.form-honey { display: none; }
+
+.form-rgpd {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--muted);
+}
+.form-rgpd a { border-bottom: 1px solid currentColor; }
+.form-rgpd a:hover { color: var(--accent); }
+.form-status a { color: var(--text); border-bottom: 1px solid var(--accent); }
 
 /* ---------- Footer ---------- */
 
@@ -1414,6 +1434,9 @@ html.js [data-reveal="4"].in { transition-delay: 0.32s; }
   .ap-intro-photo img { height: 100%; }
   .ap-stats { grid-template-columns: 1fr 1fr; }
   .event-list { grid-template-columns: 1fr; }
+  /* Sans JS le burger ne s'ouvre pas : on garde le bouton contact, la navigation reste dans le footer */
+  html:not(.js) .burger { display: none; }
+  html:not(.js) .header-cta { display: inline-flex; }
 }
 
 @media (max-width: 560px) {
@@ -1568,15 +1591,17 @@ body.ap :focus-visible { outline-color: var(--text); }
 .avis-track {
   display: flex;
   width: max-content;
-  animation: avisDefile 80s linear infinite;
+  animation: avisDefile 120s linear infinite;
 }
 
 @keyframes avisDefile {
   to { transform: translateX(-50%); }
 }
 
-/* Pause au survol et quand le bouton bascule en .is-paused */
+/* Pause au survol, au clavier, fenêtre ouverte et quand le bouton bascule en .is-paused */
 .avis-viewport:hover .avis-track,
+.avis-viewport:focus-within .avis-track,
+.avis:has(.avis-dialog[open]) .avis-track,
 .avis-track.is-paused { animation-play-state: paused; }
 
 .avis-list {
@@ -1608,6 +1633,64 @@ body.ap :focus-visible { outline-color: var(--text); }
 }
 .avis-quote p + p { margin-top: 0.8em; }
 
+/* Avis long : 6 lignes dans la carte, la suite dans la fenêtre */
+.avis-card.is-long .avis-quote p:first-child {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+  overflow: hidden;
+}
+.avis-card.is-long .avis-quote p + p { display: none; }
+
+.avis-more {
+  margin-top: 12px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(232, 122, 61, 0.45);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+.avis-more:hover { border-bottom-color: var(--accent); }
+
+.avis-dialog {
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-soft);
+  color: var(--text);
+  overflow-y: auto;
+}
+.avis-dialog::backdrop { background: rgba(15, 15, 15, 0.8); }
+
+.avis-dialog .avis-quote p {
+  font-size: clamp(1rem, 1.4vw, 1.08rem);
+  line-height: 1.75;
+}
+
+.avis-dialog-close {
+  float: right;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -12px -12px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.avis-dialog-close:hover { border-color: var(--accent); color: var(--accent); }
+
 .avis-author {
   margin-top: 18px;
   font-size: 0.92rem;
@@ -1622,6 +1705,13 @@ body.ap :focus-visible { outline-color: var(--text); }
 
 .avis-vide { color: var(--muted); }
 
+.avis-verif {
+  margin-top: 22px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
 /* Mouvement réduit : pas de boucle, défilement manuel au doigt ou au clavier */
 @media (prefers-reduced-motion: reduce) {
   .avis-toggle { display: none; }
@@ -1632,6 +1722,12 @@ body.ap :focus-visible { outline-color: var(--text); }
   }
   .avis-card { scroll-snap-align: start; }
 }
+
+/* Sans JS le bouton pause ne marche pas : pas de boucle, défilement manuel */
+html:not(.js) .avis-toggle { display: none; }
+html:not(.js) .avis-track { animation: none; }
+html:not(.js) .avis-viewport { overflow-x: auto; scroll-snap-type: x mandatory; }
+html:not(.js) .avis-card { scroll-snap-align: start; }
 
 /* Mode contraste forcé : garder le contour du bouton visible */
 @media (forced-colors: active) {
@@ -1868,6 +1964,18 @@ body.ap :focus-visible { outline-color: var(--text); }
 
 .legal p + p { margin-top: 1em; }
 
+.legal h1 + p { margin-top: 1em; }
+
+.legal ul + p { margin-top: 1em; }
+
+.legal ul {
+  max-width: 68ch;
+  margin: 1em 0 0 1.1em;
+  color: var(--muted);
+}
+
+.legal li + li { margin-top: 0.5em; }
+
 .legal a {
   color: var(--text);
   border-bottom: 1px solid var(--accent);
@@ -1875,3 +1983,71 @@ body.ap :focus-visible { outline-color: var(--text); }
 }
 
 .legal a:hover { color: var(--accent); }
+
+/* ---------- Bandeau de consentement ---------- */
+
+.consent {
+  position: fixed;
+  z-index: 130;
+  left: clamp(12px, 3vw, 24px);
+  right: clamp(12px, 3vw, 24px);
+  bottom: clamp(12px, 3vw, 24px);
+  margin: 0 auto;
+  max-width: 760px;
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 28px);
+  padding: 18px clamp(18px, 3vw, 26px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(22, 22, 22, 0.96);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+.consent[hidden] { display: none; }
+
+/* Masqué quand le menu mobile est ouvert (inert posé par main.js) */
+.consent[inert] { display: none; }
+
+.consent-text {
+  flex: 1;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.consent-text a {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+  white-space: nowrap;
+}
+
+.consent-text a:hover { color: var(--accent); }
+
+.consent-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.consent .btn {
+  padding: 11px 22px;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .consent { flex-direction: column; align-items: stretch; gap: 14px; }
+  .consent-actions .btn { flex: 1; justify-content: center; }
+}
+
+.consent-reset {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--accent);
+  padding: 0;
+  cursor: pointer;
+}
+
+.consent-reset:hover { color: var(--accent); }

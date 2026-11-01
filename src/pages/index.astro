@@ -1,14 +1,15 @@
 ---
-import Base from "../layouts/Base.astro";
-import Avis from "../components/Avis.astro";
+import Base from "@/layouts/Base.astro";
+import Avis from "@/components/Avis.astro";
+import { CONTACT_EMAIL } from "@/seo";
 
 // Avis auto-publiés (src/data/avis.ts) : aucune donnée structurée
 // Review/AggregateRating, Google ne les accepte pas pour sa propre activité.
 ---
 
 <Base
-  title="Coach running à distance et à Lyon : Olivier Gaillard, entraîneur FFA"
-  description="Coaching running à distance partout en France et à Lyon : plan d'entraînement sur mesure sur Nolio, ajusté chaque semaine. 10 km, semi, marathon. Premier échange gratuit."
+  title="Coach running à Lyon et à distance : Olivier Gaillard, entraîneur FFA"
+  description="Coach running à Lyon et à distance : plan d'entraînement sur mesure sur Nolio, ajusté chaque semaine, du 10 km au marathon. Premier échange gratuit."
   active="home"
   home={true}
   imageAlt="Olivier Gaillard, coach running à Lyon et à distance"
@@ -193,7 +194,7 @@ import Avis from "../components/Avis.astro";
           <a href="#contact" class="btn btn-solid">Commencer <span class="arrow" aria-hidden="true">→</span></a>
         </article>
       </div>
-      <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider.</p>
+      <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider. Prix par mois, TVA non applicable, article 293 B du code général des impôts. Sans engagement, avec 14 jours de rétractation : <a href="/cgv">conditions de vente</a>.</p>
     </div>
   </section>
 
@@ -208,12 +209,23 @@ import Avis from "../components/Avis.astro";
             Écrivez-moi, je réponds à tout le monde.
           </p>
           <p class="contact-direct">
-            <a href="mailto:contact@olivier-gaillard.fr">contact@olivier-gaillard.fr</a>
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           </p>
         </div>
 
-        <form class="contact-form" id="contactForm" novalidate aria-describedby="form-note" data-reveal="2">
-          <p class="form-note full" id="form-note">Tous les champs sont obligatoires.</p>
+        <form
+          class="contact-form"
+          id="contactForm"
+          action={`https://formsubmit.co/${CONTACT_EMAIL}`}
+          method="POST"
+          novalidate
+          aria-describedby="form-note"
+          data-reveal="2"
+        >
+          <input type="hidden" name="_subject" value="Nouveau message depuis olivier-gaillard.fr" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off" />
+          <p class="form-note full" id="form-note">Tous les champs sont obligatoires, sauf le téléphone.</p>
           <div class="field">
             <label for="nom">Nom et prénom</label>
             <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" placeholder="Martin Julie" aria-describedby="nom-error" />
@@ -225,6 +237,10 @@ import Avis from "../components/Avis.astro";
             <p class="field-error" id="email-error"></p>
           </div>
           <div class="field full">
+            <label for="tel">Téléphone (facultatif, pour un premier échange par téléphone ou en visio)</label>
+            <input type="tel" id="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" />
+          </div>
+          <div class="field full">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Votre objectif, votre niveau, vos questions…" aria-describedby="message-error"></textarea>
             <p class="field-error" id="message-error"></p>
@@ -233,6 +249,10 @@ import Avis from "../components/Avis.astro";
             <button type="submit" class="btn btn-solid">Envoyer <span class="arrow" aria-hidden="true">→</span></button>
             <p class="form-status" id="form-status" role="status"></p>
           </div>
+          <p class="form-rgpd full">
+            Vos coordonnées servent uniquement à vous répondre et ne sont jamais
+            cédées. <a href="/mentions-legales#donnees">En savoir plus</a>
+          </p>
         </form>
       </div>
     </div>
@@ -283,26 +303,64 @@ import Avis from "../components/Avis.astro";
       };
 
       let tente = false;
+      let envoiEnCours = false;
+      const statut = document.getElementById("form-status")!;
+      const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+      const adresse = form.action.split("/").pop()!;
+
+      const afficherStatut = (texte: string, lienMail = false) => {
+        statut.textContent = texte;
+        if (lienMail) {
+          const lien = document.createElement("a");
+          lien.href = `mailto:${adresse}`;
+          lien.textContent = adresse;
+          statut.append(" ", lien);
+        }
+      };
 
       // Après un premier envoi raté, on revalide à la frappe pour effacer les erreurs corrigées
       form.addEventListener("input", () => { if (tente) valider(); });
 
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        if (envoiEnCours) return;
         tente = true;
         const data = valider();
         if (!data) {
+          const n = form.querySelectorAll('[aria-invalid="true"]').length;
+          afficherStatut(n === 1 ? "1 champ à corriger." : `${n} champs à corriger.`);
           form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
           return;
         }
 
-        const sujet = `Contact site : ${data.nom}`;
-        const corps = `Nom et prénom : ${data.nom}\nEmail : ${data.email}\n\nMessage :\n${data.message}\n`;
+        envoiEnCours = true;
+        bouton.disabled = true;
+        afficherStatut("Envoi en cours…");
 
-        window.location.href =
-          "mailto:contact@olivier-gaillard.fr" +
-          "?subject=" + encodeURIComponent(sujet) +
-          "&body=" + encodeURIComponent(corps);
+        const champsEnvoyes = new FormData(form);
+        champsEnvoyes.set("nom", data.nom);
+        champsEnvoyes.set("email", data.email);
+        champsEnvoyes.set("message", data.message);
+        champsEnvoyes.set("_captcha", "false");
+
+        try {
+          const reponse = await fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: champsEnvoyes,
+          });
+          const resultat = await reponse.json().catch(() => ({}));
+          if (!reponse.ok || String(resultat.success) !== "true") throw new Error(resultat.message);
+
+          form.reset();
+          tente = false;
+          afficherStatut("Merci, votre message est bien parti. Je vous réponds au plus vite.");
+        } catch {
+          afficherStatut("L'envoi n'a pas abouti. Écrivez-moi directement à", true);
+        } finally {
+          envoiEnCours = false;
+          bouton.disabled = false;
+        }
       });
     }
   </script>

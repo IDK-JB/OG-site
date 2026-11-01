@@ -1,5 +1,6 @@
 ---
-import Base from "../layouts/Base.astro";
+import Base from "@/layouts/Base.astro";
+import { OFFRES } from "@/seo";
 
 const site = Astro.site ?? new URL("https://olivier-gaillard.fr");
 const businessId = new URL("/#coaching", site).href;
@@ -37,22 +38,7 @@ const jsonLd: Record<string, unknown>[] = [
       "Plan d'entraînement running personnalisé publié sur Nolio, ajusté chaque semaine, avec analyse des séances. Du premier 10 km au marathon, partout en France.",
     provider: { "@id": businessId },
     areaServed: { "@type": "Country", name: "France" },
-    offers: [
-      {
-        "@type": "Offer",
-        name: "Suivi performance",
-        price: "80",
-        priceCurrency: "EUR",
-        description: "Plan d'entraînement running personnalisé sur Nolio, ajusté chaque semaine.",
-      },
-      {
-        "@type": "Offer",
-        name: "Suivi premium",
-        price: "130",
-        priceCurrency: "EUR",
-        description: "Suivi running personnalisé avec accompagnement nutritionnel et disponibilité prioritaire.",
-      },
-    ],
+    offers: OFFRES,
   },
   {
     "@type": "FAQPage",
@@ -74,8 +60,8 @@ const jsonLd: Record<string, unknown>[] = [
 ---
 
 <Base
-  title="Plan d'entraînement running personnalisé, Olivier Gaillard"
-  description="Suivi running en ligne par un entraîneur FFA : plan sur mesure publié sur Nolio, séances analysées chaque semaine. 10 km, semi, marathon. Premier échange gratuit."
+  title="Coaching running à distance : plan d'entraînement personnalisé"
+  description="Suivi running en ligne par un entraîneur FFA : plan sur mesure sur Nolio, séances analysées chaque semaine, du 10 km au marathon. Premier échange gratuit."
   active="distance"
   image="/assets/og-coaching-a-distance.jpg"
   imageAlt="Coaching running à distance avec Olivier Gaillard, plan sur mesure sur Nolio"
@@ -231,7 +217,7 @@ const jsonLd: Record<string, unknown>[] = [
           <a href="/#contact" class="btn btn-solid">Commencer <span class="arrow" aria-hidden="true">→</span></a>
         </article>
       </div>
-      <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider.</p>
+      <p class="pricing-note" data-reveal="3">Le premier échange est toujours gratuit : on en parle avant de décider. Prix par mois, TVA non applicable, article 293 B du code général des impôts. Sans engagement, avec 14 jours de rétractation : <a href="/cgv">conditions de vente</a>.</p>
     </div>
   </section>
 

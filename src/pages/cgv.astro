@@ -1,0 +1,198 @@
+---
+import Base from "@/layouts/Base.astro";
+import { CONTACT_EMAIL, MEDIATEUR, OFFRES } from "@/seo";
+
+const MAJ = "1er novembre 2026";
+---
+
+<Base
+  title="Conditions générales de vente, Olivier Gaillard coach running"
+  description="Conditions générales de vente du coaching running d'Olivier Gaillard : formules, prix, paiement, résiliation, droit de rétractation de 14 jours et médiation de la consommation."
+  active="legal"
+>
+
+  <section class="section legal">
+    <div class="container">
+      <h1 class="section-title">Conditions générales de vente</h1>
+      <p>En vigueur au {MAJ}.</p>
+
+      <h2>1. Objet</h2>
+      <p>
+        Les présentes conditions encadrent la vente de prestations de coaching
+        sportif à distance proposées par Olivier Gaillard à des particuliers.
+        Elles sont communiquées avant toute souscription et leur acceptation
+        est nécessaire pour souscrire.
+      </p>
+
+      <h2>2. Prestataire</h2>
+      <p>
+        Olivier Gaillard, entrepreneur individuel (micro-entreprise),
+        115 allée du 4 Avril 1908, 69580 Sathonay-Camp, France.
+        SIRET 531 217 925 00027. TVA non applicable, article 293 B du code
+        général des impôts. Contact :{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+      </p>
+
+      <h2>3. Prestations</h2>
+      <p>
+        Le coaching consiste en un accompagnement sportif personnalisé :
+        plan d'entraînement individualisé, mis à disposition sur la plateforme
+        Nolio, analyse des séances réalisées, ajustements et échanges réguliers
+        avec l'entraîneur. Deux formules mensuelles sont proposées :
+      </p>
+      <ul>
+        {OFFRES.map((o) => (
+          <li>{o.name}, {o.price} € par mois : {o.description}</li>
+        ))}
+      </ul>
+      <p>
+        L'accompagnement nutritionnel inclus dans la formule premium est assuré
+        par une diététicienne nutritionniste diplômée, partenaire indépendante.
+        Olivier Gaillard ne délivre lui-même aucun conseil diététique ni acte
+        de soin.
+      </p>
+
+      <h2>4. Souscription</h2>
+      <p>
+        Toute souscription est précédée d'un premier échange gratuit, par
+        téléphone ou en visioconférence. La souscription est ensuite confirmée
+        par écrit, par courrier électronique, en reprenant la formule retenue,
+        son prix, sa date de début et le lien vers les présentes conditions.
+        Cette confirmation vaut contrat.
+      </p>
+
+      <h2>5. Prix et paiement</h2>
+      <p>
+        Les prix sont indiqués en euros, par mois, et ne sont pas soumis à la
+        TVA (article 293 B du code général des impôts). Le paiement s'effectue
+        au début de chaque mois d'accompagnement, par le moyen convenu lors de
+        la souscription. Une facture est adressée pour chaque règlement.
+      </p>
+      <p>
+        En cas de défaut de paiement, l'accompagnement peut être suspendu après
+        une relance restée sans réponse pendant quinze jours.
+      </p>
+
+      <h2>6. Durée, reconduction et résiliation</h2>
+      <p>
+        L'accompagnement est conclu pour un mois, reconduit d'un mois sur
+        l'autre, sans durée minimale d'engagement. Chaque partie peut y mettre
+        fin par simple message écrit, au plus tard la veille du renouvellement.
+        Le mois en cours, déjà réglé, reste dû et se poursuit jusqu'à son
+        terme. Aucun frais de résiliation n'est appliqué.
+      </p>
+
+      <h2 id="retractation">7. Droit de rétractation</h2>
+      <p>
+        Vous disposez d'un délai de quatorze jours à compter de la conclusion
+        du contrat pour vous rétracter, sans avoir à vous justifier et sans
+        pénalité, conformément à l'article L221-18 du code de la consommation.
+      </p>
+      <p>
+        Pour l'exercer, il suffit de nous informer de votre décision par un
+        message sans ambiguïté adressé à{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>,
+        ou d'utiliser le formulaire reproduit en fin de page. Les sommes versées
+        vous sont remboursées au plus tard quatorze jours après réception de
+        votre demande, par le même moyen de paiement.
+      </p>
+      <p>
+        Si vous demandez expressément que l'accompagnement commence avant la
+        fin de ce délai, ce qui est le cas lorsque le premier plan vous est
+        transmis dans les quatorze jours, votre droit de rétractation reste
+        entier, mais vous restez tenu de payer la part de prestation déjà
+        fournie, calculée au prorata du nombre de jours d'accompagnement. Si
+        vous demandez l'exécution immédiate et que la prestation du mois est
+        entièrement fournie avant la fin du délai, le droit de rétractation ne
+        peut plus être exercé pour ce mois, après information préalable de
+        votre part.
+      </p>
+
+      <h2>8. Obligations et aptitude physique</h2>
+      <p>
+        L'accompagnement suppose que vous soyez apte à la pratique sportive.
+        Il vous appartient de vous assurer de cette aptitude auprès d'un
+        médecin, en particulier avant une reprise ou une préparation
+        intensive, et de signaler sans délai toute douleur, blessure,
+        pathologie ou traitement susceptible d'influer sur l'entraînement.
+        Les séances proposées ne constituent ni un diagnostic, ni un
+        traitement, ni un avis médical.
+      </p>
+      <p>
+        Vous vous engagez à transmettre des informations exactes sur votre
+        niveau et votre état de forme, et à adapter ou interrompre une séance
+        si votre état le justifie.
+      </p>
+
+      <h2>9. Responsabilité</h2>
+      <p>
+        Olivier Gaillard s'engage à mettre en œuvre les moyens et les
+        compétences nécessaires à un accompagnement sérieux et adapté. Aucune
+        performance, aucun chrono ni aucun résultat de compétition ne peut être
+        garanti, ces résultats dépendant de facteurs propres à chaque personne.
+        Les séances sont réalisées de manière autonome, en dehors de toute
+        surveillance directe de l'entraîneur.
+      </p>
+
+      <h2>10. Propriété intellectuelle</h2>
+      <p>
+        Les plans, séances et documents transmis sont personnels. Ils ne
+        peuvent être ni revendus, ni diffusés, ni réutilisés pour entraîner
+        d'autres personnes sans autorisation écrite.
+      </p>
+
+      <h2>11. Données personnelles</h2>
+      <p>
+        Les informations recueillies servent uniquement à assurer
+        l'accompagnement et à répondre à vos demandes. Le détail des
+        traitements, des durées de conservation et de vos droits figure dans
+        les <a href="/mentions-legales#donnees">mentions légales</a>.
+      </p>
+
+      <h2 id="mediation">12. Réclamation et médiation</h2>
+      <p>
+        Toute réclamation peut être adressée à{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        Nous nous engageons à y répondre dans un délai d'un mois.
+      </p>
+      {MEDIATEUR ? (
+        <p>
+          À défaut de solution, vous pouvez recourir gratuitement à un
+          médiateur de la consommation : {MEDIATEUR.nom},{" "}
+          <a href={MEDIATEUR.site} target="_blank" rel="noopener">{MEDIATEUR.site.replace(/^https?:\/\//, "")}<span class="sr-only"> (nouvel onglet)</span></a>.
+          La saisine du médiateur suppose d'avoir d'abord tenté de résoudre le
+          litige directement avec nous, par une réclamation écrite.
+        </p>
+      ) : null}
+
+      <h2>13. Droit applicable et litiges</h2>
+      <p>
+        Les présentes conditions sont soumises au droit français. En cas de
+        litige, vous pouvez saisir, à votre choix, la juridiction du lieu de
+        votre domicile ou celle du lieu d'exercice de l'activité.
+      </p>
+
+      <h2 id="formulaire">Annexe : formulaire type de rétractation</h2>
+      <p>
+        À compléter et à renvoyer uniquement si vous souhaitez vous rétracter.
+      </p>
+      <p>
+        À l'attention d'Olivier Gaillard, 115 allée du 4 Avril 1908,
+        69580 Sathonay-Camp, <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> :
+      </p>
+      <p>
+        Je vous notifie par la présente ma rétractation du contrat portant sur
+        la prestation de coaching sportif ci-dessous :
+      </p>
+      <p>
+        Formule souscrite : ..........<br />
+        Commandée le : ..........<br />
+        Nom du consommateur : ..........<br />
+        Adresse du consommateur : ..........<br />
+        Signature (uniquement en cas de notification sur papier) : ..........<br />
+        Date : ..........
+      </p>
+    </div>
+  </section>
+
+</Base>

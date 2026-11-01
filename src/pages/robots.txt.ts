@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { INDEXABLE } from "../seo";
+import { INDEXABLE } from "@/seo";
 
 // Hors indexation, on laisse les robots lire les pages pour qu'ils voient
 // la consigne noindex (un Disallow les empêcherait de la lire).

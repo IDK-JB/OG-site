@@ -1,27 +1,50 @@
 ---
-import Base from "../layouts/Base.astro";
+import Base from "@/layouts/Base.astro";
+import { CONTACT_EMAIL } from "@/seo";
 ---
 
 <Base
   title="Mentions légales et confidentialité, Olivier Gaillard"
-  description="Mentions légales du site olivier-gaillard.fr : éditeur, hébergement, propriété intellectuelle et traitement des données personnelles."
+  description="Mentions légales du site olivier-gaillard.fr : éditeur, hébergement, propriété intellectuelle, cookies et traitement des données personnelles."
   active="legal"
 >
 
   <section class="section legal">
     <div class="container">
       <h1 class="section-title">Mentions légales</h1>
+      <p>
+        Les conditions de vente du coaching, le droit de rétractation et la
+        médiation de la consommation figurent sur la page{" "}
+        <a href="/cgv">conditions générales de vente</a>.
+      </p>
 
       <h2>Éditeur du site</h2>
       <p>
-        Olivier Gaillard, entraîneur d'athlétisme et coach running, Lyon,
-        France. Contact : <a href="mailto:contact@olivier-gaillard.fr">contact@olivier-gaillard.fr</a>.
+        Olivier Gaillard, entraîneur d'athlétisme et coach running,
+        entrepreneur individuel (micro-entreprise), 115 allée du 4 Avril 1908,
+        69580 Sathonay-Camp, France.
+      </p>
+      <p>
+        SIRET 531 217 925 00027, code APE 96.09Z.
+        TVA non applicable, article 293 B du code général des impôts.
+      </p>
+      <p>
+        Contact : <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        Directeur de la publication : Olivier Gaillard.
       </p>
 
       <h2>Hébergement</h2>
       <p>
         Vercel Inc., 440 N Barranca Avenue, Suite 4133, Covina, CA 91723,
-        États-Unis (<a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a>).
+        États-Unis (<a href="https://vercel.com" target="_blank" rel="noopener">vercel.com<span class="sr-only"> (nouvel onglet)</span></a>).
+      </p>
+
+      <h2>Réalisation et support technique</h2>
+      <p>
+        Jeremy Dura, 06 95 87 51 13,{" "}
+        <a href="mailto:dura.jeremy@proton.me">dura.jeremy@proton.me</a>.
+        Pour toute question sur le fonctionnement du site, un contenu à
+        corriger ou un signalement.
       </p>
 
       <h2>Propriété intellectuelle</h2>
@@ -31,23 +54,83 @@ import Base from "../layouts/Base.astro";
         même partielle, est interdite sans autorisation préalable.
       </p>
 
-      <h2>Données personnelles</h2>
+      <h2 id="cookies">Cookies et mesure d'audience</h2>
       <p>
-        Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure
-        d'audience. Le formulaire de contact ouvre votre propre messagerie :
-        aucune donnée n'est transmise à un serveur ni stockée par le site.
+        Ce site ne dépose aucun cookie, ni pour son fonctionnement, ni pour la
+        publicité, ni pour du profilage. Les polices de caractères, les images
+        et les scripts sont hébergés sur le site lui-même, aucun service tiers
+        n'est appelé pour afficher les pages.
       </p>
       <p>
-        Les messages envoyés à l'adresse de contact ne servent qu'à répondre
-        à votre demande et ne sont ni cédés ni réutilisés à d'autres fins.
-        Les polices de caractères sont fournies par Google Fonts : votre
-        navigateur contacte les serveurs de Google pour les charger.
+        La fréquentation et la rapidité d'affichage du site sont mesurées par
+        deux outils de l'hébergeur, Vercel Web Analytics et Vercel Speed
+        Insights, et seulement si vous les avez acceptés dans le bandeau
+        affiché à votre arrivée. Tant que vous n'avez pas répondu, ou si vous
+        refusez, ces scripts ne sont ni téléchargés, ni exécutés, et rien n'est
+        transmis. Le refus ne limite en rien l'accès au site.
       </p>
       <p>
-        Vous disposez d'un droit d'accès, de rectification et de suppression
-        des données vous concernant, en écrivant à
-        <a href="mailto:contact@olivier-gaillard.fr">contact@olivier-gaillard.fr</a>.
-        Vous pouvez également saisir la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>).
+        Ces outils n'écrivent ni cookie ni identifiant dans votre navigateur et
+        ne vous suivent pas d'un site à l'autre. Web Analytics compte les pages
+        vues et retient des informations générales : page consultée, page d'où
+        vous venez, pays, type d'appareil, navigateur. Speed Insights relève
+        des temps de chargement et d'affichage de la page que vous consultez.
+        Le visiteur est distingué par une empreinte calculée à partir de la
+        requête, sans que votre adresse IP soit conservée, et cette empreinte
+        est supprimée au bout de 24 heures. Les statistiques qui en découlent
+        sont agrégées et conservées au maximum douze mois.
+      </p>
+      <p>
+        Responsable de ce traitement : Olivier Gaillard, coordonnées
+        ci-dessus. Finalité : mesurer la fréquentation du site et savoir
+        quelles pages sont utiles. Base légale : votre consentement, que vous
+        pouvez retirer à tout moment. Destinataire : Vercel Inc., qui agit
+        comme sous-traitant et dont les serveurs peuvent se trouver hors de
+        l'Union européenne, dans le cadre des garanties contractuelles prévues
+        par la réglementation européenne.
+      </p>
+      <p>
+        Votre réponse et sa date sont gardées dans la mémoire locale de votre
+        navigateur, pas dans un cookie, et la question vous est reposée au bout
+        de six mois. Vous pouvez changer d'avis à tout moment :
+        <button type="button" class="consent-reset" data-consent-reset>modifier mon choix</button>.
+        Un refus après un accord prend effet au chargement de page suivant.
+      </p>
+
+      <h2 id="donnees">Données personnelles</h2>
+      <p>
+        Le formulaire de contact recueille votre nom, votre adresse email,
+        votre message et, si vous le souhaitez, votre numéro de téléphone.
+        Ces informations sont transmises par le service FormSubmit
+        (<a href="https://formsubmit.co" target="_blank" rel="noopener">formsubmit.co<span class="sr-only"> (nouvel onglet)</span></a>)
+        à la boîte mail d'Olivier Gaillard, seul destinataire. Elles servent
+        uniquement à répondre à votre demande, ne sont ni cédées ni
+        réutilisées à d'autres fins, et sont supprimées au plus tard trois
+        ans après notre dernier échange.
+      </p>
+      <p>
+        Comme tout hébergeur, Vercel enregistre des journaux techniques
+        (adresse IP, page demandée) nécessaires à la sécurité et au bon
+        fonctionnement du site.
+      </p>
+      <p>
+        Vercel et FormSubmit sont des sociétés établies aux États-Unis : les
+        données ci-dessus peuvent être traitées hors de l'Union européenne,
+        dans le cadre des garanties prévues par la réglementation européenne.
+      </p>
+      <p>
+        Base légale de ce traitement : votre demande de contact. Fournir ces
+        informations est nécessaire pour vous répondre, et rien n'est collecté
+        d'autre.
+      </p>
+      <p>
+        Vous disposez d'un droit d'accès, de rectification, d'effacement, de
+        limitation, d'opposition et de portabilité sur les données vous
+        concernant, ainsi que du droit de retirer votre consentement à la
+        mesure d'audience, en écrivant à{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        Si la réponse ne vous satisfait pas, vous pouvez saisir la CNIL
+        (<a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr<span class="sr-only"> (nouvel onglet)</span></a>).
       </p>
     </div>
   </section>

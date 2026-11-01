@@ -7,6 +7,7 @@ const pages = [
   { path: "/coach", priority: "0.8" },
   { path: "/athlete-project", priority: "0.7" },
   { path: "/mentions-legales", priority: "0.1" },
+  { path: "/cgv", priority: "0.1" },
 ];
 
 export const GET: APIRoute = ({ site }) => {

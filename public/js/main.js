@@ -33,6 +33,9 @@
       menu.inert = !open;
       if (main) main.inert = open;
       if (footer) footer.inert = open;
+      // Le bandeau est inséré après ce script : on le cherche au moment de l'ouverture
+      var consent = document.getElementById("consent");
+      if (consent) consent.inert = open;
       if (open) {
         var first = menu.querySelector("a");
         if (first) first.focus();
@@ -122,7 +125,8 @@
         clone = avisList.cloneNode(true);
         clone.id = "avisListClone";
         clone.setAttribute("aria-hidden", "true");
-        clone.inert = true;
+        // Pas inert : « Lire l'avis complet » doit rester cliquable à la souris
+        clone.querySelectorAll("button").forEach(function (b) { b.tabIndex = -1; });
         avisTrack.appendChild(clone);
       }
       if (viewport) viewport.removeAttribute("tabindex");
@@ -137,6 +141,35 @@
     }
     syncAvis();
     motionMq.addEventListener("change", syncAvis);
+  }
+
+  /* ---------- Avis : lecture complète d'un avis long ---------- */
+  var avisDialog = document.getElementById("avisDialog");
+
+  if (avisTrack && avisDialog) {
+    var avisDialogBody = avisDialog.querySelector(".avis-dialog-body");
+
+    avisTrack.addEventListener("click", function (e) {
+      var more = e.target.closest(".avis-more");
+      if (!more) return;
+      var card = more.closest(".avis-card");
+      // Une carte du clone renvoie à sa jumelle de la liste d'origine
+      var source = avisList.children[Array.prototype.indexOf.call(card.parentElement.children, card)];
+      avisDialogBody.innerHTML = "";
+      ["avis-quote", "avis-author", "avis-meta"].forEach(function (cls) {
+        avisDialogBody.appendChild(source.querySelector("." + cls).cloneNode(true));
+      });
+      avisDialogBody.querySelector(".avis-author").id = "avisDialogAuteur";
+      avisDialog.showModal();
+    });
+
+    avisDialog.querySelector(".avis-dialog-close").addEventListener("click", function () {
+      avisDialog.close();
+    });
+    // Clic sur le voile : fermeture
+    avisDialog.addEventListener("click", function (e) {
+      if (e.target === avisDialog) avisDialog.close();
+    });
   }
 
   /* ---------- Vidéo : bouton pause, lecture auto seulement sur grand écran ---------- */
@@ -174,65 +207,6 @@
       !!(conn && conn.saveData);
     if (video.hasAttribute("data-autoplay") && !noAutoplay) playVideo();
     syncToggle();
-  }
-
-  /* ---------- Formulaire de contact : validation accessible puis messagerie ---------- */
-  var form = document.getElementById("contactForm");
-
-  if (form) {
-    var status = document.getElementById("form-status");
-    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var rules = {
-      nom: function (v) { return v ? "" : "Indiquez votre nom et prénom."; },
-      email: function (v) {
-        if (!v) return "Indiquez votre adresse email.";
-        return emailRe.test(v) ? "" : "Adresse email invalide, par exemple : julie.martin@gmail.com";
-      },
-      message: function (v) { return v ? "" : "Écrivez votre message."; },
-    };
-
-    function check(name) {
-      var field = form.elements[name];
-      var msg = rules[name](field.value.trim());
-      var err = document.getElementById(name + "-error");
-      err.textContent = msg;
-      if (msg) field.setAttribute("aria-invalid", "true");
-      else field.removeAttribute("aria-invalid");
-      return !msg;
-    }
-
-    // Après une première erreur, le champ se revalide pendant la frappe
-    Object.keys(rules).forEach(function (name) {
-      form.elements[name].addEventListener("input", function () {
-        if (this.getAttribute("aria-invalid") === "true") check(name);
-      });
-    });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var invalid = Object.keys(rules).filter(function (name) { return !check(name); });
-
-      if (invalid.length) {
-        status.textContent = invalid.length === 1
-          ? "1 champ à corriger."
-          : invalid.length + " champs à corriger.";
-        form.elements[invalid[0]].focus();
-        return;
-      }
-
-      var nom = form.elements.nom.value.trim();
-      var sujet = "Contact site : " + nom;
-      var corps =
-        "Nom : " + nom + "\n" +
-        "Email : " + form.elements.email.value.trim() + "\n\n" +
-        "Message :\n" + form.elements.message.value.trim() + "\n";
-
-      status.textContent = "Votre messagerie s'ouvre avec le message prêt à partir.";
-      window.location.href =
-        "mailto:contact@olivier-gaillard.fr" +
-        "?subject=" + encodeURIComponent(sujet) +
-        "&body=" + encodeURIComponent(corps);
-    });
   }
 
   /* ---------- Léger parallax hero ---------- */
