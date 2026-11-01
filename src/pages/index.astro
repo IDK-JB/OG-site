@@ -7,11 +7,11 @@ import Avis from "../components/Avis.astro";
 ---
 
 <Base
-  title="Coach running à distance et à Lyon · Olivier Gaillard, entraîneur FFA"
+  title="Coach running à distance et à Lyon : Olivier Gaillard, entraîneur FFA"
   description="Coaching running à distance partout en France et à Lyon : plan d'entraînement sur mesure sur Nolio, ajusté chaque semaine. 10 km, semi, marathon. Premier échange gratuit."
   active="home"
   home={true}
-  imageAlt="Coureuse à l'entraînement de nuit, coaching running à Lyon"
+  imageAlt="Olivier Gaillard, coach running à Lyon et à distance"
   preload={{
     href: "/assets/hero-runner.webp",
     srcset: "/assets/hero-runner-960.webp 960w, /assets/hero-runner.webp 1920w",
@@ -100,6 +100,8 @@ import Avis from "../components/Avis.astro";
         <figure class="portrait" data-reveal="2">
           <img
             src="/assets/olivier-qui-suis-je.webp"
+            srcset="/assets/olivier-qui-suis-je-480.webp 480w, /assets/olivier-qui-suis-je-720.webp 720w, /assets/olivier-qui-suis-je-880.webp 880w, /assets/olivier-qui-suis-je.webp 1050w"
+            sizes="(max-width: 860px) 92vw, (max-width: 1200px) 43vw, 502px"
             width="1050"
             height="1400"
             loading="lazy"
@@ -206,7 +208,7 @@ import Avis from "../components/Avis.astro";
             Écrivez-moi, je réponds à tout le monde.
           </p>
           <p class="contact-direct">
-            <a href="mailto:contact@oliviergaillard.fr">contact@oliviergaillard.fr</a>
+            <a href="mailto:contact@olivier-gaillard.fr">contact@olivier-gaillard.fr</a>
           </p>
         </div>
 
@@ -294,11 +296,11 @@ import Avis from "../components/Avis.astro";
           return;
         }
 
-        const sujet = `Contact site · ${data.nom}`;
+        const sujet = `Contact site : ${data.nom}`;
         const corps = `Nom et prénom : ${data.nom}\nEmail : ${data.email}\n\nMessage :\n${data.message}\n`;
 
         window.location.href =
-          "mailto:contact@oliviergaillard.fr" +
+          "mailto:contact@olivier-gaillard.fr" +
           "?subject=" + encodeURIComponent(sujet) +
           "&body=" + encodeURIComponent(corps);
       });

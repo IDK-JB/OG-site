@@ -3,25 +3,25 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base
-  title="Athlete Project · Groupe d'athlétisme demi-fond à Lyon (ACL)"
+  title="Athlete Project : groupe d'athlétisme demi-fond à Lyon (ACL)"
   description="Athlete Project (AP), groupe d'entraînement demi-fond de 20 athlètes à l'Athletic Club du Lyonnais, fondé par Olivier Gaillard. Saison, résultats, records, recrutement."
   active="ap"
   bodyClass="ap"
-  image="/assets/ap-hero-poster.webp"
-  imageAlt="Athlete Project, groupe de demi-fond à Lyon, à l'entraînement"
+  image="/assets/og-athlete-project.jpg"
+  imageAlt="Athlete Project, groupe de demi-fond à Lyon"
   preload={{ href: "/assets/ap-hero-poster.webp" }}
   jsonLd={[
     {
       "@type": "SportsTeam",
-      "@id": "https://oliviergaillard.fr/athlete-project#athlete-project",
+      "@id": "https://olivier-gaillard.fr/athlete-project#athlete-project",
       name: "Athlete Project (AP)",
       alternateName: "AP Lyon",
       sport: "Athlétisme",
-      url: "https://oliviergaillard.fr/athlete-project",
-      logo: "https://oliviergaillard.fr/assets/logo-ap.webp",
+      url: "https://olivier-gaillard.fr/athlete-project",
+      logo: "https://olivier-gaillard.fr/assets/logo-ap.webp",
       foundingDate: "2024-09",
-      founder: { "@id": "https://oliviergaillard.fr/#olivier-gaillard" },
-      coach: { "@id": "https://oliviergaillard.fr/#olivier-gaillard" },
+      founder: { "@id": "https://olivier-gaillard.fr/#olivier-gaillard" },
+      coach: { "@id": "https://olivier-gaillard.fr/#olivier-gaillard" },
       parentOrganization: { "@type": "SportsClub", name: "Athletic Club du Lyonnais (ACL)" },
       location: { "@type": "Place", name: "Site de la Duchère", address: { "@type": "PostalAddress", addressLocality: "Lyon", addressCountry: "FR" } },
       sameAs: ["https://instagram.com/athleteproject.lyon"],
@@ -29,8 +29,8 @@ import Base from "../layouts/Base.astro";
     {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://oliviergaillard.fr/" },
-        { "@type": "ListItem", position: 2, name: "Athlete Project", item: "https://oliviergaillard.fr/athlete-project" },
+        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://olivier-gaillard.fr/" },
+        { "@type": "ListItem", position: 2, name: "Athlete Project", item: "https://olivier-gaillard.fr/athlete-project" },
       ],
     },
   ]}
@@ -39,11 +39,12 @@ import Base from "../layouts/Base.astro";
   <!-- ================= HERO PAGE ================= -->
   <section class="page-hero page-hero--video">
     <div class="page-hero-media" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="metadata" poster="/assets/ap-hero-poster.webp" width="1280" height="720">
+      <video data-autoplay muted loop playsinline preload="none" poster="/assets/ap-hero-poster.webp" width="1280" height="720">
+        <source src="/assets/ap-training-480.mp4" type="video/mp4" media="(max-width: 767px)" />
         <source src="/assets/ap-training.mp4" type="video/mp4" />
       </video>
     </div>
-    <button type="button" class="video-toggle" aria-label="Mettre la vidéo en pause">
+    <button type="button" class="video-toggle is-paused" aria-label="Lire la vidéo">
       <svg class="icon-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
       <svg class="icon-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
     </button>
@@ -66,8 +67,8 @@ import Base from "../layouts/Base.astro";
     <div class="container">
       <div class="ap-intro-grid">
         <div class="ap-intro-photo" data-reveal="1">
-          <img class="base" src="/assets/matis-run.webp" width="1423" height="1066" loading="lazy" decoding="async" alt="Matis Boucard, coureur de demi-fond en maillot Athlete Project à Lyon" />
-          <img class="subject" src="/assets/matis-subject.webp" width="1423" height="1066" loading="lazy" decoding="async" alt="" aria-hidden="true" />
+          <img class="base" src="/assets/matis-run.webp" srcset="/assets/matis-run-640.webp 640w, /assets/matis-run-1024.webp 1024w, /assets/matis-run-1280.webp 1280w, /assets/matis-run.webp 1423w" sizes="(max-width: 860px) 92vw, (max-width: 1000px) 760px, (max-width: 1200px) 48vw, 574px" width="1423" height="1066" loading="lazy" decoding="async" alt="Matis Boucard, coureur de demi-fond en maillot Athlete Project à Lyon" />
+          <img class="subject" src="/assets/matis-subject.webp" srcset="/assets/matis-subject-640.webp 640w, /assets/matis-subject-1024.webp 1024w, /assets/matis-subject-1280.webp 1280w, /assets/matis-subject.webp 1423w" sizes="(max-width: 860px) 92vw, (max-width: 1000px) 760px, (max-width: 1200px) 48vw, 574px" width="1423" height="1066" loading="lazy" decoding="async" alt="" aria-hidden="true" />
         </div>
         <div class="text-block" data-reveal="2">
           <p class="lead">

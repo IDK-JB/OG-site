@@ -10,12 +10,12 @@ const pages = [
 ];
 
 export const GET: APIRoute = ({ site }) => {
-  const base = site ?? new URL("https://oliviergaillard.fr");
-  const lastmod = new Date().toISOString().slice(0, 10);
+  const base = site ?? new URL("https://olivier-gaillard.fr");
+  // Pas de lastmod : la date du build ne reflète pas une vraie mise à jour du contenu
   const urls = pages
     .map(
       (p) =>
-        `  <url><loc>${new URL(p.path, base).href}</loc><lastmod>${lastmod}</lastmod><priority>${p.priority}</priority></url>`
+        `  <url><loc>${new URL(p.path, base).href}</loc><priority>${p.priority}</priority></url>`
     )
     .join("\n");
   return new Response(

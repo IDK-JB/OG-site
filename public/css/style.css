@@ -1,5 +1,5 @@
 /* ============================================================
-   Olivier Gaillard · Entraîneur athlétisme, Lyon
+   Olivier Gaillard, entraîneur athlétisme, Lyon
    Base sombre chaude / accent ambré piste
    ============================================================ */
 
@@ -29,11 +29,12 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  opacity: 0;
+  opacity: 0.01;
   animation: pageIn 0.6s ease-out 0.05s forwards;
 }
 
-@keyframes pageIn { to { opacity: 1; } }
+/* 0.01 et non 0 : Chrome n'enregistre aucun premier rendu sur un body invisible. */
+@keyframes pageIn { from { opacity: 0.01; } to { opacity: 1; } }
 
 ::selection { background: var(--accent); color: #0f0f0f; }
 
@@ -694,12 +695,24 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image: url("../assets/track-night.webp");
+  background-image: url("../assets/track-night-768.webp");
+  background-image: image-set(url("../assets/track-night-768.webp") 1x, url("../assets/track-night-1280.webp") 2x);
   background-size: cover;
   background-position: center 65%;
   opacity: 0.5;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 72%, transparent 100%);
+}
+
+/* Fond du pied de page : variante légère sur mobile, pleine taille sur grand écran */
+@media (min-width: 769px) {
+  .footer-bg {
+    background-image: url("../assets/track-night-1280.webp");
+    background-image: image-set(url("../assets/track-night-1280.webp") 1x, url("../assets/track-night-1920.webp") 2x);
+  }
+}
+@media (min-width: 1281px) {
+  .footer-bg { background-image: url("../assets/track-night-1920.webp"); }
 }
 
 .footer-bg::after {
@@ -917,7 +930,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
-/* Accueil · Qui je suis : titre standard, colonne texte abaissée face à l'image */
+/* Accueil, qui je suis : titre standard, colonne texte abaissée face à l'image */
 
 #apropos .split { align-items: start; }
 
@@ -925,7 +938,7 @@ a { color: inherit; text-decoration: none; }
 
 #apropos .section-title { margin-bottom: clamp(22px, 3vw, 34px); }
 
-/* Coach · records en cartes (au lieu du tableau) */
+/* Coach : records en cartes (au lieu du tableau) */
 
 .record-grid {
   display: grid;
@@ -970,7 +983,7 @@ a { color: inherit; text-decoration: none; }
 
 .rc-meta strong { color: var(--text); font-weight: 500; }
 
-/* Coach · événements en grille 2 colonnes (année en display) */
+/* Coach : événements en grille 2 colonnes (année en display) */
 
 .event-list {
   list-style: none;
@@ -1004,7 +1017,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
-/* AP : saison en bandeaux panoramiques · image NB, couleur au survol */
+/* AP : saison en bandeaux panoramiques, image NB, couleur au survol */
 
 .section--seasons .seasons { margin-top: clamp(8px, 2vw, 20px); }
 
@@ -1070,10 +1083,25 @@ a { color: inherit; text-decoration: none; }
   color: rgba(255, 253, 250, 0.75);
 }
 
-.season--hiver .season-bg { background-image: url("/assets/season-hiver.webp"); }
-.season--printemps .season-bg { background-image: url("/assets/season-printemps.webp"); }
-.season--ete .season-bg { background-image: url("/assets/season-ete.webp"); }
-.season--automne .season-bg { background-image: url("/assets/season-automne.webp"); }
+/* Fonds des saisons : variante légère sur mobile (768 ou 1280 selon la densité), pleine taille sur grand écran */
+.season--hiver .season-bg { background-image: url("/assets/season-hiver-768.webp"); background-image: image-set(url("/assets/season-hiver-768.webp") 1x, url("/assets/season-hiver-1280.webp") 2x); }
+.season--printemps .season-bg { background-image: url("/assets/season-printemps-768.webp"); background-image: image-set(url("/assets/season-printemps-768.webp") 1x, url("/assets/season-printemps-1280.webp") 2x); }
+.season--ete .season-bg { background-image: url("/assets/season-ete-768.webp"); background-image: image-set(url("/assets/season-ete-768.webp") 1x, url("/assets/season-ete-1280.webp") 2x); }
+.season--automne .season-bg { background-image: url("/assets/season-automne-768.webp"); background-image: image-set(url("/assets/season-automne-768.webp") 1x, url("/assets/season-automne-1280.webp") 2x); }
+
+@media (min-width: 769px) {
+  .season--hiver .season-bg { background-image: url("/assets/season-hiver-1280.webp"); background-image: image-set(url("/assets/season-hiver-1280.webp") 1x, url("/assets/season-hiver-1920.webp") 2x); }
+  .season--printemps .season-bg { background-image: url("/assets/season-printemps-1280.webp"); background-image: image-set(url("/assets/season-printemps-1280.webp") 1x, url("/assets/season-printemps-1920.webp") 2x); }
+  .season--ete .season-bg { background-image: url("/assets/season-ete-1280.webp"); background-image: image-set(url("/assets/season-ete-1280.webp") 1x, url("/assets/season-ete-1920.webp") 2x); }
+  .season--automne .season-bg { background-image: url("/assets/season-automne-1280.webp"); background-image: image-set(url("/assets/season-automne-1280.webp") 1x, url("/assets/season-automne-1920.webp") 2x); }
+}
+
+@media (min-width: 1281px) {
+  .season--hiver .season-bg { background-image: url("/assets/season-hiver-1920.webp"); }
+  .season--printemps .season-bg { background-image: url("/assets/season-printemps-1920.webp"); }
+  .season--ete .season-bg { background-image: url("/assets/season-ete-1920.webp"); }
+  .season--automne .season-bg { background-image: url("/assets/season-automne-1920.webp"); }
+}
 
 /* Logo AP dans le hero de la page AP, calé sur le bord droit du contenu */
 
@@ -1089,7 +1117,7 @@ a { color: inherit; text-decoration: none; }
   animation: fadeUp 0.8s ease 0.35s forwards;
 }
 
-/* AP : intro sous le hero · grand logo à gauche, texte à droite */
+/* AP : intro sous le hero, grand logo à gauche, texte à droite */
 
 body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #6B1417; }
 
@@ -1171,7 +1199,7 @@ body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #6B1417; }
 
 .portrait:hover img { transform: scale(1.03); }
 
-/* Coach · Le parcours : texte à gauche, photo à droite calée sur la hauteur du texte */
+/* Coach : Le parcours, texte à gauche, photo à droite calée sur la hauteur du texte */
 .coach-parcours {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
@@ -1201,7 +1229,7 @@ body.ap { --ap: #6B1417; --ap-deep: #6B1417; --ap-text: #6B1417; }
 .coach-parcours .section-title { margin-bottom: clamp(22px, 3vw, 34px); }
 .coach-parcours .text-block { max-width: 580px; }
 
-/* Coach · Ma vision : phrase manifeste en grand, texte en deux colonnes */
+/* Coach : Ma vision, phrase manifeste en grand, texte en deux colonnes */
 .coach-vision-quote {
   max-width: 900px;
   font-size: clamp(1.5rem, 3vw, 2.4rem);

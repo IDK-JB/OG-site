@@ -1,4 +1,4 @@
-/* Olivier Gaillard · interactions */
+/* Olivier Gaillard, interactions */
 
 (function () {
   "use strict";
@@ -139,28 +139,41 @@
     motionMq.addEventListener("change", syncAvis);
   }
 
-  /* ---------- Vidéo : bouton pause + respect du mouvement réduit ---------- */
+  /* ---------- Vidéo : bouton pause, lecture auto seulement sur grand écran ---------- */
+  /* Pas de lecture automatique (poster seul, rien n'est téléchargé) en mouvement
+     réduit, en économie de données ou sous 768 px de large. Le bouton reste
+     utilisable pour lancer la vidéo à la demande. */
   var video = document.querySelector(".page-hero-media video");
   var toggle = document.querySelector(".video-toggle");
 
-  function setPaused(paused) {
-    if (!video) return;
-    if (paused) video.pause(); else video.play();
+  function syncToggle() {
+    if (!video || !toggle) return;
+    var paused = video.paused;
+    toggle.setAttribute("aria-label", paused ? "Lire la vidéo" : "Mettre la vidéo en pause");
+    toggle.classList.toggle("is-paused", paused);
+  }
+
+  function playVideo() {
+    var p = video.play();
+    if (p && p.catch) p.catch(syncToggle);
+  }
+
+  if (video) {
+    video.addEventListener("play", syncToggle);
+    video.addEventListener("pause", syncToggle);
     if (toggle) {
-      toggle.setAttribute("aria-label", paused ? "Lire la vidéo" : "Mettre la vidéo en pause");
-      toggle.classList.toggle("is-paused", paused);
+      toggle.addEventListener("click", function () {
+        if (video.paused) playVideo(); else video.pause();
+      });
     }
-  }
-
-  if (video && toggle) {
-    toggle.addEventListener("click", function () { setPaused(!video.paused); });
-  }
-
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll("video[autoplay]").forEach(function (v) {
-      v.removeAttribute("autoplay");
-    });
-    setPaused(true);
+    var conn = navigator.connection;
+    var noAutoplay =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(prefers-reduced-data: reduce)").matches ||
+      window.matchMedia("(max-width: 767px)").matches ||
+      !!(conn && conn.saveData);
+    if (video.hasAttribute("data-autoplay") && !noAutoplay) playVideo();
+    syncToggle();
   }
 
   /* ---------- Formulaire de contact : validation accessible puis messagerie ---------- */
@@ -208,7 +221,7 @@
       }
 
       var nom = form.elements.nom.value.trim();
-      var sujet = "Contact site · " + nom;
+      var sujet = "Contact site : " + nom;
       var corps =
         "Nom : " + nom + "\n" +
         "Email : " + form.elements.email.value.trim() + "\n\n" +
@@ -216,7 +229,7 @@
 
       status.textContent = "Votre messagerie s'ouvre avec le message prêt à partir.";
       window.location.href =
-        "mailto:contact@oliviergaillard.fr" +
+        "mailto:contact@olivier-gaillard.fr" +
         "?subject=" + encodeURIComponent(sujet) +
         "&body=" + encodeURIComponent(corps);
     });

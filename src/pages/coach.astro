@@ -3,26 +3,30 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base
-  title="Olivier Gaillard, entraîneur d'athlétisme FFA à Lyon · Parcours"
+  title="Olivier Gaillard, entraîneur d'athlétisme FFA à Lyon : parcours"
   description="Qui est Olivier Gaillard, coach running à Lyon ? 30 ans de course à pied, entraîneur FFA demi-fond depuis 2009, licence STAPS, DU de préparation physique, INSEP."
   active="coach"
-  image="/assets/olivier-qui-suis-je.webp"
-  imageAlt="Olivier Gaillard, entraîneur d'athlétisme à Lyon"
-  preload={{ href: "/assets/coach-hero.webp" }}
+  image="/assets/og-coach.jpg"
+  imageAlt="Olivier Gaillard, entraîneur d'athlétisme FFA à Lyon"
+  preload={{
+    href: "/assets/coach-hero.webp",
+    srcset: "/assets/coach-hero-540.webp 540w, /assets/coach-hero-900.webp 900w, /assets/coach-hero.webp 1010w",
+    sizes: "(max-width: 860px) 100vw, 62vw",
+  }}
   jsonLd={[
     {
       "@type": "ProfilePage",
-      "@id": "https://oliviergaillard.fr/coach#page",
-      url: "https://oliviergaillard.fr/coach",
+      "@id": "https://olivier-gaillard.fr/coach#page",
+      url: "https://olivier-gaillard.fr/coach",
       name: "Olivier Gaillard, entraîneur d'athlétisme FFA à Lyon",
-      mainEntity: { "@id": "https://oliviergaillard.fr/#olivier-gaillard" },
-      isPartOf: { "@id": "https://oliviergaillard.fr/#site" },
+      mainEntity: { "@id": "https://olivier-gaillard.fr/#olivier-gaillard" },
+      isPartOf: { "@id": "https://olivier-gaillard.fr/#site" },
     },
     {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://oliviergaillard.fr/" },
-        { "@type": "ListItem", position: 2, name: "Le Coach", item: "https://oliviergaillard.fr/coach" },
+        { "@type": "ListItem", position: 1, name: "Accueil", item: "https://olivier-gaillard.fr/" },
+        { "@type": "ListItem", position: 2, name: "Le Coach", item: "https://olivier-gaillard.fr/coach" },
       ],
     },
   ]}
@@ -31,7 +35,7 @@ import Base from "../layouts/Base.astro";
   <!-- ================= HERO PAGE ================= -->
   <section class="page-hero page-hero--photo">
     <div class="page-hero-media" aria-hidden="true">
-      <img src="/assets/coach-hero.webp" width="1010" height="1800" fetchpriority="high" decoding="async" alt="" />
+      <img src="/assets/coach-hero.webp" srcset="/assets/coach-hero-540.webp 540w, /assets/coach-hero-900.webp 900w, /assets/coach-hero.webp 1010w" sizes="(max-width: 860px) 100vw, 62vw" width="1010" height="1800" fetchpriority="high" decoding="async" alt="" />
     </div>
     <div class="container">
       <h1 class="hero-title">
@@ -54,6 +58,8 @@ import Base from "../layouts/Base.astro";
         <figure class="portrait coach-parcours-photo" data-reveal="2">
           <img
             src="/assets/olivier-parcours.webp"
+            srcset="/assets/olivier-parcours-480.webp 480w, /assets/olivier-parcours-720.webp 720w, /assets/olivier-parcours.webp 1100w"
+            sizes="(max-width: 860px) 92vw, 424px"
             alt="Olivier Gaillard, entraîneur de course à pied à Lyon, en footing dans un parc"
             width="1100"
             height="1100"

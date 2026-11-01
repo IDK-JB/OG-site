@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 
-const site = Astro.site ?? new URL("https://oliviergaillard.fr");
+const site = Astro.site ?? new URL("https://olivier-gaillard.fr");
 const businessId = new URL("/#coaching", site).href;
 
 const FAQ = [
@@ -74,11 +74,11 @@ const jsonLd: Record<string, unknown>[] = [
 ---
 
 <Base
-  title="Plan d'entraînement running personnalisé · Olivier Gaillard"
+  title="Plan d'entraînement running personnalisé, Olivier Gaillard"
   description="Suivi running en ligne par un entraîneur FFA : plan sur mesure publié sur Nolio, séances analysées chaque semaine. 10 km, semi, marathon. Premier échange gratuit."
   active="distance"
-  image="/assets/nolio-plan.webp"
-  imageAlt="Plan d'entraînement Nolio : quatre semaines de séances jusqu'au marathon"
+  image="/assets/og-coaching-a-distance.jpg"
+  imageAlt="Coaching running à distance avec Olivier Gaillard, plan sur mesure sur Nolio"
   jsonLd={jsonLd}
   preload={{
     href: "/assets/nolio-hero.webp",

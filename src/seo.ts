@@ -1,4 +1,5 @@
 // Interrupteur d'indexation du site.
-// false = le site n'apparaît dans aucun moteur de recherche (préproduction).
-// Mise en ligne officielle : passer à true ET retirer le bloc "headers" X-Robots-Tag de vercel.json.
-export const INDEXABLE = false;
+// true : le domaine de production (olivier-gaillard.fr) est indexable.
+// Les URL Vercel (*.vercel.app) restent hors index grâce à l'en-tête X-Robots-Tag
+// de vercel.json, envoyé sur tout hôte autre que olivier-gaillard.fr.
+export const INDEXABLE = true;

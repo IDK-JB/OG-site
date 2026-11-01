@@ -16,7 +16,7 @@ const etoile =
   <div class="container">
     <div class="section-head" data-reveal>
       <h2 class="section-title" id="titre-avis">Les avis des coureurs</h2>
-      {moyenne && <p class="avis-score">{moyenne}/5 · {notes.length} avis</p>}
+      {moyenne && <p class="avis-score">{moyenne}/5 ({notes.length} avis)</p>}
       {avis.length > 0 && (
         <button
           type="button"
