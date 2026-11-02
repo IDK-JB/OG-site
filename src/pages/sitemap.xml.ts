@@ -1,10 +1,12 @@
 import type { APIRoute } from "astro";
+import { EPREUVES } from "@/data/epreuves";
 
 // Pages indexables. Priorité : l'accueil porte la requête "coach running Lyon".
 const pages = [
   { path: "/", priority: "1.0" },
   { path: "/coaching-a-distance", priority: "0.9" },
   { path: "/coach", priority: "0.8" },
+  ...EPREUVES.map((e) => ({ path: `/${e.slug}`, priority: "0.8" })),
   { path: "/athlete-project", priority: "0.7" },
   { path: "/mentions-legales", priority: "0.1" },
   { path: "/cgv", priority: "0.1" },

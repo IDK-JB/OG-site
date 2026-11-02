@@ -1,0 +1,205 @@
+---
+import Base from "@/layouts/Base.astro";
+import { EPREUVES, epreuve, type Epreuve } from "@/data/epreuves";
+
+export function getStaticPaths() {
+  return EPREUVES.map((e) => ({ params: { epreuve: e.slug }, props: { e } }));
+}
+
+const { e } = Astro.props as { e: Epreuve };
+const suivante = epreuve(e.suivante);
+
+const site = Astro.site ?? new URL("https://olivier-gaillard.fr");
+const url = new URL(`/${e.slug}`, site).href;
+const personId = new URL("/#olivier-gaillard", site).href;
+
+const photo = `/assets/${e.photo}`;
+const srcset = `${photo}-768.webp 768w, ${photo}-1280.webp 1280w, ${photo}-1920.webp 1920w`;
+const derniere = e.lignes.length - 1;
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: e.h1,
+    description: e.description,
+    image: new URL(e.og, site).href,
+    inLanguage: "fr-FR",
+    author: { "@id": personId },
+    publisher: { "@id": personId },
+    mainEntityOfPage: url,
+  },
+  {
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    mainEntity: e.faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.r },
+    })),
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: new URL("/", site).href },
+      { "@type": "ListItem", position: 2, name: e.h1, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  title={e.title}
+  description={e.description}
+  active="course"
+  image={e.og}
+  imageAlt={e.ogAlt}
+  jsonLd={jsonLd}
+  preload={{ href: `${photo}-1920.webp`, srcset, sizes: "100vw" }}
+>
+
+  <!-- ================= HERO PAGE ================= -->
+  <section class="page-hero page-hero--photo page-hero--course">
+    <div class="page-hero-media" aria-hidden="true">
+      <img
+        src={`${photo}-1920.webp`}
+        srcset={srcset}
+        sizes="100vw"
+        width="1920"
+        height="818"
+        fetchpriority="high"
+        decoding="async"
+        alt=""
+      />
+    </div>
+    <div class="container">
+      <h1 class="hero-title">
+        <span aria-hidden="true">
+          {e.lignes.map((l, i) => (
+            <span class="line">{l}{i === derniere && <span class="accent">{e.accent}</span>}</span>
+          ))}
+        </span>
+        <span class="sr-only">{e.h1}</span>
+      </h1>
+      <p class="lead">{e.lead}</p>
+      <div class="hero-actions">
+        <a href="/#contact" class="btn btn-solid">Premier échange gratuit <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="#seances" class="btn btn-ghost">{e.seances.titre}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEXTE ================= -->
+  {e.sections.map((s) => (
+    <section class="section">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <h2 class="section-title">{s.titre}</h2>
+        </div>
+        <div class="text-block course-text" data-reveal="1">
+          {s.paragraphes.map((p) => <p set:html={p} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- ================= SÉANCES ================= -->
+  <section class="section" id="seances">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">{e.seances.titre}</h2>
+      </div>
+      <div class="steps" data-reveal="1">
+        {e.seances.items.map((s, i) => (
+          <div class="step">
+            <div class="step-num">{String(i + 1).padStart(2, "0")}</div>
+            <h3 class="step-title">{s.titre}</h3>
+            <p>{s.texte}</p>
+          </div>
+        ))}
+      </div>
+      <p class="steps-note" data-reveal="2">
+        <strong>{e.seances.note.titre}</strong> : {e.seances.note.texte}
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ERREURS ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Les erreurs que je vois le plus souvent</h2>
+      </div>
+      <ul class="plan-list course-errors" data-reveal="1">
+        {e.erreurs.map((x) => (
+          <li><strong>{x.titre}</strong> {x.texte}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= SUIVI ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Ce que change un suivi</h2>
+      </div>
+      <div class="text-block course-text" data-reveal="1">
+        <p>
+          Un plan trouvé en ligne ne sait pas que vous avez mal dormi, que votre
+          semaine a sauté ou que votre genou tire. Avec mon suivi, votre
+          préparation {e.cible} est publiée sur Nolio et ajustée chaque semaine
+          à partir de vos retours et de vos séances analysées.
+        </p>
+        <p>
+          Je suis entraîneur diplômé de la Fédération Française d'Athlétisme et
+          j'accompagne des coureurs depuis 2009, à Lyon et partout en France.
+        </p>
+        <a href="/coaching-a-distance" class="more-link">Le suivi en ligne en détail <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Questions fréquentes</h2>
+      </div>
+      <div class="faq" data-reveal="1">
+        {e.faq.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <div class="faq-answer">
+              <p>{f.r}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section cta-band">
+    <div class="container">
+      <h2 class="section-title" data-reveal>On en parle ?</h2>
+      <p class="lead" data-reveal="1">
+        Racontez-moi votre objectif. Le premier échange est gratuit, sans
+        engagement, et je réponds à tout le monde.
+      </p>
+      <div class="hero-actions" data-reveal="2">
+        <a href="/#contact" class="btn btn-solid">Me contacter <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="/#tarifs" class="btn btn-ghost">Voir les formules</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LIEN SUIVANT ================= -->
+  <a href={`/${suivante.slug}`} class="next-link">
+    <div class="container">
+      <div class="nl-label">Préparer aussi</div>
+      <span class="nl-title">{suivante.court} <span aria-hidden="true">→</span></span>
+    </div>
+  </a>
+
+</Base>

@@ -511,6 +511,14 @@ a { color: inherit; text-decoration: none; }
 
 .steps-note strong { color: var(--accent); font-weight: 500; }
 
+.steps-note a {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease;
+}
+
+.steps-note a:hover { color: var(--accent); }
+
 /* ---------- Tarifs ---------- */
 
 .pricing {
@@ -746,7 +754,7 @@ a { color: inherit; text-decoration: none; }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
   gap: clamp(32px, 5vw, 64px);
 }
 
@@ -1874,6 +1882,36 @@ html:not(.js) .avis-card { scroll-snap-align: start; }
 .page-hero--nolio .page-hero-media::after {
   background: linear-gradient(to top, rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.78) 55%, rgba(15, 15, 15, 0.65) 100%);
 }
+
+/* ---------- Pages « préparer une course » ---------- */
+
+.page-hero--course .page-hero-media img {
+  width: 100%;
+  object-position: center;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.page-hero--course .page-hero-media::after {
+  background:
+    linear-gradient(to top, rgba(15, 15, 15, 0.95) 0%, rgba(15, 15, 15, 0.7) 55%, rgba(15, 15, 15, 0.5) 100%),
+    linear-gradient(100deg, rgba(15, 15, 15, 0.8) 0%, rgba(15, 15, 15, 0.2) 70%);
+}
+
+.course-text { max-width: 68ch; }
+
+.course-text a:not(.more-link) {
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease;
+}
+
+.course-text a:not(.more-link):hover { color: var(--accent); }
+
+.course-errors { max-width: 78ch; margin: 0; }
+
+.course-errors li { color: var(--muted); line-height: 1.65; }
+
+.course-errors strong { color: var(--text); font-weight: 600; }
 
 /* ---------- Capture plan Nolio (preuve produit) ---------- */
 
