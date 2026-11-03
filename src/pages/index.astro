@@ -224,27 +224,26 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           method="POST"
           data-contact={CONTACT_EMAIL}
           novalidate
-          aria-describedby="form-note"
           data-reveal="2"
         >
           <input type="text" name={CHAMP_PIEGE} class="form-honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <p class="form-note full" id="form-note">Tous les champs sont obligatoires, sauf le téléphone.</p>
           <div class="field">
-            <label for="nom">Nom et prénom</label>
-            <input type="text" id="nom" name="nom" autocomplete="name" required aria-required="true" placeholder="Martin Julie" aria-describedby="nom-error" />
+            <label for="nom">Nom et prénom <span class="requis" aria-hidden="true">*</span></label>
+            <input type="text" id="nom" name="nom" autocomplete="name" autocapitalize="words" required aria-required="true" placeholder="Martin Julie" aria-describedby="nom-error" />
             <p class="field-error" id="nom-error"></p>
           </div>
           <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required aria-required="true" placeholder="julie.martin@gmail.com" aria-describedby="email-error" />
+            <label for="email">Email <span class="requis" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" autocorrect="off" spellcheck="false" required aria-required="true" placeholder="julie.martin@gmail.com" aria-describedby="email-error" />
             <p class="field-error" id="email-error"></p>
           </div>
           <div class="field full">
-            <label for="tel">Téléphone (facultatif, pour un premier échange par téléphone ou en visio)</label>
-            <input type="tel" id="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" />
+            <label for="tel">Téléphone (facultatif)</label>
+            <input type="tel" id="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" aria-describedby="tel-error" />
+            <p class="field-error" id="tel-error"></p>
           </div>
           <div class="field full">
-            <label for="message">Message</label>
+            <label for="message">Message <span class="requis" aria-hidden="true">*</span></label>
             <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Votre objectif, votre niveau, vos questions…" aria-describedby="message-error"></textarea>
             <p class="field-error" id="message-error"></p>
           </div>
@@ -262,8 +261,8 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             <p class="form-status" id="form-status" role="status"></p>
           </div>
           <p class="form-rgpd full">
-            Vos coordonnées servent uniquement à vous répondre et ne sont jamais
-            cédées. <a href="/mentions-legales#donnees">En savoir plus</a>
+            Vos coordonnées, y compris votre numéro si vous le laissez, servent
+            uniquement à vous répondre et ne sont jamais cédées. <a href="/mentions-legales#donnees">En savoir plus</a>
           </p>
           <div class="envoi-scene" inert>
             <span class="envoi-rond" aria-hidden="true">
@@ -285,7 +284,7 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   <script>
     import { contactSchema, type ChampContact } from "@/contact";
 
-    const champs: ChampContact[] = ["nom", "email", "message"];
+    const champs: ChampContact[] = ["nom", "email", "tel", "message"];
     const form = document.getElementById("contactForm") as HTMLFormElement | null;
 
     if (form) {

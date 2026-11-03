@@ -679,11 +679,7 @@ a { color: inherit; text-decoration: none; }
 
 .field [aria-invalid="true"] { border-bottom-color: #ff6b5b; box-shadow: 0 1px 0 0 #ff6b5b; }
 
-.form-note {
-  grid-column: 1 / -1;
-  font-size: 13px;
-  color: var(--muted);
-}
+.field label .requis { color: #ff6b5b; }
 
 .form-status {
   margin-top: 14px;
