@@ -1,6 +1,16 @@
 // Pages « préparer une course » : une entrée = une page /<slug>.
 // Les paragraphes de `sections` acceptent des liens HTML (contenu maîtrisé).
 
+/** Texte qu'Olivier doit encore rédiger : la preview affiche la consigne, le build de prod échoue. */
+export interface ARemplir {
+  aRemplir: string;
+}
+
+export const aRemplir = (consigne: string): ARemplir => ({ aRemplir: consigne });
+
+export const estARemplir = (v: unknown): v is ARemplir =>
+  typeof v === "object" && v !== null && "aRemplir" in v;
+
 export interface Bloc {
   titre: string;
   texte: string;
@@ -27,6 +37,16 @@ export interface Epreuve {
   seances: { titre: string; intro?: string; items: Bloc[]; note: Bloc };
   erreurs: Bloc[];
   faq: { q: string; r: string }[];
+  /** Section « Ma façon de préparer… » : la méthode et les partis pris d'Olivier */
+  approche: { titre: string; texte: string[] | ARemplir };
+  /** Un cas réel d'athlète, avec son accord */
+  cas: string[] | ARemplir;
+  /** Photos originales (séances, groupe, course) */
+  photos: { src: string; alt: string; legende: string }[] | ARemplir;
+  /** Parcours commenté, pour une course nommée */
+  parcours?: string[] | ARemplir;
+  /** Durées, séances, erreurs et FAQ relues et validées par Olivier */
+  relu: boolean;
   suivante: string;
 }
 
@@ -83,6 +103,19 @@ export const EPREUVES: Epreuve[] = [
       { q: "Que faire la dernière semaine avant la course ?", r: "On réduit le volume d'environ un tiers, on garde une courte séance à allure course pour rester vif, on dort bien et on ne teste rien de nouveau : ni chaussures, ni petit-déjeuner." },
       { q: "Le suivi à distance convient-il pour un premier 10 km ?", r: "Oui. Le plan démarre là où vous en êtes, et l'ajustement chaque semaine évite de vous en demander trop au début, là où les débutants se blessent ou se découragent le plus souvent." },
     ],
+    approche: {
+      titre: "Ma façon de préparer un 10 km",
+      texte: aRemplir(
+        "Ce que tu fais différemment des plans 10 km qu'on trouve partout : la séance que tu ne sautes jamais, ce que tu déconseilles (et pourquoi), comment tu fixes l'allure cible, ce que tu changes pour un débutant et pour quelqu'un qui vise un chrono. Avis tranchés bienvenus. 200 à 300 mots, au « je ».",
+      ),
+    },
+    cas: aRemplir(
+      "Raconte un athlète que tu as préparé sur cette distance (prénom ou initiale, avec son accord) : son niveau et son objectif au départ, ce qui s'est passé en route (blessure, fatigue, imprévu), ce que tu as changé dans le plan et pourquoi, le résultat le jour J. Une phrase de l'athlète si possible. 150 à 250 mots.",
+    ),
+    photos: aRemplir(
+      "Envoie 2 ou 3 photos à toi (pas de banque d'images) : une séance type de cette préparation, un athlète en course sur cette distance, toi au bord de la piste ou sur le parcours. Une phrase de légende pour chacune.",
+    ),
+    relu: false,
     suivante: "preparer-semi-marathon",
   },
   {
@@ -134,6 +167,19 @@ export const EPREUVES: Epreuve[] = [
       { q: "Faut-il prendre des gels pendant un semi-marathon ?", r: "Au-delà d'1 h 30 de course, un gel vers la mi-course aide souvent. En dessous, c'est moins utile. Dans tous les cas, il se teste à l'entraînement avant." },
       { q: "Le suivi à distance convient-il pour un premier semi ?", r: "Oui. Le plan part de votre niveau actuel et s'ajuste chaque semaine à vos retours : c'est ce qui permet d'allonger les sorties sans se blesser." },
     ],
+    approche: {
+      titre: "Ma façon de préparer un semi-marathon",
+      texte: aRemplir(
+        "Ce que tu fais différemment des plans semi classiques : comment tu construis la sortie longue, ta place pour le seuil, ta façon de valider l'allure semi, ce que tu changes entre un premier semi et un objectif chrono. 200 à 300 mots, au « je ».",
+      ),
+    },
+    cas: aRemplir(
+      "Raconte un athlète que tu as préparé sur cette distance (prénom ou initiale, avec son accord) : son niveau et son objectif au départ, ce qui s'est passé en route (blessure, fatigue, imprévu), ce que tu as changé dans le plan et pourquoi, le résultat le jour J. Une phrase de l'athlète si possible. 150 à 250 mots.",
+    ),
+    photos: aRemplir(
+      "Envoie 2 ou 3 photos à toi (pas de banque d'images) : une séance type de cette préparation, un athlète en course sur cette distance, toi au bord de la piste ou sur le parcours. Une phrase de légende pour chacune.",
+    ),
+    relu: false,
     suivante: "preparer-marathon",
   },
   {
@@ -185,6 +231,19 @@ export const EPREUVES: Epreuve[] = [
       { q: "Combien de gels pendant un marathon ?", r: "La plupart des coureurs en prennent un toutes les 30 à 45 minutes. La bonne stratégie dépend de votre allure et de votre tolérance, elle se teste à l'entraînement. Avec la formule premium, l'accompagnement nutritionnel est assuré par Deborah Maurice, diététicienne nutritionniste diplômée." },
       { q: "Peut-on préparer un marathon avec un coach à distance ?", r: "Oui. Sur 12 à 16 semaines, il y a forcément des imprévus : fatigue, déplacement, petite douleur. Le plan s'ajuste chaque semaine sur Nolio, c'est tout l'intérêt d'un suivi plutôt que d'un plan figé." },
     ],
+    approche: {
+      titre: "Ma façon de préparer un marathon",
+      texte: aRemplir(
+        "Tes partis pris sur le marathon : la longueur maximale de tes sorties longues et pourquoi, comment tu gères la fatigue sur 12 à 16 semaines, ta position sur le ravitaillement, ce qui fait selon toi rater un marathon. 200 à 300 mots, au « je ».",
+      ),
+    },
+    cas: aRemplir(
+      "Raconte un athlète que tu as préparé sur cette distance (prénom ou initiale, avec son accord) : son niveau et son objectif au départ, ce qui s'est passé en route (blessure, fatigue, imprévu), ce que tu as changé dans le plan et pourquoi, le résultat le jour J. Une phrase de l'athlète si possible. 150 à 250 mots.",
+    ),
+    photos: aRemplir(
+      "Envoie 2 ou 3 photos à toi (pas de banque d'images) : une séance type de cette préparation, un athlète en course sur cette distance, toi au bord de la piste ou sur le parcours. Une phrase de légende pour chacune.",
+    ),
+    relu: false,
     suivante: "marathon-de-lyon",
   },
   {
@@ -243,6 +302,22 @@ export const EPREUVES: Epreuve[] = [
       { q: "Préparez-vous aussi au semi et au 10 km de Run in Lyon ?", r: "Oui, la préparation suit la même logique avec des volumes adaptés à la distance." },
       { q: "Peut-on être suivi si l'on n'habite pas à Lyon ?", r: "Oui. Le plan est publié sur Nolio et ajusté chaque semaine, où que vous viviez. Vous pouvez préparer Run in Lyon depuis n'importe quelle ville." },
     ],
+    approche: {
+      titre: "Ma façon de préparer le marathon de Lyon",
+      texte: aRemplir(
+        "Ce que tu adaptes spécifiquement pour Run in Lyon : la préparation sur l'été, les séances que tu places dans Lyon, comment tu gères la rentrée, ce que tu as appris avec tes athlètes sur cette course. 200 à 300 mots, au « je ».",
+      ),
+    },
+    cas: aRemplir(
+      "Raconte un athlète que tu as préparé sur cette distance (prénom ou initiale, avec son accord) : son niveau et son objectif au départ, ce qui s'est passé en route (blessure, fatigue, imprévu), ce que tu as changé dans le plan et pourquoi, le résultat le jour J. Une phrase de l'athlète si possible. 150 à 250 mots.",
+    ),
+    photos: aRemplir(
+      "Envoie 2 ou 3 photos à toi (pas de banque d'images) : une séance type de cette préparation, un athlète en course sur cette distance, toi au bord de la piste ou sur le parcours. Une phrase de légende pour chacune.",
+    ),
+    parcours: aRemplir(
+      "Commente le parcours du marathon comme tu le ferais à un athlète : les portions où il faut s'économiser, les relances, les faux plats, les endroits où l'on part trop vite, où se placer au départ, les ravitaillements. Repars du parcours de l'année en cours (runinlyon.com). 200 à 300 mots, au « je ».",
+    ),
+    relu: false,
     suivante: "preparer-10-km",
   },
 ];

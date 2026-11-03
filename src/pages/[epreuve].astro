@@ -1,6 +1,7 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { EPREUVES, PUBLIE, epreuve, type Epreuve } from "@/data/epreuves";
+import ARemplir from "@/components/ARemplir.astro";
+import { EPREUVES, PUBLIE, epreuve, estARemplir, type Epreuve } from "@/data/epreuves";
 
 export function getStaticPaths() {
   return EPREUVES.map((e) => ({ params: { epreuve: e.slug }, props: { e } }));
@@ -16,6 +17,13 @@ const personId = new URL("/#olivier-gaillard", site).href;
 const photo = `/assets/${e.photo}`;
 const srcset = `${photo}-768.webp 768w, ${photo}-1280.webp 1280w, ${photo}-1920.webp 1920w`;
 const derniere = e.lignes.length - 1;
+
+const brouillon = !e.relu || [e.approche.texte, e.cas, e.photos, e.parcours].some(estARemplir);
+if (brouillon && process.env.VERCEL_ENV === "production") {
+  throw new Error(`/${e.slug} : textes d'Olivier manquants ou non relus, page non publiable en production`);
+}
+
+const majLe = new Date(PUBLIE).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 
 const jsonLd: Record<string, unknown>[] = [
   {
@@ -88,6 +96,12 @@ const jsonLd: Record<string, unknown>[] = [
     </div>
   </section>
 
+  {!e.relu && (
+    <div class="container">
+      <ARemplir consigne="Les durées, la semaine type, les erreurs et la FAQ de cette page sont un premier jet : relis-les, corrige les chiffres et remplace ce qui ne correspond pas à ce que tu fais vraiment." />
+    </div>
+  )}
+
   <!-- ================= TEXTE ================= -->
   {e.sections.map((s) => (
     <section class="section">
@@ -101,6 +115,22 @@ const jsonLd: Record<string, unknown>[] = [
       </div>
     </section>
   ))}
+
+  <!-- ================= PARCOURS COMMENTÉ ================= -->
+  {e.parcours && (
+    <section class="section">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <h2 class="section-title">Le parcours commenté</h2>
+        </div>
+        <div class="text-block course-text" data-reveal="1">
+          {estARemplir(e.parcours)
+            ? <ARemplir consigne={e.parcours.aRemplir} />
+            : e.parcours.map((p) => <p set:html={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- ================= SÉANCES ================= -->
   <section class="section" id="seances">
@@ -123,6 +153,20 @@ const jsonLd: Record<string, unknown>[] = [
     </div>
   </section>
 
+  <!-- ================= APPROCHE ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">{e.approche.titre}</h2>
+      </div>
+      <div class="text-block course-text" data-reveal="1">
+        {estARemplir(e.approche.texte)
+          ? <ARemplir consigne={e.approche.texte.aRemplir} />
+          : e.approche.texte.map((p) => <p set:html={p} />)}
+      </div>
+    </div>
+  </section>
+
   <!-- ================= ERREURS ================= -->
   <section class="section">
     <div class="container">
@@ -134,6 +178,32 @@ const jsonLd: Record<string, unknown>[] = [
           <li><strong>{x.titre}</strong> {x.texte}</li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <!-- ================= CAS CONCRET ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="section-title">Un cas concret</h2>
+      </div>
+      <div class="text-block course-text" data-reveal="1">
+        {estARemplir(e.cas)
+          ? <ARemplir consigne={e.cas.aRemplir} />
+          : e.cas.map((p) => <p set:html={p} />)}
+      </div>
+      {estARemplir(e.photos)
+        ? <ARemplir consigne={e.photos.aRemplir} />
+        : (
+          <div class="course-photos" data-reveal="2">
+            {e.photos.map((ph) => (
+              <figure>
+                <img src={ph.src} alt={ph.alt} loading="lazy" decoding="async" width="800" height="600" />
+                <figcaption>{ph.legende}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
     </div>
   </section>
 
@@ -171,6 +241,32 @@ const jsonLd: Record<string, unknown>[] = [
           </details>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- ================= AUTEUR ================= -->
+  <section class="section course-auteur-wrap">
+    <div class="container">
+      <aside class="course-auteur" data-reveal>
+        <img
+          src="/assets/olivier-qui-suis-je-480.webp"
+          width="480"
+          height="640"
+          loading="lazy"
+          decoding="async"
+          alt="Olivier Gaillard, entraîneur d'athlétisme FFA"
+        />
+        <div>
+          <p class="course-auteur-nom">Écrit par <a href="/coach">Olivier Gaillard</a></p>
+          <p>
+            Entraîneur diplômé de la Fédération Française d'Athlétisme, licence
+            STAPS et DU de préparation physique. J'entraîne depuis 2009 et j'ai
+            fondé le groupe <a href="/athlete-project">Athlete Project</a> à
+            l'Athletic Club du Lyonnais.
+          </p>
+          <p class="course-auteur-date">Mis à jour le <time datetime={PUBLIE}>{majLe}</time></p>
+        </div>
+      </aside>
     </div>
   </section>
 

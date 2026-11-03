@@ -1923,6 +1923,81 @@ html:not(.js) .avis-card { scroll-snap-align: start; }
 
 .course-errors strong { color: var(--text); font-weight: 600; }
 
+.course-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.course-photos img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.course-photos figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.course-auteur-wrap { padding-top: 0; }
+
+.course-auteur {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: clamp(18px, 3vw, 28px);
+  align-items: start;
+  max-width: 68ch;
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.course-auteur img {
+  width: 96px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.course-auteur p { color: var(--muted); font-size: 0.95rem; }
+
+.course-auteur p + p { margin-top: 0.8em; }
+
+.course-auteur .course-auteur-nom { color: var(--text); font-weight: 600; }
+
+.course-auteur a {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease;
+}
+
+.course-auteur a:hover { color: var(--accent); }
+
+.course-auteur-date { font-size: 0.85rem; }
+
+/* Consigne de rédaction, visible uniquement sur les previews (le build de prod refuse ces pages) */
+.a-remplir {
+  max-width: 68ch;
+  margin: clamp(20px, 3vw, 32px) 0;
+  padding: 18px 22px;
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  background: rgba(232, 122, 61, 0.08);
+}
+
+.a-remplir p { color: var(--text); font-size: 0.95rem; }
+
+.a-remplir .a-remplir-label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
 /* ---------- Capture plan Nolio (preuve produit) ---------- */
 
 .nolio-shot { margin-top: clamp(40px, 6vw, 64px); }
