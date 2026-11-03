@@ -10,8 +10,6 @@ export interface Epreuve {
   slug: string;
   /** Libellé court (footer, lien « page suivante ») */
   court: string;
-  /** « préparation au 10 km », « préparation au marathon de Lyon » */
-  cible: string;
   title: string;
   description: string;
   /** H1 visuel : lignes, la dernière se termine par `accent` */
@@ -20,6 +18,8 @@ export interface Epreuve {
   /** H1 lisible par Google et les lecteurs d'écran */
   h1: string;
   lead: string;
+  /** Paragraphe « Ce que change un suivi », propre à l'épreuve (HTML) */
+  suivi: string;
   photo: string;
   og: string;
   ogAlt: string;
@@ -30,11 +30,13 @@ export interface Epreuve {
   suivante: string;
 }
 
+/** Date de mise en ligne des pages (JSON-LD Article), à mettre à jour au merge */
+export const PUBLIE = "2026-11-02";
+
 export const EPREUVES: Epreuve[] = [
   {
     slug: "preparer-10-km",
     court: "10 km",
-    cible: "au 10 km",
     title: "Préparer un 10 km : plan d'entraînement et coaching running",
     description:
       "Comment préparer un 10 km, du premier dossard au record : durée de préparation, semaine type, erreurs à éviter. Plan sur mesure avec un entraîneur FFA.",
@@ -43,6 +45,8 @@ export const EPREUVES: Epreuve[] = [
     h1: "Préparer un 10 km",
     lead:
       "Un premier dossard ou un chrono à battre : le 10 km se prépare en 8 à 10 semaines, avec 3 ou 4 séances bien choisies. Voici comment je m'y prends avec les coureurs que j'accompagne.",
+    suivi:
+      "Sur 10 km, tout se joue sur le dosage entre vitesse et récupération. Un plan trouvé en ligne ne sait pas que votre semaine a sauté ou que vos mollets tirent après le fractionné. Avec mon suivi en ligne, vos séances sont analysées et le plan est ajusté chaque semaine sur Nolio, où que vous viviez.",
     photo: "season-ete",
     og: "/assets/og-preparer-10-km.jpg",
     ogAlt: "Préparer un 10 km avec Olivier Gaillard, coach running",
@@ -84,7 +88,6 @@ export const EPREUVES: Epreuve[] = [
   {
     slug: "preparer-semi-marathon",
     court: "Semi-marathon",
-    cible: "au semi-marathon",
     title: "Préparer un semi-marathon : plan d'entraînement sur mesure",
     description:
       "Préparer un semi-marathon : combien de semaines, quelles séances, quelle sortie longue, quelles erreurs éviter. Plan personnalisé avec un entraîneur FFA.",
@@ -93,6 +96,8 @@ export const EPREUVES: Epreuve[] = [
     h1: "Préparer un semi-marathon",
     lead:
       "Sur 21,1 km, l'endurance devient la clé. Je prépare un semi en 10 à 12 semaines, autour de trois séances qui comptent : la sortie longue, le seuil et l'allure spécifique.",
+    suivi:
+      "Sur semi, le piège est d'allonger trop vite. Je regarde chaque sortie longue et chaque séance au seuil, et je règle la suivante en fonction de votre forme réelle, pas d'un tableau écrit à l'avance. Tout se passe en ligne sur Nolio : vous pouvez préparer votre semi depuis n'importe quelle ville.",
     photo: "season-printemps",
     og: "/assets/og-preparer-semi-marathon.jpg",
     ogAlt: "Préparer un semi-marathon avec Olivier Gaillard, coach running",
@@ -134,15 +139,16 @@ export const EPREUVES: Epreuve[] = [
   {
     slug: "preparer-marathon",
     court: "Marathon",
-    cible: "au marathon",
     title: "Préparer un marathon : plan d'entraînement avec un coach running",
     description:
-      "Préparer un marathon : 12 à 16 semaines, sorties longues, allure marathon, nutrition, affûtage. Plan sur mesure avec un entraîneur FFA, ajusté chaque semaine.",
+      "Préparer un marathon : 12 à 16 semaines, sorties longues, allure marathon, ravitaillement, affûtage. Plan ajusté chaque semaine par un entraîneur FFA.",
     lignes: ["Préparer", "un "],
     accent: "marathon.",
     h1: "Préparer un marathon",
     lead:
       "Un marathon ne s'improvise pas. La préparation dure 12 à 16 semaines et se joue autant sur la régularité que sur la gestion de la fatigue. C'est là qu'un plan ajusté chaque semaine fait la différence.",
+    suivi:
+      "Douze à seize semaines, c'est long : il y aura de la fatigue, des déplacements, une petite douleur. C'est là qu'un plan figé lâche et qu'un suivi fait la différence. Chaque semaine, j'analyse vos séances sur Nolio et j'ajuste la suivante, pour arriver au départ en forme plutôt qu'usé.",
     photo: "season-hiver",
     og: "/assets/og-preparer-marathon.jpg",
     ogAlt: "Préparer un marathon avec Olivier Gaillard, coach running",
@@ -184,15 +190,16 @@ export const EPREUVES: Epreuve[] = [
   {
     slug: "marathon-de-lyon",
     court: "Marathon de Lyon",
-    cible: "au marathon de Lyon",
     title: "Préparer le marathon de Lyon (Run in Lyon) avec un coach running",
     description:
-      "Préparation au marathon de Lyon : plan d'entraînement sur l'été, séances dans Lyon, gestion de la chaleur et du jour J. Coaching par un entraîneur FFA lyonnais.",
+      "Préparer le marathon de Lyon : plan d'entraînement sur l'été, séances dans Lyon, chaleur et jour J. Suivi par un entraîneur FFA lyonnais, ou à distance.",
     lignes: ["Préparer le", "marathon", "de "],
     accent: "Lyon.",
     h1: "Préparer le marathon de Lyon",
     lead:
       "Le marathon de Run in Lyon se court début octobre, ce qui veut dire une préparation en plein été. Je suis entraîneur à Lyon : voici comment je prépare les coureurs qui visent cette course.",
+    suivi:
+      "J'entraîne à Lyon depuis 2009, en club à l'Athletic Club du Lyonnais et avec le groupe <a href=\"/athlete-project\">Athlete Project</a> : je connais les parcours, la chaleur de l'été lyonnais et le rythme de la rentrée. Mais pas besoin d'habiter ici : votre préparation est publiée sur Nolio et ajustée chaque semaine, où que vous viviez.",
     photo: "season-automne",
     og: "/assets/og-marathon-de-lyon.jpg",
     ogAlt: "Préparer le marathon de Lyon avec Olivier Gaillard, coach running à Lyon",
@@ -207,7 +214,7 @@ export const EPREUVES: Epreuve[] = [
       {
         titre: "Une préparation en plein été",
         paragraphes: [
-          "Pour un marathon début octobre, la préparation spécifique commence entre mi-juin et mi-juillet, selon votre niveau. Les grosses semaines tombent donc en juillet et en août, avec la chaleur et les vacances.",
+          "Pour un marathon début octobre, la <a href=\"/preparer-marathon\">préparation spécifique</a> commence entre mi-juin et mi-juillet, selon votre niveau. Les grosses semaines tombent donc en juillet et en août, avec la chaleur et les vacances.",
           "On s'adapte : séances tôt le matin ou en soirée, allures revues à la baisse quand il fait chaud (on court aux sensations, pas au chrono), hydratation travaillée. Les vacances se placent dans le plan au lieu de le casser : une semaine plus légère au bon moment n'est pas une semaine perdue.",
           "Septembre est le mois clé : la chaleur retombe, les séances à allure marathon retrouvent leur vrai rythme, et on peut caler un semi de préparation pour valider l'objectif.",
         ],

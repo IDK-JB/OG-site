@@ -519,6 +519,16 @@ a { color: inherit; text-decoration: none; }
 
 .steps-note a:hover { color: var(--accent); }
 
+.steps-note--courses { margin-top: 12px; }
+
+.page-hero .lead a {
+  color: var(--text);
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease;
+}
+
+.page-hero .lead a:hover { color: var(--accent); }
+
 /* ---------- Tarifs ---------- */
 
 .pricing {

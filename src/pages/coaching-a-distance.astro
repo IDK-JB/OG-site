@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import { EPREUVES } from "@/data/epreuves";
 import { OFFRES } from "@/seo";
 
 const site = Astro.site ?? new URL("https://olivier-gaillard.fr");
@@ -60,8 +61,8 @@ const jsonLd: Record<string, unknown>[] = [
 ---
 
 <Base
-  title="Coaching running à distance : plan d'entraînement personnalisé"
-  description="Suivi running en ligne par un entraîneur FFA : plan sur mesure sur Nolio, séances analysées chaque semaine, du 10 km au marathon. Premier échange gratuit."
+  title="Suivi running en ligne : plan personnalisé, formules et prix"
+  description="Comment se passe mon suivi running en ligne : plan sur mesure sur Nolio, séances analysées, ajustements chaque semaine. Formules à 80 et 130 € par mois."
   active="distance"
   image="/assets/og-coaching-a-distance.jpg"
   imageAlt="Coaching running à distance avec Olivier Gaillard, plan sur mesure sur Nolio"
@@ -89,16 +90,17 @@ const jsonLd: Record<string, unknown>[] = [
     </div>
     <div class="container">
       <h1 class="hero-title">
-        <span class="line">Un plan.</span>
-        <span class="line">Un coach.</span>
-        <span class="line">Où que vous <span class="accent">couriez.</span></span>
+        <span class="line">Un plan.</span>{" "}
+        <span class="line">Un coach.</span>{" "}
+        <span class="line">Où que vous <span class="accent">couriez.</span></span>{" "}
         <span class="sr-only">Plan d'entraînement running personnalisé et suivi en ligne partout en France</span>
       </h1>
       <p class="lead">
-        Annecy, Lille, Bordeaux ou un village sans piste : peu importe. Votre
-        plan arrive sur votre téléphone, ajusté chaque semaine à vos retours,
-        avec un entraîneur FFA qui analyse vos séances et répond à vos
-        questions.
+        Un suivi running en ligne, où que vous viviez. Annecy, Lille,
+        Bordeaux ou un village sans piste : votre plan arrive sur votre
+        téléphone, ajusté chaque semaine à vos retours, avec un{" "}
+        <a href="/coach">entraîneur FFA</a> qui analyse vos séances et répond
+        à vos questions.
       </p>
       <div class="hero-actions">
         <a href="/#contact" class="btn btn-solid">Premier échange gratuit <span class="arrow" aria-hidden="true">→</span></a>
@@ -140,11 +142,19 @@ const jsonLd: Record<string, unknown>[] = [
         </div>
       </div>
       <p class="steps-note" data-reveal="3">
-        <strong>Tous niveaux</strong> : du premier <a href="/preparer-10-km">10 km</a> au <a href="/preparer-marathon">marathon</a>, de la remise en forme à la performance.
+        <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
+      </p>
+      <p class="steps-note steps-note--courses" data-reveal="3">
+        <strong>Par course</strong> :{" "}
+        {EPREUVES.map((e, i) => (
+          <>{i > 0 && ", "}<a href={`/${e.slug}`}>{e.h1.charAt(0).toLowerCase() + e.h1.slice(1)}</a></>
+        ))}.
       </p>
       <figure class="nolio-shot" data-reveal="3">
         <img
           src="/assets/nolio-plan.webp"
+          srcset="/assets/nolio-plan-480.webp 480w, /assets/nolio-plan-800.webp 800w, /assets/nolio-plan.webp 1400w"
+          sizes="(max-width: 1200px) 92vw, 1104px"
           width="1400"
           height="798"
           loading="lazy"

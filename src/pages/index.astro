@@ -1,5 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
+import { EPREUVES } from "@/data/epreuves";
 import Avis from "@/components/Avis.astro";
 import { CONTACT_EMAIL } from "@/seo";
 
@@ -8,8 +9,8 @@ import { CONTACT_EMAIL } from "@/seo";
 ---
 
 <Base
-  title="Coach running à Lyon et à distance : Olivier Gaillard, entraîneur FFA"
-  description="Coach running à Lyon et à distance : plan d'entraînement sur mesure sur Nolio, ajusté chaque semaine, du 10 km au marathon. Premier échange gratuit."
+  title="Coach running à distance : Olivier Gaillard, entraîneur FFA"
+  description="Coach running à distance, entraîneur FFA : plan d'entraînement sur mesure sur Nolio, ajusté chaque semaine, du 10 km au marathon. Premier échange gratuit."
   active="home"
   home={true}
   imageAlt="Olivier Gaillard, coach running à Lyon et à distance"
@@ -36,13 +37,14 @@ import { CONTACT_EMAIL } from "@/seo";
     </div>
     <div class="container hero-content">
       <h1 class="hero-title">
-        <span class="line">Olivier</span>
-        <span class="line">Gaillard</span>
-        <span class="line"><span class="accent">Coach.</span></span>
+        <span class="line">Olivier</span>{" "}
+        <span class="line">Gaillard</span>{" "}
+        <span class="line"><span class="accent">Coach.</span></span>{" "}
         <span class="sr-only">Coach running à distance et entraîneur d'athlétisme à Lyon</span>
       </h1>
       <p class="hero-sub">
-        Entraîneur demi-fond et running depuis 2009. Du premier 10 km au
+        Coach running à distance, entraîneur demi-fond et running depuis
+        2009. Du premier 10 km au
         record personnel : un plan sur mesure, un vrai suivi, et quelqu'un
         qui répond quand vous avez une question. Débutant ou élite, votre
         projet devient le nôtre.
@@ -147,7 +149,13 @@ import { CONTACT_EMAIL } from "@/seo";
         </div>
       </div>
       <p class="steps-note" data-reveal="3">
-        <strong>Tous niveaux</strong> : du premier <a href="/preparer-10-km">10 km</a> au <a href="/preparer-marathon">marathon</a>, de la remise en forme à la performance.
+        <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
+      </p>
+      <p class="steps-note steps-note--courses" data-reveal="3">
+        <strong>Par course</strong> :{" "}
+        {EPREUVES.map((e, i) => (
+          <>{i > 0 && ", "}<a href={`/${e.slug}`}>{e.h1.charAt(0).toLowerCase() + e.h1.slice(1)}</a></>
+        ))}.
       </p>
       <p class="text-block" data-reveal="3">
         <a href="/coaching-a-distance" class="more-link">Le suivi en ligne en détail <span aria-hidden="true">→</span></a>
@@ -251,7 +259,7 @@ import { CONTACT_EMAIL } from "@/seo";
           </div>
           <p class="form-rgpd full">
             Vos coordonnées servent uniquement à vous répondre et ne sont jamais
-            cédées. <a href="/mentions-legales#donnees">En savoir plus</a>
+            cédées. <a href="/mentions-legales#donnees">Vos données personnelles</a>
           </p>
         </form>
       </div>

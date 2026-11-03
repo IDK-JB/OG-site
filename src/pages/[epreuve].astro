@@ -1,6 +1,6 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { EPREUVES, epreuve, type Epreuve } from "@/data/epreuves";
+import { EPREUVES, PUBLIE, epreuve, type Epreuve } from "@/data/epreuves";
 
 export function getStaticPaths() {
   return EPREUVES.map((e) => ({ params: { epreuve: e.slug }, props: { e } }));
@@ -25,6 +25,8 @@ const jsonLd: Record<string, unknown>[] = [
     description: e.description,
     image: new URL(e.og, site).href,
     inLanguage: "fr-FR",
+    datePublished: PUBLIE,
+    dateModified: PUBLIE,
     author: { "@id": personId },
     publisher: { "@id": personId },
     mainEntityOfPage: url,
@@ -74,12 +76,9 @@ const jsonLd: Record<string, unknown>[] = [
     </div>
     <div class="container">
       <h1 class="hero-title">
-        <span aria-hidden="true">
-          {e.lignes.map((l, i) => (
-            <span class="line">{l}{i === derniere && <span class="accent">{e.accent}</span>}</span>
-          ))}
-        </span>
-        <span class="sr-only">{e.h1}</span>
+        {e.lignes.map((l, i) => (
+          <><span class="line">{l}{i === derniere && <span class="accent">{e.accent}</span>}</span>{" "}</>
+        ))}
       </h1>
       <p class="lead">{e.lead}</p>
       <div class="hero-actions">
@@ -145,15 +144,11 @@ const jsonLd: Record<string, unknown>[] = [
         <h2 class="section-title">Ce que change un suivi</h2>
       </div>
       <div class="text-block course-text" data-reveal="1">
+        <p set:html={e.suivi} />
         <p>
-          Un plan trouvé en ligne ne sait pas que vous avez mal dormi, que votre
-          semaine a sauté ou que votre genou tire. Avec mon suivi, votre
-          préparation {e.cible} est publiée sur Nolio et ajustée chaque semaine
-          à partir de vos retours et de vos séances analysées.
-        </p>
-        <p>
-          Je suis entraîneur diplômé de la Fédération Française d'Athlétisme et
-          j'accompagne des coureurs depuis 2009, à Lyon et partout en France.
+          Je suis <a href="/coach">entraîneur diplômé de la Fédération Française
+          d'Athlétisme</a> et j'accompagne des coureurs depuis 2009, partout en
+          France.
         </p>
         <a href="/coaching-a-distance" class="more-link">Le suivi en ligne en détail <span aria-hidden="true">→</span></a>
       </div>
