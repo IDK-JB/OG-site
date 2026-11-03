@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import { CONTACT_EMAIL, MEDIATEUR, OFFRES } from "@/seo";
 
-const MAJ = "1er novembre 2026";
+const MAJ = "3 novembre 2026";
 ---
 
 <Base
@@ -26,8 +26,7 @@ const MAJ = "1er novembre 2026";
 
       <h2>2. Prestataire</h2>
       <p>
-        Olivier Gaillard, entrepreneur individuel (micro-entreprise),
-        115 allée du 4 Avril 1908, 69580 Sathonay-Camp, France.
+        Olivier Gaillard, entrepreneur individuel (micro-entreprise).
         SIRET 531 217 925 00027. TVA non applicable, article 293 B du code
         général des impôts. Contact :{" "}
         <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
@@ -65,8 +64,9 @@ const MAJ = "1er novembre 2026";
       <p>
         Les prix sont indiqués en euros, par mois, et ne sont pas soumis à la
         TVA (article 293 B du code général des impôts). Le paiement s'effectue
-        au début de chaque mois d'accompagnement, par le moyen convenu lors de
-        la souscription. Une facture est adressée pour chaque règlement.
+        au début de chaque mois d'accompagnement, avant le 10 du mois, par le
+        moyen convenu lors de la souscription. Une facture peut être adressée
+        pour chaque règlement sur demande.
       </p>
       <p>
         En cas de défaut de paiement, l'accompagnement peut être suspendu après
@@ -75,11 +75,15 @@ const MAJ = "1er novembre 2026";
 
       <h2>6. Durée, reconduction et résiliation</h2>
       <p>
-        L'accompagnement est conclu pour un mois, reconduit d'un mois sur
-        l'autre, sans durée minimale d'engagement. Chaque partie peut y mettre
-        fin par simple message écrit, au plus tard la veille du renouvellement.
-        Le mois en cours, déjà réglé, reste dû et se poursuit jusqu'à son
-        terme. Aucun frais de résiliation n'est appliqué.
+        L'accompagnement est conclu pour deux mois minimum, reconduit
+        tacitement d'un mois sur l'autre. Chaque partie peut y mettre fin par
+        simple message écrit, au plus tard la veille du renouvellement. Le mois
+        en cours, déjà réglé, reste dû et se poursuit jusqu'à son terme.
+      </p>
+      <p>
+        Une résiliation avant la période initiale de deux mois, si elle
+        s'effectue après la période de rétractation, ne donnera pas lieu à un
+        remboursement. Aucun frais de résiliation n'est appliqué.
       </p>
 
       <h2 id="retractation">7. Droit de rétractation</h2>
@@ -174,11 +178,12 @@ const MAJ = "1er novembre 2026";
 
       <h2 id="formulaire">Annexe : formulaire type de rétractation</h2>
       <p>
-        À compléter et à renvoyer uniquement si vous souhaitez vous rétracter.
+        À compléter et à renvoyer uniquement par mail si vous souhaitez vous
+        rétracter.
       </p>
       <p>
-        À l'attention d'Olivier Gaillard, 115 allée du 4 Avril 1908,
-        69580 Sathonay-Camp, <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> :
+        À l'adresse{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> :
       </p>
       <p>
         Je vous notifie par la présente ma rétractation du contrat portant sur
@@ -188,9 +193,11 @@ const MAJ = "1er novembre 2026";
         Formule souscrite : ..........<br />
         Commandée le : ..........<br />
         Nom du consommateur : ..........<br />
-        Adresse du consommateur : ..........<br />
-        Signature (uniquement en cas de notification sur papier) : ..........<br />
-        Date : ..........
+        Adresse du consommateur : ..........
+      </p>
+      <p>
+        Date : ..........<br />
+        Signature : ..........
       </p>
     </div>
   </section>
