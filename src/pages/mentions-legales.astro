@@ -100,9 +100,9 @@ import { CONTACT_EMAIL } from "@/seo";
       <p>
         Le formulaire de contact recueille votre nom, votre adresse email,
         votre message et, si vous le souhaitez, votre numéro de téléphone.
-        Ces informations sont transmises par le service FormSubmit
-        (<a href="https://formsubmit.co" target="_blank" rel="noopener">formsubmit.co<span class="sr-only"> (nouvel onglet)</span></a>)
-        à ma boîte mail, seule destinataire. Elles servent
+        Ces informations sont envoyées directement par le site à ma boîte mail
+        professionnelle, hébergée par OVHcloud en France, seule destinataire.
+        Elles servent
         uniquement à répondre à votre demande, ne sont ni cédées ni
         réutilisées à d'autres fins, et sont supprimées au plus tard trois
         ans après notre dernier échange.
@@ -113,7 +113,13 @@ import { CONTACT_EMAIL } from "@/seo";
         fonctionnement du site.
       </p>
       <p>
-        Vercel et FormSubmit sont des sociétés établies aux États-Unis : les
+        Pour bloquer les envois automatiques, le formulaire utilise le service
+        anti-robot Turnstile de Cloudflare, chargé seulement quand vous
+        commencez à le remplir. Il vérifie que l'envoi vient d'une personne,
+        sans cookie publicitaire ni suivi d'un site à l'autre.
+      </p>
+      <p>
+        Vercel et Cloudflare sont des sociétés établies aux États-Unis : les
         données ci-dessus peuvent être traitées hors de l'Union européenne,
         dans le cadre des garanties prévues par la réglementation européenne.
       </p>

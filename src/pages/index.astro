@@ -2,6 +2,12 @@
 import Base from "@/layouts/Base.astro";
 import Avis from "@/components/Avis.astro";
 import { CONTACT_EMAIL } from "@/seo";
+import { CHAMP_PIEGE, TURNSTILE_CLE_TEST } from "@/contact";
+
+const turnstileCle =
+  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ??
+  (process.env.VERCEL_ENV === "production" ? undefined : TURNSTILE_CLE_TEST);
+if (!turnstileCle) throw new Error("PUBLIC_TURNSTILE_SITE_KEY manquant en production");
 
 // Avis auto-publiés (src/data/avis.ts) : aucune donnée structurée
 // Review/AggregateRating, Google ne les accepte pas pour sa propre activité.
@@ -216,15 +222,14 @@ import { CONTACT_EMAIL } from "@/seo";
         <form
           class="contact-form"
           id="contactForm"
-          action={`https://formsubmit.co/${CONTACT_EMAIL}`}
+          action="/api/contact"
           method="POST"
+          data-contact={CONTACT_EMAIL}
           novalidate
           aria-describedby="form-note"
           data-reveal="2"
         >
-          <input type="hidden" name="_subject" value="Nouveau message depuis olivier-gaillard.fr" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off" />
+          <input type="text" name={CHAMP_PIEGE} class="form-honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <p class="form-note full" id="form-note">Tous les champs sont obligatoires, sauf le téléphone.</p>
           <div class="field">
             <label for="nom">Nom et prénom</label>
@@ -246,6 +251,13 @@ import { CONTACT_EMAIL } from "@/seo";
             <p class="field-error" id="message-error"></p>
           </div>
           <div class="form-foot">
+            <div class="cf-turnstile" data-sitekey={turnstileCle} data-theme="dark" data-language="fr" data-appearance="interaction-only"></div>
+            <noscript>
+              <p class="form-status">
+                Le formulaire a besoin de JavaScript. Écrivez-moi directement à{" "}
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+              </p>
+            </noscript>
             <button type="submit" class="btn btn-solid">Envoyer <span class="arrow" aria-hidden="true">→</span></button>
             <p class="form-status" id="form-status" role="status"></p>
           </div>
@@ -259,54 +271,55 @@ import { CONTACT_EMAIL } from "@/seo";
   </section>
 
   <script>
-    import { z } from "zod/mini";
+    import { contactSchema, type ChampContact } from "@/contact";
 
-    const NOM = "Indiquez votre nom et votre prénom.";
-
-    const schema = z.object({
-      nom: z.string().check(
-        z.trim(),
-        z.minLength(1, { error: NOM }),
-        z.refine((v) => v.split(/\s+/).length >= 2, { error: NOM }),
-      ),
-      email: z.pipe(
-        z.string().check(z.trim()),
-        z.email({ error: "Cette adresse email ne semble pas valide." }),
-      ),
-      message: z.string().check(
-        z.trim(),
-        z.minLength(10, { error: "Votre message est un peu court (10 caractères minimum)." }),
-        z.maxLength(3000, { error: "Votre message est trop long (3000 caractères maximum)." }),
-      ),
-    });
-
-    type Champ = keyof z.infer<typeof schema>;
-    const champs: Champ[] = ["nom", "email", "message"];
-
+    const champs: ChampContact[] = ["nom", "email", "message"];
     const form = document.getElementById("contactForm") as HTMLFormElement | null;
 
     if (form) {
       const lire = () => Object.fromEntries(champs.map((c) => [c, String(new FormData(form).get(c) ?? "")]));
 
-      // Valide et affiche les erreurs sous chaque champ ; renvoie les données propres ou null
-      const valider = () => {
-        const r = schema.safeParse(lire());
-        const erreurs: Partial<Record<Champ, string>> = {};
-        if (!r.success) for (const i of r.error.issues) erreurs[i.path[0] as Champ] ??= i.message;
-
+      const afficherErreurs = (erreurs: Partial<Record<ChampContact, string>>) => {
         for (const c of champs) {
           const msg = erreurs[c] ?? "";
           (form.elements.namedItem(c) as HTMLElement).setAttribute("aria-invalid", String(!!msg));
           document.getElementById(`${c}-error`)!.textContent = msg;
         }
-        return r.success ? r.data : null;
+      };
+
+      // Valide et affiche les erreurs sous chaque champ ; renvoie true si tout est bon
+      const valider = () => {
+        const r = contactSchema.safeParse(lire());
+        const erreurs: Partial<Record<ChampContact, string>> = {};
+        if (!r.success) for (const i of r.error.issues) erreurs[i.path[0] as ChampContact] ??= i.message;
+        afficherErreurs(erreurs);
+        return r.success;
+      };
+
+      // Anti-robot Cloudflare Turnstile, chargé à la première interaction avec le formulaire
+      let turnstileCharge = false;
+      const chargerTurnstile = () => {
+        if (turnstileCharge) return;
+        turnstileCharge = true;
+        const script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+        script.async = true;
+        document.head.append(script);
+      };
+      form.addEventListener("focusin", chargerTurnstile, { once: true });
+
+      const jetonTurnstile = async () => {
+        chargerTurnstile();
+        const champJeton = () => form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
+        for (let i = 0; i < 40 && !champJeton()?.value; i++) await new Promise((r) => setTimeout(r, 250));
+        return champJeton()?.value ?? "";
       };
 
       let tente = false;
       let envoiEnCours = false;
       const statut = document.getElementById("form-status")!;
       const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
-      const adresse = form.action.split("/").pop()!;
+      const adresse = form.dataset.contact!;
 
       const afficherStatut = (texte: string, lienMail = false) => {
         statut.textContent = texte;
@@ -325,8 +338,7 @@ import { CONTACT_EMAIL } from "@/seo";
         e.preventDefault();
         if (envoiEnCours) return;
         tente = true;
-        const data = valider();
-        if (!data) {
+        if (!valider()) {
           const n = form.querySelectorAll('[aria-invalid="true"]').length;
           afficherStatut(n === 1 ? "1 champ à corriger." : `${n} champs à corriger.`);
           form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
@@ -337,27 +349,34 @@ import { CONTACT_EMAIL } from "@/seo";
         bouton.disabled = true;
         afficherStatut("Envoi en cours…");
 
-        const champsEnvoyes = new FormData(form);
-        champsEnvoyes.set("nom", data.nom);
-        champsEnvoyes.set("email", data.email);
-        champsEnvoyes.set("message", data.message);
-        champsEnvoyes.set("_captcha", "false");
-
         try {
-          const reponse = await fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+          if (!(await jetonTurnstile())) throw new Error("robot");
+          const reponse = await fetch(form.action, {
             method: "POST",
             headers: { Accept: "application/json" },
-            body: champsEnvoyes,
+            body: new FormData(form),
           });
           const resultat = await reponse.json().catch(() => ({}));
-          if (!reponse.ok || String(resultat.success) !== "true") throw new Error(resultat.message);
 
-          form.reset();
-          tente = false;
-          afficherStatut("Merci, votre message est bien parti. Je vous réponds au plus vite.");
-        } catch {
-          afficherStatut("L'envoi n'a pas abouti. Écrivez-moi directement à", true);
+          if (reponse.ok && resultat.ok) {
+            form.reset();
+            tente = false;
+            afficherStatut("Merci, votre message est bien parti. Je vous réponds au plus vite.");
+          } else if (resultat.erreurs) {
+            afficherErreurs(resultat.erreurs);
+            afficherStatut("Un champ est à corriger.");
+          } else {
+            throw new Error(resultat.erreur);
+          }
+        } catch (erreur) {
+          afficherStatut(
+            erreur instanceof Error && erreur.message === "robot"
+              ? "La vérification anti-robot n'a pas abouti. Réessayez dans un instant, ou écrivez-moi directement à"
+              : "L'envoi n'a pas abouti. Écrivez-moi directement à",
+            true,
+          );
         } finally {
+          (window as { turnstile?: { reset: () => void } }).turnstile?.reset();
           envoiEnCours = false;
           bouton.disabled = false;
         }
