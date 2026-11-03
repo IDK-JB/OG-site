@@ -1,5 +1,6 @@
-// Fonction Vercel : reçoit le formulaire de contact et l'envoie à la boîte OVH du site.
+// Fonction Vercel : reçoit le formulaire de contact et l'envoie à contact@ depuis le compte mail OVH du site.
 // Variables d'environnement : SMTP_USER, SMTP_PASS, TURNSTILE_SECRET (SMTP_HOST et SMTP_PORT facultatifs).
+// OVH impose que l'expéditeur soit le compte authentifié : SMTP_USER sert donc aussi d'adresse d'envoi.
 import nodemailer from "nodemailer";
 import { CHAMP_PIEGE, contactSchema, type ChampContact } from "../src/contact.js";
 
@@ -81,7 +82,7 @@ export async function POST(request: Request) {
 
   try {
     await transport().sendMail({
-      from: { name: "Site olivier-gaillard.fr", address: DESTINATAIRE },
+      from: { name: "Site olivier-gaillard.fr", address: process.env.SMTP_USER ?? DESTINATAIRE },
       to: DESTINATAIRE,
       replyTo: { name: nomSurUneLigne, address: email },
       subject: `Nouveau message de ${nomSurUneLigne}`,
