@@ -3,6 +3,7 @@
 // OVH impose que l'expéditeur soit le compte authentifié : SMTP_USER sert donc aussi d'adresse d'envoi.
 import nodemailer from "nodemailer";
 import { CHAMP_PIEGE, contactSchema, type ChampContact } from "../src/contact.js";
+import { mailContact } from "../src/emails/contact.js";
 
 const DESTINATAIRE = "contact@olivier-gaillard.fr";
 
@@ -72,24 +73,16 @@ export async function POST(request: Request) {
     return repondre(request, 400, { erreurs });
   }
 
-  const { nom, email, tel, message } = r.data;
-  const nomSurUneLigne = nom.replace(/[\r\n]+/g, " ");
+  const { subject, text, html } = mailContact(r.data);
 
   try {
     await transport().sendMail({
       from: { name: "Site olivier-gaillard.fr", address: process.env.SMTP_USER ?? DESTINATAIRE },
       to: DESTINATAIRE,
-      replyTo: { name: nomSurUneLigne, address: email },
-      subject: `Nouveau message de ${nomSurUneLigne}`,
-      text: [
-        `Nom : ${nomSurUneLigne}`,
-        `Email : ${email}`,
-        `Téléphone : ${tel || "non indiqué"}`,
-        "",
-        message,
-        "",
-        "Répondre à ce mail répond directement à la personne.",
-      ].join("\n"),
+      replyTo: { name: r.data.nom.replace(/\s+/g, " "), address: r.data.email },
+      subject,
+      text,
+      html,
     });
   } catch (erreur) {
     console.error("Envoi du formulaire de contact impossible", erreur);
