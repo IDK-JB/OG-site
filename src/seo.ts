@@ -5,7 +5,7 @@
 export const INDEXABLE = true;
 
 // Adresse de contact unique du site (pages, formulaire, données structurées).
-export const CONTACT_EMAIL = "olivier.gaillard27@gmail.com";
+export const CONTACT_EMAIL = "contact@olivier-gaillard.fr";
 
 // Médiateur de la consommation : obligatoire en B2C dès que le client est
 // un particulier. Renseigner nom et site dès l'adhésion, le bloc des CGV
