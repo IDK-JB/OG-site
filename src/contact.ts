@@ -27,6 +27,3 @@ export type ChampContact = keyof Contact;
 
 // Champ piège invisible : un humain le laisse vide, un robot le remplit.
 export const CHAMP_PIEGE = "site_web";
-
-// Clés de test Cloudflare (toujours valides), utilisées hors production.
-export const TURNSTILE_CLE_TEST = "1x00000000000000000000AA";

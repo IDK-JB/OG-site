@@ -1,11 +1,10 @@
 // Fonction Vercel : reçoit le formulaire de contact et l'envoie à contact@ depuis le compte mail OVH du site.
-// Variables d'environnement : SMTP_USER, SMTP_PASS, TURNSTILE_SECRET (SMTP_HOST et SMTP_PORT facultatifs).
+// Variables d'environnement : SMTP_USER, SMTP_PASS ; facultatives : TURNSTILE_SECRET, SMTP_HOST, SMTP_PORT.
 // OVH impose que l'expéditeur soit le compte authentifié : SMTP_USER sert donc aussi d'adresse d'envoi.
 import nodemailer from "nodemailer";
 import { CHAMP_PIEGE, contactSchema, type ChampContact } from "../src/contact.js";
 
 const DESTINATAIRE = "contact@olivier-gaillard.fr";
-const TURNSTILE_SECRET_TEST = "1x0000000000000000000000000000000AA";
 
 const json = (statut: number, corps: Record<string, unknown>) =>
   new Response(JSON.stringify(corps), {
@@ -19,16 +18,12 @@ const repondre = (request: Request, statut: number, corps: Record<string, unknow
     ? json(statut, { ok: statut === 200, ...corps })
     : Response.redirect(new URL(`/?contact=${statut === 200 ? "envoye" : "erreur"}#contact`, request.url), 303);
 
-const secretTurnstile = () => {
-  const secret = process.env.TURNSTILE_SECRET;
-  if (secret) return secret;
-  if (process.env.VERCEL_ENV === "production") throw new Error("TURNSTILE_SECRET manquant");
-  return TURNSTILE_SECRET_TEST;
-};
-
+// Sans TURNSTILE_SECRET, seul le champ piège protège le formulaire.
 const humainVerifie = async (jeton: string, ip: string | null) => {
+  const secret = process.env.TURNSTILE_SECRET;
+  if (!secret) return true;
   if (!jeton) return false;
-  const corps = new URLSearchParams({ secret: secretTurnstile(), response: jeton });
+  const corps = new URLSearchParams({ secret, response: jeton });
   if (ip) corps.set("remoteip", ip);
   const reponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",

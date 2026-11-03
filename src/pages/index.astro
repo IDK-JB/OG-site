@@ -2,12 +2,10 @@
 import Base from "@/layouts/Base.astro";
 import Avis from "@/components/Avis.astro";
 import { CONTACT_EMAIL } from "@/seo";
-import { CHAMP_PIEGE, TURNSTILE_CLE_TEST } from "@/contact";
+import { CHAMP_PIEGE } from "@/contact";
 
-const turnstileCle =
-  import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ??
-  (process.env.VERCEL_ENV === "production" ? undefined : TURNSTILE_CLE_TEST);
-if (!turnstileCle) throw new Error("PUBLIC_TURNSTILE_SITE_KEY manquant en production");
+// Anti-robot Cloudflare Turnstile, actif seulement si la clé est renseignée dans Vercel
+const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 // Avis auto-publiés (src/data/avis.ts) : aucune donnée structurée
 // Review/AggregateRating, Google ne les accepte pas pour sa propre activité.
@@ -251,7 +249,9 @@ if (!turnstileCle) throw new Error("PUBLIC_TURNSTILE_SITE_KEY manquant en produc
             <p class="field-error" id="message-error"></p>
           </div>
           <div class="form-foot">
-            <div class="cf-turnstile" data-sitekey={turnstileCle} data-theme="dark" data-language="fr" data-appearance="interaction-only"></div>
+            {turnstileCle && (
+              <div class="cf-turnstile" data-sitekey={turnstileCle} data-theme="dark" data-language="fr" data-appearance="interaction-only"></div>
+            )}
             <noscript>
               <p class="form-status">
                 Le formulaire a besoin de JavaScript. Écrivez-moi directement à{" "}
@@ -296,10 +296,11 @@ if (!turnstileCle) throw new Error("PUBLIC_TURNSTILE_SITE_KEY manquant en produc
         return r.success;
       };
 
-      // Anti-robot Cloudflare Turnstile, chargé à la première interaction avec le formulaire
+      // Anti-robot Cloudflare Turnstile (si activé), chargé à la première interaction avec le formulaire
+      const avecTurnstile = !!form.querySelector(".cf-turnstile");
       let turnstileCharge = false;
       const chargerTurnstile = () => {
-        if (turnstileCharge) return;
+        if (!avecTurnstile || turnstileCharge) return;
         turnstileCharge = true;
         const script = document.createElement("script");
         script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
@@ -309,6 +310,7 @@ if (!turnstileCle) throw new Error("PUBLIC_TURNSTILE_SITE_KEY manquant en produc
       form.addEventListener("focusin", chargerTurnstile, { once: true });
 
       const jetonTurnstile = async () => {
+        if (!avecTurnstile) return "sans-turnstile";
         chargerTurnstile();
         const champJeton = () => form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]');
         for (let i = 0; i < 40 && !champJeton()?.value; i++) await new Promise((r) => setTimeout(r, 250));
