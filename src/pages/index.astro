@@ -258,19 +258,25 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
                 <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
               </p>
             </noscript>
-            <div class="envoi-zone">
-              <button type="submit" class="btn btn-solid">Envoyer <span class="arrow" aria-hidden="true">→</span></button>
-              <span class="envoi-rond" aria-hidden="true">
-                <svg class="envoi-avion" viewBox="0 0 24 24"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7Z" /></svg>
-                <svg class="envoi-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
-              </span>
-            </div>
+            <button type="submit" class="btn btn-solid">Envoyer <span class="arrow" aria-hidden="true">→</span></button>
             <p class="form-status" id="form-status" role="status"></p>
           </div>
           <p class="form-rgpd full">
             Vos coordonnées servent uniquement à vous répondre et ne sont jamais
             cédées. <a href="/mentions-legales#donnees">En savoir plus</a>
           </p>
+          <div class="envoi-scene" inert>
+            <span class="envoi-rond" aria-hidden="true">
+              <svg class="envoi-avion" viewBox="0 0 24 24"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7Z" /></svg>
+              <svg class="envoi-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+            </span>
+            <p class="envoi-titre">
+              <span class="envoi-texte-cours">Envoi en cours</span>
+              <span class="envoi-texte-ok">Message envoyé<span class="accent">.</span></span>
+            </p>
+            <p class="envoi-sous">Merci, je vous réponds au plus vite.</p>
+            <button type="button" class="btn btn-ghost envoi-retour">Écrire un autre message</button>
+          </div>
         </form>
       </div>
     </div>
@@ -329,12 +335,21 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
       const adresse = form.dataset.contact!;
 
-      // Animation d'envoi : rond bleu avec un avion qui décolle, puis rond vert et coche une fois parti
+      // Animation d'envoi : la scène remplace le formulaire (rond bleu et avion, puis rond vert et coche)
+      const scene = form.querySelector<HTMLElement>(".envoi-scene")!;
+      const retour = scene.querySelector<HTMLButtonElement>(".envoi-retour")!;
       const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
       const animer = (etat?: "en-cours" | "ok") => {
         if (etat) form.dataset.envoi = etat;
         else delete form.dataset.envoi;
+        scene.inert = etat !== "ok";
       };
+
+      retour.addEventListener("click", () => {
+        animer();
+        afficherStatut("");
+        (form.elements.namedItem("nom") as HTMLElement).focus();
+      });
 
       const afficherStatut = (texte: string, lienMail = false) => {
         statut.textContent = texte;
@@ -382,6 +397,7 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           if (reponse.ok && resultat.ok) {
             parti = true;
             animer("ok");
+            setTimeout(() => retour.focus({ preventScroll: true }), 900);
             form.reset();
             tente = false;
             afficherStatut("Merci, votre message est bien parti. Je vous réponds au plus vite.");
@@ -400,8 +416,7 @@ const turnstileCle = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           );
         } finally {
           (window as { turnstile?: { reset: () => void } }).turnstile?.reset();
-          if (parti) await pause(3200);
-          animer();
+          if (!parti) animer();
           envoiEnCours = false;
           bouton.disabled = false;
         }
