@@ -27,12 +27,14 @@ const tarifsHref = home ? "#tarifs" : "/#tarifs";
           <li><a href="/athlete-project">Athlete Project</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <div class="col-label">Préparer une course</div>
-        <ul>
-          {EPREUVES.map((e) => <li><a href={`/${e.slug}`}>{e.court}</a></li>)}
-        </ul>
-      </div>
+      {EPREUVES.length > 0 && (
+        <div class="footer-col">
+          <div class="col-label">Préparer une course</div>
+          <ul>
+            {EPREUVES.map((e) => <li><a href={`/${e.slug}`}>{e.court}</a></li>)}
+          </ul>
+        </div>
+      )}
       <div class="footer-col">
         <div class="col-label">Me suivre</div>
         <ul>

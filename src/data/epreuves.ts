@@ -1,7 +1,7 @@
 // Pages « préparer une course » : une entrée = une page /<slug>.
 // Les paragraphes de `sections` acceptent des liens HTML (contenu maîtrisé).
 
-/** Texte qu'Olivier doit encore rédiger : la preview affiche la consigne, le build de prod échoue. */
+/** Texte qu'Olivier doit encore rédiger : la preview affiche la consigne, la prod ne publie pas la page. */
 export interface ARemplir {
   aRemplir: string;
 }
@@ -53,7 +53,7 @@ export interface Epreuve {
 /** Date de mise en ligne des pages (JSON-LD Article), à mettre à jour au merge */
 export const PUBLIE = "2026-11-02";
 
-export const EPREUVES: Epreuve[] = [
+const TOUTES: Epreuve[] = [
   {
     slug: "preparer-10-km",
     court: "10 km",
@@ -322,4 +322,11 @@ export const EPREUVES: Epreuve[] = [
   },
 ];
 
-export const epreuve = (slug: string) => EPREUVES.find((e) => e.slug === slug)!;
+export const estBrouillon = (e: Epreuve) =>
+  !e.relu || [e.approche.texte, e.cas, e.photos, e.parcours].some(estARemplir);
+
+/** En production, une page non relue n'existe pas : ni page, ni lien, ni sitemap. */
+export const EPREUVES =
+  process.env.VERCEL_ENV === "production" ? TOUTES.filter((e) => !estBrouillon(e)) : TOUTES;
+
+export const epreuve = (slug: string) => EPREUVES.find((e) => e.slug === slug);

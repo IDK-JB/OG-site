@@ -172,10 +172,10 @@
     });
   }
 
-  /* ---------- Vidéo : bouton pause, lecture auto seulement sur grand écran ---------- */
+  /* ---------- Vidéo : bouton pause, lecture auto ---------- */
   /* Pas de lecture automatique (poster seul, rien n'est téléchargé) en mouvement
-     réduit, en économie de données ou sous 768 px de large. Le bouton reste
-     utilisable pour lancer la vidéo à la demande. */
+     réduit ou en économie de données. Le bouton reste utilisable pour lancer la
+     vidéo à la demande. */
   var video = document.querySelector(".page-hero-media video");
   var toggle = document.querySelector(".video-toggle");
 
@@ -203,7 +203,6 @@
     var noAutoplay =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       window.matchMedia("(prefers-reduced-data: reduce)").matches ||
-      window.matchMedia("(max-width: 767px)").matches ||
       !!(conn && conn.saveData);
     if (video.hasAttribute("data-autoplay") && !noAutoplay) playVideo();
     syncToggle();

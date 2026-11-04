@@ -18,10 +18,6 @@ const photo = `/assets/${e.photo}`;
 const srcset = `${photo}-768.webp 768w, ${photo}-1280.webp 1280w, ${photo}-1920.webp 1920w`;
 const derniere = e.lignes.length - 1;
 
-const brouillon = !e.relu || [e.approche.texte, e.cas, e.photos, e.parcours].some(estARemplir);
-if (brouillon && process.env.VERCEL_ENV === "production") {
-  throw new Error(`/${e.slug} : textes d'Olivier manquants ou non relus, page non publiable en production`);
-}
 
 const majLe = new Date(PUBLIE).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
 
@@ -286,11 +282,13 @@ const jsonLd: Record<string, unknown>[] = [
   </section>
 
   <!-- ================= LIEN SUIVANT ================= -->
-  <a href={`/${suivante.slug}`} class="next-link">
-    <div class="container">
-      <div class="nl-label">Préparer aussi</div>
-      <span class="nl-title">{suivante.court} <span aria-hidden="true">→</span></span>
-    </div>
-  </a>
+  {suivante && (
+    <a href={`/${suivante.slug}`} class="next-link">
+      <div class="container">
+        <div class="nl-label">Préparer aussi</div>
+        <span class="nl-title">{suivante.court} <span aria-hidden="true">→</span></span>
+      </div>
+    </a>
+  )}
 
 </Base>
