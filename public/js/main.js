@@ -52,6 +52,11 @@
       link.addEventListener("click", function () { setMenu(false, false); });
     });
 
+    // Clic à côté des liens : on referme
+    menu.addEventListener("click", function (e) {
+      if (!e.target.closest("a")) setMenu(false, true);
+    });
+
     document.addEventListener("keydown", function (e) {
       if (!menu.classList.contains("open")) return;
       if (e.key === "Escape") { setMenu(false, true); return; }
@@ -188,7 +193,17 @@
 
   function playVideo() {
     var p = video.play();
-    if (p && p.catch) p.catch(syncToggle);
+    if (p && p.catch) p.catch(function () {
+      syncToggle();
+      // Lecture auto refusée (iPhone en économie d'énergie) : on lance au premier toucher
+      ["touchend", "click"].forEach(function (t) {
+        document.addEventListener(t, function relancer(e) {
+          document.removeEventListener("touchend", relancer);
+          document.removeEventListener("click", relancer);
+          if (video.paused && !(toggle && toggle.contains(e.target))) video.play().catch(function () {});
+        });
+      });
+    });
   }
 
   var conn = navigator.connection;
