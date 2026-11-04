@@ -177,10 +177,7 @@
     });
   }
 
-  /* ---------- Vidéo : bouton pause, lecture auto ---------- */
-  /* Pas de lecture automatique (poster seul, rien n'est téléchargé) en mouvement
-     réduit ou en économie de données. Le bouton reste utilisable pour lancer la
-     vidéo à la demande. */
+  /* ---------- Vidéo : lecture auto, bouton pause ---------- */
   var video = document.querySelector(".page-hero-media video");
   var toggle = document.querySelector(".video-toggle");
 
@@ -206,16 +203,7 @@
     });
   }
 
-  var conn = navigator.connection;
-  var noAutoplay =
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-    window.matchMedia("(prefers-reduced-data: reduce)").matches ||
-    !!(conn && conn.saveData);
-
   if (video) {
-    video.addEventListener("playing", function () {
-      video.classList.add("is-playing");
-    });
     video.addEventListener("play", syncToggle);
     video.addEventListener("pause", syncToggle);
     if (toggle) {
@@ -223,34 +211,18 @@
         if (video.paused) playVideo(); else video.pause();
       });
     }
-    if (video.hasAttribute("data-autoplay") && !noAutoplay) playVideo();
+    // La vidéo démarre seule (attribut autoplay) ; mouvement réduit : on la coupe
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) video.pause();
+    else if (video.paused) playVideo();
     syncToggle();
   }
 
-  /* ---------- Vidéo Athlete Project téléchargée en avance ---------- */
-  /* Sur les autres pages, une fois la page chargée, le service worker met en
-     cache la variante que ce navigateur lira : la vidéo démarre tout de suite
-     en arrivant sur /athlete-project. */
-  function videoAP() {
-    var t = document.createElement("video");
-    if (window.matchMedia("(max-width: 767px)").matches) return "/assets/ap-training-portrait.mp4";
-    if (t.canPlayType('video/mp4; codecs="av01.0.05M.08"')) return "/assets/ap-training.av1.mp4";
-    if (t.canPlayType("video/webm")) return "/assets/ap-training.webm";
-    return "/assets/ap-training.mp4";
-  }
-
+  // Ancien préchargement par service worker : on le désinstalle chez les visiteurs
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("/sw.js").then(function () {
-        if (video || noAutoplay) return;
-        return navigator.serviceWorker.ready.then(function (reg) {
-          var idle = window.requestIdleCallback || function (f) { setTimeout(f, 1500); };
-          idle(function () {
-            if (reg.active) reg.active.postMessage({ precharger: videoAP() });
-          });
-        });
-      }).catch(function () {});
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+      regs.forEach(function (r) { r.unregister(); });
     });
+    if (window.caches) caches.keys().then(function (k) { k.forEach(function (n) { caches.delete(n); }); });
   }
 
   /* ---------- Léger parallax hero ---------- */
