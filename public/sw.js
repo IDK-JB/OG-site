@@ -4,6 +4,15 @@
 var CACHE = "video-ap-2";
 var VIDEO = /^\/assets\/ap-training[^/]*\.(mp4|webm)$/;
 
+/* Fichiers déjà en cache : les autres vont au réseau sans passer par ici,
+   le lecteur vidéo du navigateur garde alors son chargement habituel. */
+var enCache = {};
+var pret = caches.open(CACHE).then(function (cache) {
+  return cache.keys().then(function (reqs) {
+    reqs.forEach(function (r) { enCache[new URL(r.url).pathname] = true; });
+  });
+});
+
 self.addEventListener("install", function () {
   self.skipWaiting();
 });
@@ -21,9 +30,9 @@ self.addEventListener("activate", function (event) {
 function precharger(url) {
   return caches.open(CACHE).then(function (cache) {
     return cache.match(url).then(function (deja) {
-      if (deja) return;
+      if (deja) { enCache[url] = true; return; }
       return fetch(url).then(function (rep) {
-        if (rep.status === 200) return cache.put(url, rep);
+        if (rep.status === 200) return cache.put(url, rep).then(function () { enCache[url] = true; });
       });
     });
   });
@@ -31,7 +40,7 @@ function precharger(url) {
 
 self.addEventListener("message", function (event) {
   var url = event.data && event.data.precharger;
-  if (url && VIDEO.test(url)) event.waitUntil(precharger(url));
+  if (url && VIDEO.test(url)) event.waitUntil(pret.then(function () { return precharger(url); }));
 });
 
 /* Les lecteurs vidéo demandent des plages d'octets : on découpe la réponse en cache. */
@@ -62,7 +71,7 @@ function plage(rep, entete) {
 
 self.addEventListener("fetch", function (event) {
   var url = new URL(event.request.url);
-  if (event.request.method !== "GET" || url.origin !== location.origin || !VIDEO.test(url.pathname)) return;
+  if (event.request.method !== "GET" || url.origin !== location.origin || !enCache[url.pathname]) return;
   event.respondWith(
     caches.open(CACHE).then(function (cache) {
       return cache.match(url.pathname).then(function (rep) {
