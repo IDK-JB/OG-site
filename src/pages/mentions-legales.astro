@@ -1,6 +1,8 @@
 ---
 import Base from "@/layouts/Base.astro";
 import { CONTACT_EMAIL } from "@/seo";
+
+const turnstile = !!import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <Base
@@ -21,8 +23,7 @@ import { CONTACT_EMAIL } from "@/seo";
       <h2>Éditeur du site</h2>
       <p>
         Olivier Gaillard, entraîneur d'athlétisme et coach running,
-        entrepreneur individuel (micro-entreprise), 115 allée du 4 Avril 1908,
-        69580 Sathonay-Camp, France.
+        entrepreneur individuel (micro-entreprise).
       </p>
       <p>
         SIRET 531 217 925 00027, code APE 96.09Z.
@@ -101,10 +102,9 @@ import { CONTACT_EMAIL } from "@/seo";
       <p>
         Le formulaire de contact recueille votre nom, votre adresse email,
         votre message et, si vous le souhaitez, votre numéro de téléphone.
-        Ces informations sont transmises par le service FormSubmit
-        (<a href="https://formsubmit.co" target="_blank" rel="noopener">formsubmit.co<span class="sr-only"> (nouvel onglet)</span></a>)
-        à ma boîte mail, seule destinataire. Elles servent
-        uniquement à répondre à votre demande, ne sont ni cédées ni
+        Ces informations sont envoyées directement par le site à ma boîte mail
+        professionnelle, hébergée par OVHcloud en France, seule destinataire.
+        Elles servent uniquement à répondre à votre demande, ne sont ni cédées ni
         réutilisées à d'autres fins, et sont supprimées au plus tard trois
         ans après notre dernier échange.
       </p>
@@ -113,8 +113,16 @@ import { CONTACT_EMAIL } from "@/seo";
         (adresse IP, page demandée) nécessaires à la sécurité et au bon
         fonctionnement du site.
       </p>
+      {turnstile && (
+        <p>
+          Pour bloquer les envois automatiques, le formulaire utilise le service
+          anti-robot Turnstile de Cloudflare, chargé seulement quand vous
+          commencez à le remplir. Il vérifie que l'envoi vient d'une personne,
+          sans cookie publicitaire ni suivi d'un site à l'autre.
+        </p>
+      )}
       <p>
-        Vercel et FormSubmit sont des sociétés établies aux États-Unis : les
+        {turnstile ? "Vercel et Cloudflare sont des sociétés établies" : "Vercel est une société établie"} aux États-Unis : les
         données ci-dessus peuvent être traitées hors de l'Union européenne,
         dans le cadre des garanties prévues par la réglementation européenne.
       </p>
