@@ -144,12 +144,14 @@ const jsonLd: Record<string, unknown>[] = [
       <p class="steps-note" data-reveal="3">
         <strong>Tous niveaux</strong> : du premier 10 km au marathon, de la remise en forme à la performance.
       </p>
-      <p class="steps-note steps-note--courses" data-reveal="3">
-        <strong>Par course</strong> :{" "}
-        {EPREUVES.map((e, i) => (
-          <>{i > 0 && ", "}<a href={`/${e.slug}`}>{e.h1.charAt(0).toLowerCase() + e.h1.slice(1)}</a></>
-        ))}.
-      </p>
+      {EPREUVES.length > 0 && (
+        <p class="steps-note steps-note--courses" data-reveal="3">
+          <strong>Par course</strong> :{" "}
+          {EPREUVES.map((e, i) => (
+            <>{i > 0 && ", "}<a href={`/${e.slug}`}>{e.h1.charAt(0).toLowerCase() + e.h1.slice(1)}</a></>
+          ))}.
+        </p>
+      )}
       <figure class="nolio-shot" data-reveal="3">
         <img
           src="/assets/nolio-plan.webp"
