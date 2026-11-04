@@ -192,6 +192,9 @@
   }
 
   if (video) {
+    video.addEventListener("playing", function () {
+      video.classList.add("is-playing");
+    });
     video.addEventListener("play", syncToggle);
     video.addEventListener("pause", syncToggle);
     if (toggle) {
