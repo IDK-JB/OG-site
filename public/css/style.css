@@ -562,6 +562,13 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.1em;
 }
 
+.plan-engagement {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
 .plan-desc {
   margin-top: 16px;
   color: var(--muted);
