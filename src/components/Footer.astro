@@ -1,4 +1,6 @@
 ---
+import { EPREUVES } from "@/data/epreuves";
+
 interface Props {
   home?: boolean;
 }
@@ -23,6 +25,12 @@ const tarifsHref = home ? "#tarifs" : "/#tarifs";
           <li><a href="/coaching-a-distance">Coaching à distance</a></li>
           <li><a href={tarifsHref}>Les formules</a></li>
           <li><a href="/athlete-project">Athlete Project</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="col-label">Préparer une course</div>
+        <ul>
+          {EPREUVES.map((e) => <li><a href={`/${e.slug}`}>{e.court}</a></li>)}
         </ul>
       </div>
       <div class="footer-col">

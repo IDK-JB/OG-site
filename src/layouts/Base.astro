@@ -24,7 +24,7 @@ interface Preload {
 interface Props {
   title: string;
   description: string;
-  active: "home" | "coach" | "distance" | "ap" | "legal";
+  active: "home" | "coach" | "distance" | "ap" | "legal" | "course";
   home?: boolean;
   bodyClass?: string;
   /** Image de partage (Open Graph), chemin depuis /public */
@@ -77,7 +77,7 @@ const graph = [
     "@id": websiteId,
     url: new URL("/", site).href,
     name: "Olivier Gaillard",
-    alternateName: ["Olivier Gaillard, coach running à Lyon", "olivier-gaillard.fr"],
+    alternateName: "Olivier Gaillard, coach running à Lyon",
     inLanguage: "fr-FR",
     publisher: { "@id": personId },
   },
@@ -101,6 +101,7 @@ const graph = [
     affiliation: {
       "@type": "SportsClub",
       name: "Athletic Club du Lyonnais (ACL)",
+      url: "https://www.acl-athle.fr/",
       address: { "@type": "PostalAddress", addressLocality: "Lyon", addressCountry: "FR" },
     },
     hasCredential: [
@@ -124,6 +125,8 @@ const graph = [
       "https://www.instagram.com/olivier_gllrd",
       "https://www.strava.com/athletes/6312500",
       "https://www.nolio.io/marketplace/coach/olivier.gaillard/",
+      "https://www.athle.fr/athletes/220868",
+      "https://worldathletics.org/athletes/france/olivier-gaillard-14333684",
     ],
   },
   {

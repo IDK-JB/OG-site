@@ -1,0 +1,12 @@
+---
+interface Props {
+  consigne: string;
+}
+
+const { consigne } = Astro.props;
+---
+
+<div class="a-remplir" role="note">
+  <p class="a-remplir-label">À rédiger par Olivier</p>
+  <p>{consigne}</p>
+</div>
